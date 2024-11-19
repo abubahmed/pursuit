@@ -1,0 +1,5 @@
+DJANGO_SECRET_KEY = "your django secret key"
+POSTGRES_PASSWORD = "your postgres password"
+JWT_SECRET_KEY = "your jwt secret key"
+GOOGLE_CLIENT_ID = "your google client id"
+GOOGLE_CLIENT_SECRET = "your google secret"
