@@ -4,8 +4,8 @@ import json
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from secrets import HUGGINGFACE_API_KEY
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from .secrets import HUGGINGFACE_API_KEY
 
 
 class InferenceClientClass:
@@ -23,17 +23,65 @@ class InferenceClientClass:
 
     def get_prompt(self, text):
         prompt = f"""
-            Please extract the variables of interest from the text below and return them in JSON format. If a variable is not present, please return an empty string for that variable.
+            Please extract the specified variables of interest from the input text below and return them in strictly JSON format. 
 
+            Instructions:
+            - For each variable, extract the most relevant and explicit information from the input text. 
+            - If a variable is not mentioned or cannot be clearly identified, return an empty string ("") for that variable.
+            - Ensure the JSON output strictly adheres to the specified format without any additional fields or text.
+
+            Variables to extract:
+            - title: The job title or position name.
+            - company: The name of the company or organization.
+            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence.
+            - location: The location of the job or position.
+            - salary: The salary or compensation offered for the job or position (hourly, yearly, etc.).
+            - status: The current hiring status of the job. Choose one of the following options based on the content: "Open", "Closed", "Opening soon", or "Other".
+            - skills: The required or preferred skills for the job. List the skills as an array of strings (e.g., ["Python", "Java", "SQL"]).
+            - during: The time period of the job or position. Choose one of the following options based on the content: "Winter", "Spring", "Summer", "Fall", "Year-round", or "Other".
+            - type: The type of job or position. Choose one of the following options based on the content: "Full-time", "Part-time", "Contract", "Internship", "Freelance", "Fellowship", or "Other".
+            - level: The experience level required for the job. Choose one of the following options based on the content: "Entry", "Mid", "Senior", "Lead", "Manager", "Director", or "Other".
+            - mode: The work mode or arrangement for the job. Choose one of the following options based on the content: "Remote", "Onsite", "Hybrid", or "Other".
+            
+            Note that the provided input is the result of a web scraping process and may contain some noise or irrelevant information. Focus on extracting the most relevant and explicit details for each variable.
+            
+            If the input text does not contain information for a specific variable, please return an empty string ("") for that variable.
+            
+            if the input text contains information that suggests a failure in the extraction process (404 error, verification required, etc.), please return an empty string ("") for all variables.
+          
             Input text:
             ---
             {text}
             ---
 
+            Example Output:
+            {{
+              "title": "Software Development Engineer Internship - 2025 (US)",
+              "company": "Amazon",
+              "description": "Amazon is looking for passionate software development engineers to join our team in Seattle, WA. This internship is open to students graduating in 2025.",
+              "location": "Seattle, WA",
+              "salary": "$10,000/month",
+              "status": "Open",
+              "skills": ["Java", "Python", "C++"],
+              "during": "Summer",
+              "type": "Internship",
+              "level": "Entry",
+              "mode": "Onsite",
+            }}
+
             Expected output:
             {{
-              "name": "<name>",
-              "location": "<location>"
+              "title": <title>,
+              "company": <company>,
+              "description": <description>,
+              "location": <location>,
+              "salary": <salary>,
+              "status": <status>,
+              "skills": <skills>,
+              "during": <during>,
+              "type": <type>,
+              "level": <level>,
+              "mode": <mode>
             }}
             """
         return prompt
@@ -64,9 +112,9 @@ class InferenceClientClass:
 
 def test_inference_client():
     client = InferenceClientClass()
-    text = "John Doe is a software engineer in New York City."
+    text = "Software Engineer at Google in New York"
     variables = client.extract_variables(text)
-    logger.info(variables["name"])
+    logger.info(variables["title"])
     logger.info(variables["location"])
 
 

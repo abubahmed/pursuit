@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 from loguru import logger
 import sys
 import os
+import string
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from secrets import SCRAPERAPI_API_KEY
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from .secrets import SCRAPERAPI_API_KEY
 
 
 class Scraper:
@@ -16,7 +17,7 @@ class Scraper:
         self.DEVICE_TYPE = "desktop"
         self.KEEP_HEADERS = "true"
 
-    def scrape(self, url):
+    def scrape_data(self, url):
         if not url:
             logger.exepction("No URL provided")
             return None
@@ -41,12 +42,14 @@ class Scraper:
             return None
         all_text = soup.get_text()
         trimmed_text = " ".join(all_text.split())
-        return trimmed_text
+        allowed_chars = string.ascii_letters + string.digits + string.punctuation + " "
+        cleaned_text = "".join(char for char in trimmed_text if char in allowed_chars)
+        return cleaned_text
 
 
 def test_scraper():
     scraper = Scraper()
-    soup = scraper.scrape(
+    soup = scraper.scrape_data(
         "https://www.ziprecruiter.com/c/Matlen-Silver/Job/Software-Engineer/-in-Pennington,NJ?jid=4f57d55fb2ef2acc&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic"
     )
     text = scraper.get_text(soup)

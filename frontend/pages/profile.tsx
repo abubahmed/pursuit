@@ -48,6 +48,25 @@ export default function Home() {
             onClick={async () => {
               try {
                 const response = await axios({
+                  method: "post",
+                  url: process.env.NEXT_PUBLIC_BACKEND_URL + "jobs/add/",
+                  headers: { Authorization: "Bearer " + session?.access_token },
+                  data: {
+                    url: "https://www.amazon.jobs/en/jobs/2808739/software-development-engineer-internship-2025-us",
+                  },
+                });
+                console.log(response.data);
+              } catch (error) {
+                console.error(error);
+              }
+            }}>
+            Create Job
+          </Button>
+          <Button
+            colorScheme="green"
+            onClick={async () => {
+              try {
+                const response = await axios({
                   method: "get",
                   url: process.env.NEXT_PUBLIC_BACKEND_URL + "jobs/",
                   headers: { Authorization: "Bearer " + session?.access_token },
@@ -57,7 +76,7 @@ export default function Home() {
                 console.error(error);
               }
             }}>
-            Call API
+            Get Jobs
           </Button>
         </HStack>
       </Box>
