@@ -9,7 +9,6 @@ from .models import Job
 from .serializer import JobSerializer, UserSerializer
 from rest_framework.views import APIView, status
 from rest_framework.response import Response
-from .models import mock_job
 from django.contrib.auth import get_user_model
 from .util.inference_client import InferenceClientClass
 from .util.scraper import Scraper
@@ -25,20 +24,38 @@ class GoogleLogin(SocialLoginView):
 
 class UserListView(APIView):
     def get(self, request):
-        User = get_user_model()
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(
-            {
-                "success": True,
-                "message": "successful get",
-                "data": {
-                    "users": serializer.data,
-                    "count": len(serializer.data),
+        if not request.user.is_authenticated:
+            return Response(
+                {"success": False, "message": "User is not authenticated"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        user_id = request.user.id
+        if not user_id:
+            return Response(
+                {"success": False, "message": "User ID is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            User = get_user_model()
+            users = User.objects.filter(id=user_id)
+            serializer = UserSerializer(users)
+            logger.info(serializer.data)
+            return Response(
+                {
+                    "success": True,
+                    "message": "successful get",
+                    "data": {
+                        "user": serializer.data,
+                    },
                 },
-            },
-            status=status.HTTP_200_OK,
-        )
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            logger.exception(e)
+            return Response(
+                {"success": False, "message": "Failed to get user"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
 class JobListView(APIView):
@@ -58,18 +75,6 @@ class JobListView(APIView):
             jobs = Job.objects.filter(user_id=user_id)
             serializer = JobSerializer(jobs, many=True)
             logger.info(serializer.data)
-            if not serializer.data:
-                return Response(
-                    {
-                        "success": True,
-                        "message": "No jobs found",
-                        "data": {
-                            "jobs": [],
-                            "count": 0,
-                        },
-                    },
-                    status=status.HTTP_200_OK,
-                )
             return Response(
                 {
                     "success": True,
@@ -87,29 +92,6 @@ class JobListView(APIView):
                 {"success": False, "message": "Failed to get jobs"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
-
-
-# class JobCreateView(APIView):
-#     def post(self, request):
-#         print("request.data", request.data)
-#         url = request.data.get("url")
-#         mock_job_clone = mock_job.copy()
-#         mock_job_clone["url"] = url
-#         serializer = JobSerializer(data=mock_job_clone)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(
-#                 {
-#                     "success": True,
-#                     "message": "successful post",
-#                     "data": serializer.data,
-#                 },
-#                 status=status.HTTP_201_CREATED,
-#             )
-#         return Response(
-#             {"success": False, "message": "failed post", "data": serializer.errors},
-#             status=status.HTTP_400_BAD_REQUEST,
-#         )
 
 
 class JobCreateView(APIView):
@@ -139,30 +121,7 @@ class JobCreateView(APIView):
             logger.info(text)
             client = InferenceClientClass()
             variables = client.extract_variables(text)
-            variables_template = {
-                "title": "",
-                "company": "",
-                "description": "",
-                "location": "",
-                "salary": 0.0,
-                "status": "",
-                "skills": [],
-                "during": "",
-                "type": "",
-                "level": "",
-                "mode": "",
-            }
             logger.info(variables)
-            if not all(key in variables for key in variables_template):
-                return Response(
-                    {"success": False, "message": "Failed to extract variables"},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                )
-            if all(not value for value in variables.values()):
-                return Response(
-                    {"success": False, "message": "No variables extracted"},
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                )
             job_data = {
                 "title": variables["title"],
                 "company": variables["company"],
@@ -176,6 +135,10 @@ class JobCreateView(APIView):
                 "type": variables["type"],
                 "level": variables["level"],
                 "mode": variables["mode"],
+                "commitment": variables["commitment"],
+                "education": variables["education"],
+                "contact": variables["contact"],
+                "deadline": variables["deadline"],
                 "user": user_id,
                 "url": url,
             }

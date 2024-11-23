@@ -1,11 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from loguru import logger
-import sys
-import os
 import string
-
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from .secrets import SCRAPERAPI_API_KEY
 
 
