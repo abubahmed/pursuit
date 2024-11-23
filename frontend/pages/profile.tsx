@@ -14,6 +14,8 @@ export default function Home() {
         url: process.env.NEXT_PUBLIC_BACKEND_URL + "user/",
         headers: useToken ? { Authorization: "Bearer " + session?.access_token } : {},
       });
+      console.log({ Authorization: "Bearer " + session?.access_token });
+      console.log(response.data);
       setResponse(JSON.stringify(response.data));
     } catch (error: any) {
       setResponse(error.message);

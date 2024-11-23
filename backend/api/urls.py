@@ -5,13 +5,19 @@ from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
 from rest_framework_simplejwt.views import TokenVerifyView
 from allauth.socialaccount.views import signup
 from .views.views import GoogleLogin
-from .views.job_views import JobListView, JobCreateView
-from .views.user_views import (
+from .views.job_views import JobListView, JobCreateView, JobDeleteView
+from .views.profile_views import (
     UserListView,
     ProfileListView,
-    ProfilePutBasicView,
-    ProfilePutPreferencesView,
-    ProfilePutSkillsView,
+    ProfileUpdateBasicView,
+    ProfileUpdatePreferencesView,
+    ProfileUpdateSkillsView,
+)
+from .views.season_views import (
+    SeasonListView,
+    SeasonCreateView,
+    SeasonDeleteView,
+    SeasonUpdateView,
 )
 from django.conf import settings
 from django.conf.urls import include
@@ -27,17 +33,26 @@ urlpatterns = [
     path("google/", GoogleLogin.as_view(), name="google_login"),
     path("jobs/", JobListView.as_view(), name="job_list"),
     path("jobs/add/", JobCreateView.as_view(), name="job_add"),
-    path("user/", UserListView.as_view(), name="user_list"),
-    path("user/profile", ProfileListView.as_view(), name="profile_list"),
-    path("user/profile/basic", ProfilePutBasicView.as_view(), name="profile_put_basic"),
+    path("jobs/delete/", JobDeleteView.as_view(), name="job_delete"),
+    path("users/", UserListView.as_view(), name="user_list"),
+    path("users/profile/", ProfileListView.as_view(), name="profile_list"),
     path(
-        "user/profile/preferences",
-        ProfilePutPreferencesView.as_view(),
+        "users/profile/basic/", ProfileUpdateBasicView.as_view(), name="profile_put_basic"
+    ),
+    path(
+        "users/profile/preferences/",
+        ProfileUpdatePreferencesView.as_view(),
         name="profile_put_preferences",
     ),
     path(
-        "user/profile/skills", ProfilePutSkillsView.as_view(), name="profile_put_skills"
+        "users/profile/skills/",
+        ProfileUpdateSkillsView.as_view(),
+        name="profile_put_skills",
     ),
+    path("seasons/", SeasonListView.as_view(), name="season_list"),
+    path("seasons/add/", SeasonCreateView.as_view(), name="season_add"),
+    path("seasons/update/", SeasonUpdateView.as_view(), name="season_update"),
+    path("seasons/delete/", SeasonDeleteView.as_view(), name="season_delete"),
 ]
 
 if settings.DEBUG:

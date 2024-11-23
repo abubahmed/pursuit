@@ -24,6 +24,11 @@ class UserListView(APIView):
         try:
             User = get_user_model()
             user = User.objects.get(id=user_id)
+            if not user:
+                return Response(
+                    {"success": False, "message": "User not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             serializer = UserSerializer(user)
             logger.info(serializer.data)
             return Response(
@@ -59,6 +64,11 @@ class ProfileListView(APIView):
             )
         try:
             profile = Profile.objects.get(user_id=user_id)
+            if not profile:
+                return Response(
+                    {"success": False, "message": "Profile not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             serializer = ProfileSerializer(profile)
             logger.info(serializer.data)
             return Response(
@@ -79,7 +89,7 @@ class ProfileListView(APIView):
             )
 
 
-class ProfilePutBasicView(APIView):
+class ProfileUpdateBasicView(APIView):
     def put(self, request):
         if not request.user.is_authenticated:
             return Response(
@@ -119,6 +129,11 @@ class ProfilePutBasicView(APIView):
                 )
 
             profile = Profile.objects.get(user_id=user_id)
+            if not profile:
+                return Response(
+                    {"success": False, "message": "Profile not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             profile.first_name = (
                 new_first_name if new_first_name else profile.first_name
             )
@@ -161,7 +176,7 @@ class ProfilePutBasicView(APIView):
             )
 
 
-class ProfilePutPreferencesView(APIView):
+class ProfileUpdatePreferencesView(APIView):
     def put(self, request):
         if not request.user.is_authenticated:
             return Response(
@@ -188,6 +203,11 @@ class ProfilePutPreferencesView(APIView):
                 )
 
             profile = Profile.objects.get(user_id=user_id)
+            if not profile:
+                return Response(
+                    {"success": False, "message": "Profile not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             profile.preferred_level = (
                 preferred_level
                 if preferred_level
@@ -237,7 +257,7 @@ class ProfilePutPreferencesView(APIView):
             )
 
 
-class ProfilePutSkillsView(APIView):
+class ProfileUpdateSkillsView(APIView):
     def put(self, request):
         if not request.user.is_authenticated:
             return Response(
@@ -260,6 +280,11 @@ class ProfilePutSkillsView(APIView):
                 )
 
             profile = Profile.objects.get(user_id=user_id)
+            if not profile:
+                return Response(
+                    {"success": False, "message": "Profile not found"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
             if new_skills:
                 profile.skills.extend(new_skills)
                 profile.skills = list(set(profile.skills))

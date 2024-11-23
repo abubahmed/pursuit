@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from loguru import logger
 import string
-from .secrets import SCRAPERAPI_API_KEY
+from api.util.secrets import SCRAPERAPI_API_KEY
 
 
 class Scraper:
@@ -46,7 +46,7 @@ class Scraper:
 def test_scraper():
     scraper = Scraper()
     soup = scraper.scrape_data(
-        "https://www.ziprecruiter.com/c/Matlen-Silver/Job/Software-Engineer/-in-Pennington,NJ?jid=4f57d55fb2ef2acc&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic"
+        "https://www.amazon.jobs/en/jobs/2808739/software-development-engineer-internship-2025-us"
     )
     text = scraper.get_text(soup)
     logger.info(text)

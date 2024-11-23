@@ -2,13 +2,14 @@ from huggingface_hub import InferenceClient
 from loguru import logger
 from api.models.job_model import Job
 import json
-from .secrets import HUGGINGFACE_API_KEY
+from api.util.secrets import HUGGINGFACE_API_KEY
 
 
 class InferenceClientClass:
     def __init__(self):
         self.API_KEY = HUGGINGFACE_API_KEY
-        self.MODEL = "google/gemma-2-27b-it"
+        self.MODEL = "Qwen/Qwen2.5-Coder-32B-Instruct"
+        self.OTHER_MODELS = ["01-ai/Yi-1.5-34B-Chat"]
         self.MAX_TOKENS = 512
         self.TEMPERATURE = 0.5
         self.TOP_P = 0.7
@@ -18,9 +19,9 @@ class InferenceClientClass:
             logger.exception("Failed to initialize InferenceClient")
             self.client = None
 
-    def get_prompt(text):
+    def get_prompt(self, text):
         prompt = f"""
-            Please extract the specified variables of interest from the input text below and return them in strictly JSON format. 
+            Please extract the specified variables of interest from the input text below and return them in strictly JSON format.
 
             Instructions:
             - For each variable, extract the most relevant and explicit information from the input text. 
@@ -34,21 +35,21 @@ class InferenceClientClass:
             - If the input text contains information that suggests the job listing has been removed or is no longer available, please return falsy values for all variables ("" or [] depending on variable type) except for "status", which should be set to "Closed".
 
             Variables to extract:
-            - title: The job title or position name. Type: string.
-            - company: The name of the company or organization. Type: string.
-            - description: A brief description of the job or position.Summarize the key responsibilities or requirements in one brief sentence. Type: string.
-            - location: The location of the job or position. Type: string.
-            - salary: The salary or compensation offered for the job or position (hourly, yearly, etc.). Type: string.
+            - title: The job title or position name. Type: string. ~1-20 tokens.
+            - company: The name of the company or organization. Type: string. ~1-5 tokens.
+            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence. Type: string. ~5-30 tokens.
+            - location: The location of the job or position. Type: string. ~1-5 tokens.
+            - salary: The salary or compensation offered for the job or position (hourly, yearly, etc.). Type: string. ~1-5 tokens.
             - status: The current hiring status of the job. Choose one of the following options: "Open", "Closed", "Opening soon", or "Other". Type: string.
             - skills: The required or preferred skills for the job. List the skills as an array of strings (e.g., ["Python", "Java", "SQL"]). Type: array of strings.
             - during: The time period of the job or position. Choose one of the following options: "Winter", "Spring", "Summer", "Fall", "Year-round", or "Other". Type: string.
             - type: The type of job or position. Choose one of the following options: "Full-time", "Part-time", "Contract", "Internship", "Freelance", "Fellowship", or "Other". Type: string.
             - level: The experience level required for the job. Choose one of the following options: "Entry", "Mid", "Senior", "Lead", "Manager", "Director", or "Other". Type: string.
             - mode: The work mode or arrangement for the job. Choose one of the following options: "Remote", "Onsite", "Hybrid", or "Other". Type: string.
-            - commitment: The expected time commitment for the job. Type: string.
-            - education: The required or preferred education level for the job. Type: string.
-            - contact: The contact information for inquiries (email, phone, etc.). Type: string.
-            - deadline: The application deadline for the job. Type: string.
+            - commitment: The expected time commitment for the job. Type: string. ~1-5 tokens.
+            - education: The required or preferred education level for the job. Type: string. ~1-5 tokens.
+            - contact: The contact information for inquiries (email, phone, etc.). Type: string. ~1-5 tokens.
+            - deadline: The application deadline for the job. Type: string. ~1-5 tokens.
 
             Example output:
             {{
@@ -95,7 +96,7 @@ class InferenceClientClass:
             """
         return prompt
       
-    def get_schema():
+    def get_schema(self):
         data_schema = {
             "title": "",
             "company": "",
@@ -133,6 +134,7 @@ class InferenceClientClass:
                 stream=False,
             )
             response = stream.choices[0].message.content
+            logger.info("Inference client response: " + response)
             start = response.find("{")
             end = response.rfind("}") + 1
             json_data = response[start:end]
@@ -140,10 +142,10 @@ class InferenceClientClass:
             schema = self.get_schema()
             if not all(key in structured_data for key in schema):
                 logger.exception("Failed to extract variables")
-                return None
+                return {}
             if all(not value for value in structured_data.values()):
                 logger.exception("No variables extracted")
-                return None
+                return {}
             choices_map = {
               "mode": Job.JOB_MODE_CHOICES,
               "level": Job.JOB_LEVEL_CHOICES,
@@ -154,9 +156,9 @@ class InferenceClientClass:
               if key in choices_map and value not in [choice[0] for choice in choices_map[key]]:
                 structured_data[key] = ""
             return structured_data
-        except:
+        except Exception as e:
             logger.exception("Failed to extract variables")
-            return None
+            return {}
 
 
 def test_inference_client():
