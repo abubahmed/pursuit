@@ -1,6 +1,6 @@
 from huggingface_hub import InferenceClient
 from loguru import logger
-from api.models import Job
+from api.models.job_model import Job
 import json
 from .secrets import HUGGINGFACE_API_KEY
 

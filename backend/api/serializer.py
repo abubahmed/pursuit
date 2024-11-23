@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Job, Profile
+from .models.job_model import Job
+from .models.profile_model import Profile
+from .models.season_model import Season
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -17,4 +19,9 @@ class JobSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
+        fields = "__all__"
+        
+class SeasonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Season
         fields = "__all__"

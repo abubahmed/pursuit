@@ -1,61 +1,14 @@
-from dj_rest_auth.registration.views import SocialLoginView
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+from loguru import logger
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Job
-from .serializer import JobSerializer, UserSerializer
-from rest_framework.views import APIView, status
-from rest_framework.response import Response
+from api.models.job_model import Job
+from api.serializer import JobSerializer
+from api.util.inference_client import InferenceClientClass
+from api.util.scraper import Scraper
 from django.contrib.auth import get_user_model
-from .util.inference_client import InferenceClientClass
-from .util.scraper import Scraper
-from loguru import logger
-from datetime import datetime
 
-
-class GoogleLogin(SocialLoginView):
-    adapter_class = GoogleOAuth2Adapter
-    callback_url = "http://127.0.0.1:3000/"
-    client_class = OAuth2Client
-
-
-class UserListView(APIView):
-    def get(self, request):
-        if not request.user.is_authenticated:
-            return Response(
-                {"success": False, "message": "User is not authenticated"},
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
-        user_id = request.user.id
-        if not user_id:
-            return Response(
-                {"success": False, "message": "User ID is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        try:
-            User = get_user_model()
-            users = User.objects.filter(id=user_id)
-            serializer = UserSerializer(users)
-            logger.info(serializer.data)
-            return Response(
-                {
-                    "success": True,
-                    "message": "successful get",
-                    "data": {
-                        "user": serializer.data,
-                    },
-                },
-                status=status.HTTP_200_OK,
-            )
-        except Exception as e:
-            logger.exception(e)
-            return Response(
-                {"success": False, "message": "Failed to get user"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
+User = get_user_model()
 
 
 class JobListView(APIView):
