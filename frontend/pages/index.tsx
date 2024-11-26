@@ -1,14 +1,19 @@
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
-import { Box, Button, Spinner, Text, VStack } from "@chakra-ui/react";
+// import { Box, Button, Spinner, Text, VStack, Container } from "@chakra-ui/react";
+// import Hero from "@/components/templates/Hero";
+import Navbar from "@/components/front-page-components/Navbar";
+import Hero from "@/components/front-page-components/Hero";
+import { Box } from "@mui/material";
+
 
 export default function Home() {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if (status == "loading") {
-    return <Spinner size="lg" />;
-  }
+  // if (status == "loading") {
+  //   return <Spinner size="lg" />;
+  // }
 
   if (session) {
     router.push("profile");
@@ -16,13 +21,21 @@ export default function Home() {
   }
 
   return (
-    <Box m={8}>
-      <VStack>
-        <Text>You are not authenticated.</Text>
-        <Button colorScheme="blue" onClick={() => signIn(undefined, { callbackUrl: "/profile" })}>
-          Sign in
-        </Button>
-      </VStack>
-    </Box>
-  );
+    <div>
+      <Navbar />
+      <Box my={8} />
+      <Hero />
+    </div>
+  )
+
+  // return (
+  //   <Box m={8}>
+  //     <VStack>
+  //       <Text>You are not authenticated.</Text>
+  //       <Button colorScheme="blue" onClick={() => signIn(undefined, { callbackUrl: "/profile" })}>
+  //         Sign in
+  //       </Button>
+  //     </VStack>
+  //   </Box>
+  // );
 }
