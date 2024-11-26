@@ -3,23 +3,29 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 
 const Hero = () => {
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
       <Box
         display="flex"
         flexDirection={{ xs: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
-        py={5}>
-        <Box flex={1} pr={{ md: 5 }} mb={{ xs: 5, md: 0 }}>
+        sx={{ flexGrow: 1 }}>
+        <Box flex={1} pr={{ md: 8 }} mb={{ xs: 8, md: 0 }}>
           <Typography
-            variant="h3"
+            variant="h2"
             component="h1"
             mb={4}
             sx={{
               color: "black",
               fontWeight: "bold",
             }}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Lorem, ipsum dolor sit amet adipisicing elit lorem.
           </Typography>
           <Typography
             variant="body1"
@@ -27,7 +33,7 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
             }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ratione ducimus,
             labore quo laudantium aperiam. Ipsum explicabo nisi, sed voluptates natus commodi cumque
@@ -48,8 +54,9 @@ const Hero = () => {
                   backgroundColor: "rgb(60, 60, 60)",
                   boxShadow: "none",
                 },
-                fontSize: "1.2rem",
+                fontSize: "1rem",
                 boxShadow: "none",
+                fontWeight: "regular",
                 mr: 3,
               }}>
               Request a Demo
@@ -64,7 +71,8 @@ const Hero = () => {
                 border: "1px solid black",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1.2rem",
+                fontSize: "1rem",
+                fontWeight: "regular",
                 boxShadow: "none",
                 "&:hover": {
                   backgroundColor: "rgb(240, 240, 240)",
@@ -81,7 +89,7 @@ const Hero = () => {
             borderRadius: "30px",
           }}>
           <img
-            src="/images/laptop-desk-notebook-computer-smartphone-writing-971631-pxhere.com.jpg"
+            src="https://placehold.co/1400x1100"
             alt="Hero Image"
             style={{ width: "100%", height: "auto", borderRadius: "40px" }}
           />

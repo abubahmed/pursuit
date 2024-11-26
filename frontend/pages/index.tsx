@@ -4,8 +4,9 @@ import { signIn, useSession } from "next-auth/react";
 // import Hero from "@/components/templates/Hero";
 import Navbar from "@/components/front-page-components/Navbar";
 import Hero from "@/components/front-page-components/Hero";
+import Features from "@/components/front-page-components/Features";
+import Pricing from "@/components/front-page-components/Pricing";
 import { Box } from "@mui/material";
-
 
 export default function Home() {
   const router = useRouter();
@@ -23,10 +24,38 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <Box my={8} />
-      <Hero />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "90vh",
+        }}>
+        <Hero />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "130vh",
+        }}>
+        <Features />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "110vh",
+        }}>
+        <Pricing />
+      </Box>
     </div>
-  )
+  );
 
   // return (
   //   <Box m={8}>
