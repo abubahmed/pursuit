@@ -2,10 +2,12 @@ import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
 // import { Box, Button, Spinner, Text, VStack, Container } from "@chakra-ui/react";
 // import Hero from "@/components/templates/Hero";
-import Navbar from "@/components/front-page-components/Navbar";
-import Hero from "@/components/front-page-components/Hero";
-import Features from "@/components/front-page-components/Features";
-import Pricing from "@/components/front-page-components/Pricing";
+import Navbar from "@/components/front-page-sections/Navbar";
+import Hero from "@/components/front-page-sections/Hero";
+import Features from "@/components/front-page-sections/Features";
+import Pricing from "@/components/front-page-sections/Pricing";
+import Reviews from "@/components/front-page-sections/Reviews";
+import Footer from "@/components/front-page-sections/Footer";
 import { Box } from "@mui/material";
 
 export default function Home() {
@@ -30,7 +32,7 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "90vh",
+          my: 16,
         }}>
         <Hero />
       </Box>
@@ -40,7 +42,7 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "130vh",
+          my: 12,
         }}>
         <Features />
       </Box>
@@ -50,10 +52,22 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          height: "110vh",
+          my: 12,
         }}>
         <Pricing />
       </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          my: 12,
+          mb: 6,
+        }}>
+        <Reviews />
+      </Box>
+      <Footer />
     </div>
   );
 

@@ -26,4 +26,10 @@ html {
   padding: 0px;
 }
 
+.TextField-without-border-radius fieldset {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0
+}
+
 

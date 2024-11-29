@@ -29,7 +29,7 @@ const Hero = () => {
           </Typography>
           <Typography
             variant="body1"
-            mb={4}
+            mb={5}
             sx={{
               color: "black",
               fontWeight: "regular",

@@ -3,14 +3,14 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 
 export default function Navbar() {
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg">
       <AppBar
-        position="static"
         sx={{
+          position: "static",
           backgroundColor: "white",
           boxShadow: "none",
-          borderBottom: "none",
-          mt: 1,
+          py: 1,
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.3rem" }}>
