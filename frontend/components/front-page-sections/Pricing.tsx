@@ -75,19 +75,19 @@ const Pricing = () => {
           display: "flex",
           justifyContent: "center",
         }}>
-        {pricing.map((plan: {
-          level: string;
-          description: string;
-          price: string;
-          features: string[];
-        }, index: number) => {
-          return (
-            <PricingCard
-              key={index}
-              plan={plan}
-            />
-          );
-        })}
+        {pricing.map(
+          (
+            plan: {
+              level: string;
+              description: string;
+              price: string;
+              features: string[];
+            },
+            index: number
+          ) => {
+            return <PricingCard key={index} plan={plan} />;
+          }
+        )}
       </Grid>
       <Box
         mt={6}

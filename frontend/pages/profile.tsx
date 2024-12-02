@@ -88,14 +88,10 @@
 //   return <></>;
 // }
 
-import React from 'react'
+import React from "react";
 
 const profile = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default profile
+export default profile;

@@ -53,6 +53,16 @@ const FAQ = () => {
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
     },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+    },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+    },
   ];
 
   const [expanded, setExpanded] = useState<string | boolean>(false);
@@ -157,7 +167,7 @@ const AccordianPanel = ({
           sx={{
             color: "black",
             fontSize: "1.1rem",
-            fontWeight: "medium",
+            fontWeight: "regular",
           }}>
           {faq.question}
         </Typography>
@@ -165,7 +175,7 @@ const AccordianPanel = ({
       <AccordionDetails>
         <Typography
           sx={{
-            color: "black",
+            color: "rgb(100, 100, 100)",
             fontSize: "1.1rem",
             fontWeight: "regular",
           }}>

@@ -3,8 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 
 export default function Navbar() {
   return (
-    <Container
-      maxWidth="lg">
+    <Container maxWidth="lg">
       <AppBar
         sx={{
           position: "static",
