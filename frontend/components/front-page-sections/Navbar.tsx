@@ -22,7 +22,7 @@ export default function Navbar() {
               gap: "30px",
               justifyContent: "center",
             }}>
-            <Box sx={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+            <Box sx={{ display: "flex", gap: "15px", justifyContent: "center" }}>
               <Button
                 sx={{
                   color: "black",

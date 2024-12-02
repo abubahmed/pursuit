@@ -73,7 +73,7 @@ const Reviews = () => {
   return (
     <Container maxWidth="lg">
       <Box
-        mb={6}
+        mb={4}
         sx={{
           display: "flex",
           flexDirection: "column",

@@ -2,12 +2,9 @@ import React from "react";
 import { Box, Container, Typography, Grid, Paper } from "@mui/material";
 import { FaStar } from "react-icons/fa";
 
-
 const ReviewCard = ({
-  key,
   reviewObject,
 }: {
-  key: number;
   reviewObject: {
     name: string;
     title: string;
@@ -17,7 +14,7 @@ const ReviewCard = ({
   };
 }) => {
   return (
-    <Grid item xs={12} md={3} key={key}>
+    <Grid item xs={12} md={3}>
       <Paper
         elevation={0}
         sx={{
@@ -51,11 +48,12 @@ const ReviewCard = ({
             justifyContent: "space-between",
             mt: 4,
           }}>
-          <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}>
             <img
               src={reviewObject.image}
               alt="reviewer"

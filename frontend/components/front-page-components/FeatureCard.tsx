@@ -2,18 +2,16 @@ import React from "react";
 import { Container, Grid, Box, Typography, Paper } from "@mui/material";
 import { FaChartArea } from "react-icons/fa";
 
-const Feature = ({
-  key,
+const FeatureCard = ({
   feature,
 }: {
-  key: number;
   feature: {
     title: string;
     description: string;
   };
 }) => {
   return (
-    <Grid item xs={12} sm={6} md={4} key={key}>
+    <Grid item xs={12} sm={6} md={4}>
       <Paper
         elevation={1}
         sx={{
@@ -49,4 +47,4 @@ const Feature = ({
   );
 };
 
-export default Feature;
+export default FeatureCard;

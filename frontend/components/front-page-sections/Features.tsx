@@ -40,7 +40,7 @@ const Features = () => {
   return (
     <Container>
       <Box
-        mb={6}
+        mb={4}
         sx={{
           display: "flex",
           flexDirection: "column",

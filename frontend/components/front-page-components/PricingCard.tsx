@@ -3,10 +3,8 @@ import { Container, Box, Typography, Grid, Button, Paper } from "@mui/material";
 import { FaCheckCircle } from "react-icons/fa";
 
 const PricingCard = ({
-  key,
   plan,
 }: {
-  key: number;
   plan: {
     level: string;
     description: string;
@@ -15,7 +13,7 @@ const PricingCard = ({
   };
 }) => {
   return (
-    <Grid item xs={12} md={4} key={key}>
+    <Grid item xs={12} md={4}>
       <Paper
         elevation={1}
         sx={{

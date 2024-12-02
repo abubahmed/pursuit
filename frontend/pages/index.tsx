@@ -8,6 +8,7 @@ import Features from "@/components/front-page-sections/Features";
 import Pricing from "@/components/front-page-sections/Pricing";
 import Reviews from "@/components/front-page-sections/Reviews";
 import Footer from "@/components/front-page-sections/Footer";
+import FAQ from "@/components/front-page-sections/FAQ";
 import { Box } from "@mui/material";
 
 export default function Home() {
@@ -54,6 +55,16 @@ export default function Home() {
           justifyContent: "center",
           my: 12,
         }}>
+        <FAQ />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          my: 12,
+        }}>
         <Pricing />
       </Box>
       <Box
@@ -63,7 +74,7 @@ export default function Home() {
           alignItems: "center",
           justifyContent: "center",
           my: 12,
-          mb: 6,
+          mb: 8,
         }}>
         <Reviews />
       </Box>
