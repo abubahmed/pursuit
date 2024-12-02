@@ -13,32 +13,32 @@ const FeatureCard = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Paper
-        elevation={1}
+        elevation={0}
         sx={{
           padding: "50px",
           py: "40px",
           borderRadius: "15px",
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          backgroundColor: "rgb(20, 70, 54)",
         }}>
-        <FaChartArea color="black" size="3rem" />
+        <FaChartArea color="rgb(240,240,240)" size="2.5rem" />
         <Typography
           variant="h6"
-          mb={1.5}
+          mb={2}
           mt={4}
           sx={{
-            color: "black",
+            color: "rgb(240,240,240)",
             fontWeight: "bold",
-            fontSize: "1.4rem",
+            fontSize: "1.3rem",
           }}>
           {feature.title}
         </Typography>
         <Typography
           variant="body1"
-          sx={{ color: "black", fontSize: "1.1rem", fontWeight: "regular" }}>
+          sx={{ color: "rgb(240,240,240)", fontSize: "1.1rem", fontWeight: "regular" }}>
           {feature.description}
         </Typography>
         <Box mt={3}>
-          <a href="#" style={{ color: "blue", textDecoration: "none", fontWeight: "bold" }}>
+          <a href="#" style={{ color: "white", textDecoration: "none", fontWeight: "bold" }}>
             Learn More
           </a>
         </Box>

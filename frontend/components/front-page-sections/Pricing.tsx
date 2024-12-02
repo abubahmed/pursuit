@@ -42,7 +42,7 @@ const Pricing = () => {
   return (
     <Container maxWidth="lg">
       <Box
-        mb={4}
+        mb={5}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -51,7 +51,7 @@ const Pricing = () => {
         }}>
         <Typography
           variant="h4"
-          mb={1.5}
+          mb={2}
           sx={{
             color: "black",
             fontWeight: "bold",
@@ -90,7 +90,7 @@ const Pricing = () => {
         )}
       </Grid>
       <Box
-        mt={6}
+        mt={5}
         sx={{
           display: "flex",
           flexDirection: "column",

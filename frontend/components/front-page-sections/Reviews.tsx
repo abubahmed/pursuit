@@ -73,7 +73,7 @@ const Reviews = () => {
   return (
     <Container maxWidth="lg">
       <Box
-        mb={4}
+        mb={5}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -100,14 +100,6 @@ const Reviews = () => {
           <ReviewCard key={index} reviewObject={reviewObject} />
         ))}
       </Grid>
-      <Box
-        mt={6}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-        }}></Box>
     </Container>
   );
 };

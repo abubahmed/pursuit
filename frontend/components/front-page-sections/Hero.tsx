@@ -33,11 +33,10 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1.1rem",
+              fontSize: "1.2rem",
             }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ratione ducimus,
-            labore quo laudantium aperiam. Ipsum explicabo nisi, sed voluptates natus commodi cumque
-            nihil tempora.
+            labore quo laudantium aperiam. Ipsum explicabo nisi sed.
           </Typography>
           <Box>
             <Button
@@ -54,7 +53,7 @@ const Hero = () => {
                   backgroundColor: "rgb(60, 60, 60)",
                   boxShadow: "none",
                 },
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 boxShadow: "none",
                 fontWeight: "regular",
                 mr: 3,
@@ -71,7 +70,7 @@ const Hero = () => {
                 border: "1px solid black",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 fontWeight: "regular",
                 boxShadow: "none",
                 "&:hover": {

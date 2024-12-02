@@ -40,7 +40,7 @@ const Features = () => {
   return (
     <Container>
       <Box
-        mb={4}
+        mb={5}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -49,7 +49,7 @@ const Features = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "black",
+            color: "rgb(240,240,240)",
             fontWeight: "bold",
           }}>
           Lorem ipsum dolor sit.

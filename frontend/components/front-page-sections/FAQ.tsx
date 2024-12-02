@@ -62,7 +62,7 @@ const FAQ = () => {
       question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
-    },
+    }
   ];
 
   const [expanded, setExpanded] = useState<string | boolean>(false);
@@ -73,7 +73,7 @@ const FAQ = () => {
   return (
     <Container maxWidth="lg">
       <Box
-        mb={4}
+        mb={5}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -83,7 +83,7 @@ const FAQ = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "black",
+            color: "rgb(230,230,230)",
             fontWeight: "bold",
           }}>
           Lorem ipsum dolor sit.
@@ -93,7 +93,7 @@ const FAQ = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          gap: 6,
+          gap: 8,
         }}>
         <Box>
           {FAQs.map((faq, index) => {
@@ -156,16 +156,17 @@ const AccordianPanel = ({
           display: "none",
         },
         boxShadow: 0,
-        borderTop: top ? "1px solid #D0D0D0" : "none",
         borderRadius: 0,
+        backgroundColor: "transparent",
+        borderTop: top ? "1px solid rgb(240,240,240)" : "none",
       }}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon sx={{ color: "rgb(240,240,240)" }} />}
         aria-controls="panel1a-content"
         id="panel1a-header">
         <Typography
           sx={{
-            color: "black",
+            color: "rgb(240,240,240)",
             fontSize: "1.1rem",
             fontWeight: "regular",
           }}>
@@ -175,7 +176,7 @@ const AccordianPanel = ({
       <AccordionDetails>
         <Typography
           sx={{
-            color: "rgb(100, 100, 100)",
+            color: "rgb(240,240,240)",
             fontSize: "1.1rem",
             fontWeight: "regular",
           }}>

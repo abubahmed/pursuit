@@ -7,7 +7,8 @@ const Footer = () => {
     <Container
       maxWidth="lg"
       sx={{
-        mb: 4,
+        py: 4,
+        pt: 8,
       }}>
       <Box
         sx={{
@@ -24,7 +25,7 @@ const Footer = () => {
           <Typography
             variant="h5"
             sx={{
-              color: "black",
+              color: "rgb(240,240,240)",
               fontWeight: "bold",
             }}>
             Lorem ipsum dolor sit
@@ -46,7 +47,7 @@ const Footer = () => {
                   backgroundColor: "white",
                   borderRadius: "5px",
                   padding: "5px 15px",
-                  color: "black",
+                  color: "rgb(240,240,240)",
                   fontSize: "1rem",
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
@@ -81,21 +82,29 @@ const Footer = () => {
             flexDirection: "column",
             gap: "10px",
           }}>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.1rem" }}>
+          <Typography
+            variant="h6"
+            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
+          {[
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+          ].map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              sx={{
+                color: "rgb(240,240,240)",
+                fontWeight: "regular",
+                fontSize: "1rem",
+                textDecoration: "none",
+              }}>
+              {link.text}
+            </Link>
+          ))}
         </Box>
         <Box
           sx={{
@@ -103,21 +112,29 @@ const Footer = () => {
             flexDirection: "column",
             gap: "10px",
           }}>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.1rem" }}>
+          <Typography
+            variant="h6"
+            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
+          {[
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+          ].map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              sx={{
+                color: "rgb(240,240,240)",
+                fontWeight: "regular",
+                fontSize: "1rem",
+                textDecoration: "none",
+              }}>
+              {link.text}
+            </Link>
+          ))}
         </Box>
         <Box
           sx={{
@@ -125,21 +142,29 @@ const Footer = () => {
             flexDirection: "column",
             gap: "10px",
           }}>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.1rem" }}>
+          <Typography
+            variant="h6"
+            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
-            Dolor sit
-          </Link>
+          {[
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+            { text: "Dolor sit", href: "#" },
+          ].map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              sx={{
+                color: "rgb(240,240,240)",
+                fontWeight: "regular",
+                fontSize: "1rem",
+                textDecoration: "none",
+              }}>
+              {link.text}
+            </Link>
+          ))}
         </Box>
         <Box
           sx={{
@@ -147,13 +172,29 @@ const Footer = () => {
             flexDirection: "column",
             gap: "10px",
           }}>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.1rem" }}>
+          <Typography
+            variant="h6"
+            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
+          <Link
+            href="#"
+            sx={{
+              color: "rgb(240,240,240)",
+              fontWeight: "regular",
+              fontSize: "1rem",
+              textDecoration: "none",
+            }}>
             email@email.com
           </Link>
-          <Link href="#" sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
+          <Link
+            href="#"
+            sx={{
+              color: "rgb(240,240,240)",
+              fontWeight: "regular",
+              fontSize: "1rem",
+              textDecoration: "none",
+            }}>
             1-800-123-4567
           </Link>
           <Box
@@ -162,26 +203,33 @@ const Footer = () => {
               gap: "10px",
               justifyContent: "space-between",
             }}>
-            <FaFacebook color="black" size="1.1rem" />
-            <FaTwitter color="black" size="1.1rem" />
-            <FaInstagram color="black" size="1.1rem" />
-            <FaYoutube color="black" size="1.1rem" />
+            <FaFacebook color="rgb(240,240,240)" size="1.1rem" />
+            <FaTwitter color="rgb(240,240,240)" size="1.1rem" />
+            <FaInstagram color="rgb(240,240,240)" size="1.1rem" />
+            <FaYoutube color="rgb(240,240,240)" size="1.1rem" />
           </Box>
         </Box>
       </Box>
       <Box
         sx={{
           mt: 6,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          px: "15%",
         }}>
-        <Typography
-          sx={{
-            color: "black",
-            fontWeight: "regular",
-            fontSize: "1rem",
-            textAlign: "center",
-          }}>
-          © 2024 Copyright. All Rights Reserved.
-        </Typography>
+        {["© 2024 Copyright. All Rights Reserved.", "Privacy Policy", "Terms of Service"].map((text, index) => (
+          <Typography
+            key={index}
+            sx={{
+              color: "rgb(240,240,240)",
+              fontWeight: "regular",
+              fontSize: "1rem",
+              textAlign: "center",
+            }}>
+            {text}
+          </Typography>
+        ))}
       </Box>
     </Container>
   );

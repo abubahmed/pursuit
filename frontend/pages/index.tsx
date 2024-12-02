@@ -33,7 +33,7 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          my: 16,
+          py: 16,
         }}>
         <Hero />
       </Box>
@@ -43,7 +43,8 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          my: 12,
+          py: 12,
+          backgroundColor: "rgb(2, 50, 34)",
         }}>
         <Features />
       </Box>
@@ -53,17 +54,7 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          my: 12,
-        }}>
-        <FAQ />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          my: 12,
+          py: 12,
         }}>
         <Pricing />
       </Box>
@@ -73,12 +64,27 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          my: 12,
-          mb: 8,
+          py: 12,
+          backgroundColor: "rgb(2, 50, 34)",
+        }}>
+        <FAQ />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          py: 12,
         }}>
         <Reviews />
       </Box>
-      <Footer />
+      <Box
+        sx={{
+          backgroundColor: "rgb(2, 50, 34)",
+        }}>
+        <Footer />
+      </Box>
     </div>
   );
 
