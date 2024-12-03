@@ -25,7 +25,7 @@ const Hero = () => {
               color: "black",
               fontWeight: "bold",
             }}>
-            Lorem, ipsum dolor sit amet adipisicing elit lorem.
+            Lorem, ipsum dolor sit amet adipisicing.
           </Typography>
           <Typography
             variant="body1"
@@ -88,7 +88,7 @@ const Hero = () => {
             borderRadius: "30px",
           }}>
           <img
-            src="https://placehold.co/1400x1100"
+            src="https://placehold.co/1600x1100"
             alt="Hero Image"
             style={{ width: "100%", height: "auto", borderRadius: "40px" }}
           />

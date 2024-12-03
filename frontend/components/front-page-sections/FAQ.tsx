@@ -53,16 +53,6 @@ const FAQ = () => {
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
     },
-    {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
-    },
-    {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
-    }
   ];
 
   const [expanded, setExpanded] = useState<string | boolean>(false);

@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function Navbar() {
   return (
@@ -8,7 +9,6 @@ export default function Navbar() {
         sx={{
           position: "static",
           backgroundColor: "white",
-          py: 1,
           boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.05)",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -30,9 +30,12 @@ export default function Navbar() {
                     textTransform: "none",
                     fontWeight: "medium",
                     fontSize: "1.05rem",
-                    width: "90px",
+                    width: "100px",
+                    justifyContent: "center",
+                    gap: "5px",
                   }}>
                   {text}
+                  <ExpandMoreIcon />
                 </Button>
               ))}
             </Box>

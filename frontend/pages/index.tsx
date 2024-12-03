@@ -33,7 +33,7 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          py: 16,
+          py: 20,
         }}>
         <Hero />
       </Box>
