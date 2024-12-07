@@ -53,6 +53,16 @@ const FAQ = () => {
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
     },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+    },
+    {
+      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+    },
   ];
 
   const [expanded, setExpanded] = useState<string | boolean>(false);
@@ -63,7 +73,7 @@ const FAQ = () => {
   return (
     <Container maxWidth="lg">
       <Box
-        mb={5}
+        mb={3}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -73,7 +83,7 @@ const FAQ = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "rgb(230,230,230)",
+            color: "black",
             fontWeight: "bold",
           }}>
           Lorem ipsum dolor sit.
@@ -83,6 +93,7 @@ const FAQ = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
+          justifyContent: "center",
           gap: 8,
         }}>
         <Box>
@@ -118,6 +129,33 @@ const FAQ = () => {
           })}
         </Box>
       </Box>
+      <Box
+        mt={4}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+        }}>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "black",
+            fontSize: "1.1rem",
+            fontWeight: "regular",
+          }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit? Exercitationem, officiis at{" "}
+          <a href="#">
+            <span
+              style={{
+                color: "blue",
+                fontWeight: "bold",
+              }}>
+              email@email.com
+            </span>
+          </a>
+        </Typography>
+      </Box>
     </Container>
   );
 };
@@ -141,32 +179,40 @@ const AccordianPanel = ({
       onChange={onChange}
       expanded={expanded === `panel${index}` ? true : false}
       sx={{
-        py: "20px",
+        py: "15px",
         "&:before": {
           display: "none",
         },
+        px: 0,
         boxShadow: 0,
         borderRadius: 0,
         backgroundColor: "transparent",
-        borderTop: top ? "1px solid rgb(240,240,240)" : "none",
+        borderTop: top ? "1px solid gray" : "none",
+        width: "500px",
       }}>
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon sx={{ color: "rgb(240,240,240)" }} />}
+        sx={{
+          px: 0,
+        }}
+        expandIcon={<ExpandMoreIcon sx={{ color: "black" }} />}
         aria-controls="panel1a-content"
         id="panel1a-header">
         <Typography
           sx={{
-            color: "rgb(240,240,240)",
+            color: "black",
             fontSize: "1.1rem",
-            fontWeight: "regular",
+            fontWeight: "medium",
           }}>
           {faq.question}
         </Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails
+        sx={{
+          px: 0,
+        }}>
         <Typography
           sx={{
-            color: "rgb(240,240,240)",
+            color: "black",
             fontSize: "1.1rem",
             fontWeight: "regular",
           }}>

@@ -88,7 +88,7 @@ const Hero = () => {
             borderRadius: "30px",
           }}>
           <img
-            src="https://placehold.co/1600x1100"
+            src="https://placehold.co/1500x1100"
             alt="Hero Image"
             style={{ width: "100%", height: "auto", borderRadius: "40px" }}
           />

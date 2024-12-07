@@ -28,7 +28,7 @@ const PricingCard = ({
             color: "black",
             fontWeight: "bold",
             textAlign: "left",
-            fontSize: "1.4rem",
+            fontSize: "1.5rem",
           }}>
           {plan.level}
         </Typography>

@@ -9,7 +9,7 @@ export default function Navbar() {
         sx={{
           position: "static",
           backgroundColor: "white",
-          boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.05)",
+          boxShadow: "none",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.3rem" }}>

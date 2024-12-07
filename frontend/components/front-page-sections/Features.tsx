@@ -49,7 +49,7 @@ const Features = () => {
         <Typography
           variant="h4"
           sx={{
-            color: "rgb(240,240,240)",
+            color: "black",
             fontWeight: "bold",
           }}>
           Lorem ipsum dolor sit.

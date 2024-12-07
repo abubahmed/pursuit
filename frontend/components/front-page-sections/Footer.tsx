@@ -25,7 +25,7 @@ const Footer = () => {
           <Typography
             variant="h5"
             sx={{
-              color: "rgb(240,240,240)",
+              color: "white",
               fontWeight: "bold",
             }}>
             Lorem ipsum dolor sit
@@ -40,30 +40,41 @@ const Footer = () => {
             }}>
             <div className="TextField-without-border-radius">
               <TextField
-                placeholder="Enter your email"
-                variant="outlined"
-                size="small"
-                sx={{
-                  backgroundColor: "white",
-                  borderRadius: "5px",
-                  padding: "5px 15px",
-                  color: "rgb(240,240,240)",
-                  fontSize: "1rem",
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                  p: 0,
-                }}
+              placeholder="Enter your email"
+              variant="outlined"
+              size="small"
+              sx={{
+                backgroundColor: "white",
+                borderRadius: "5px",
+                padding: "5px 15px",
+                color: "white",
+                fontSize: "1rem",
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+                p: 0,
+                "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "none",
+                },
+                "&:hover fieldset": {
+                  border: "none",
+                },
+                "&.Mui-focused fieldset": {
+                  border: "none",
+                },
+                },
+              }}
               />
             </div>
             <Button
               sx={{
-                backgroundColor: "black",
+                backgroundColor: "rgb(40,40,40)",
                 color: "white",
                 textTransform: "none",
                 padding: "5px 15px",
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                border: "1px solid black",
+                border: "1px solid rgb(40,40,40)",
                 "&:hover": {
                   backgroundColor: "rgb(60, 60, 60)",
                   boxShadow: "none",
@@ -84,7 +95,7 @@ const Footer = () => {
           }}>
           <Typography
             variant="h6"
-            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
+            sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
           {[
@@ -97,7 +108,7 @@ const Footer = () => {
               key={index}
               href={link.href}
               sx={{
-                color: "rgb(240,240,240)",
+                color: "white",
                 fontWeight: "regular",
                 fontSize: "1rem",
                 textDecoration: "none",
@@ -114,7 +125,7 @@ const Footer = () => {
           }}>
           <Typography
             variant="h6"
-            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
+            sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
           {[
@@ -127,7 +138,7 @@ const Footer = () => {
               key={index}
               href={link.href}
               sx={{
-                color: "rgb(240,240,240)",
+                color: "white",
                 fontWeight: "regular",
                 fontSize: "1rem",
                 textDecoration: "none",
@@ -144,7 +155,7 @@ const Footer = () => {
           }}>
           <Typography
             variant="h6"
-            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
+            sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
           {[
@@ -157,7 +168,7 @@ const Footer = () => {
               key={index}
               href={link.href}
               sx={{
-                color: "rgb(240,240,240)",
+                color: "white",
                 fontWeight: "regular",
                 fontSize: "1rem",
                 textDecoration: "none",
@@ -174,13 +185,13 @@ const Footer = () => {
           }}>
           <Typography
             variant="h6"
-            sx={{ color: "rgb(240,240,240)", fontWeight: "bold", fontSize: "1.1rem" }}>
+            sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
             Lorem Ipsum
           </Typography>
           <Link
             href="#"
             sx={{
-              color: "rgb(240,240,240)",
+              color: "white",
               fontWeight: "regular",
               fontSize: "1rem",
               textDecoration: "none",
@@ -190,7 +201,7 @@ const Footer = () => {
           <Link
             href="#"
             sx={{
-              color: "rgb(240,240,240)",
+              color: "white",
               fontWeight: "regular",
               fontSize: "1rem",
               textDecoration: "none",
@@ -203,16 +214,16 @@ const Footer = () => {
               gap: "10px",
               justifyContent: "space-between",
             }}>
-            <FaFacebook color="rgb(240,240,240)" size="1.1rem" />
-            <FaTwitter color="rgb(240,240,240)" size="1.1rem" />
-            <FaInstagram color="rgb(240,240,240)" size="1.1rem" />
-            <FaYoutube color="rgb(240,240,240)" size="1.1rem" />
+            <FaFacebook color="white" size="1.1rem" />
+            <FaTwitter color="white" size="1.1rem" />
+            <FaInstagram color="white" size="1.1rem" />
+            <FaYoutube color="white" size="1.1rem" />
           </Box>
         </Box>
       </Box>
       <Box
         sx={{
-          mt: 6,
+          mt: 5,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
@@ -222,7 +233,7 @@ const Footer = () => {
           <Typography
             key={index}
             sx={{
-              color: "rgb(240,240,240)",
+              color: "white",
               fontWeight: "regular",
               fontSize: "1rem",
               textAlign: "center",
