@@ -1,6 +1,8 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import logoImage from "@/public/logos/Pursuit_transparent-.png";
+import Image from "next/image";
 
 export default function Navbar() {
   return (
@@ -12,9 +14,10 @@ export default function Navbar() {
           boxShadow: "none",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.3rem" }}>
+          {/* <Typography variant="h6" sx={{ color: "black", fontWeight: "bold", fontSize: "1.3rem" }}>
             Logo Here
-          </Typography>
+          </Typography> */}
+          <Image src={logoImage} alt="logo" width={130} height={40} />
           <Box
             sx={{
               display: "flex",

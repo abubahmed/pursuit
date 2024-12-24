@@ -1,11 +1,16 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
+import { FaCircleCheck } from "react-icons/fa6";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import Image from "next/image";
+import heroImage from "@/public/images/people-working-as-team-company (1).jpg";
 
 const Hero = () => {
   return (
     <Container
       maxWidth="lg"
       sx={{
+        py: 16,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -29,16 +34,79 @@ const Hero = () => {
           </Typography>
           <Typography
             variant="body1"
-            mb={5}
+            mb={4}
             sx={{
               color: "black",
               fontWeight: "regular",
               fontSize: "1.2rem",
             }}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ratione ducimus,
-            labore quo laudantium aperiam. Ipsum explicabo nisi sed.
+            labore quo laudantium aperiam.
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "14px",
+              my: 1.5,
+            }}>
+            <FaCircleCheck size="1rem" color="black" />
+            <Typography
+              variant="body1"
+              sx={{
+                color: "black",
+                fontWeight: "regular",
+                fontSize: "1.1rem",
+                textTransform: "uppercase",
+              }}>
+              Lorem ipsum dolor sit amet consectetur elit
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "14px",
+              my: 1.5,
+            }}>
+            <FaCircleCheck size="1rem" color="black" />
+            <Typography
+              variant="body1"
+              sx={{
+                color: "black",
+                fontWeight: "regular",
+                fontSize: "1.1rem",
+                textTransform: "uppercase",
+              }}>
+              Sit amet consectetur elit lorem ipsum dolor
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              gap: "14px",
+              my: 1.5,
+            }}>
+            <FaCircleCheck size="1rem" color="black" />
+            <Typography
+              variant="body1"
+              sx={{
+                color: "black",
+                fontWeight: "regular",
+                fontSize: "1.1rem",
+                textTransform: "uppercase",
+              }}>
+              Lorem dolor sit amet consectetur dolor elit
+            </Typography>
+          </Box>
+          <Box mt={5}>
             <Button
               variant="contained"
               color="primary"
@@ -87,10 +155,10 @@ const Hero = () => {
           sx={{
             borderRadius: "30px",
           }}>
-          <img
-            src="https://placehold.co/1500x1100"
+          <Image
+            src={heroImage}
             alt="Hero Image"
-            style={{ width: "100%", height: "auto", borderRadius: "40px" }}
+            style={{ height: "100%", width: "auto", borderRadius: "50px" }}
           />
         </Box>
       </Box>

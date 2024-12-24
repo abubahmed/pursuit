@@ -71,7 +71,11 @@ const FAQ = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg"
+      sx={{
+        py: 6,
+      }}>
       <Box
         mb={3}
         sx={{
@@ -179,7 +183,7 @@ const AccordianPanel = ({
       onChange={onChange}
       expanded={expanded === `panel${index}` ? true : false}
       sx={{
-        py: "15px",
+        py: "16px",
         "&:before": {
           display: "none",
         },
@@ -201,7 +205,7 @@ const AccordianPanel = ({
           sx={{
             color: "black",
             fontSize: "1.1rem",
-            fontWeight: "medium",
+            fontWeight: "regular",
           }}>
           {faq.question}
         </Typography>
@@ -214,7 +218,7 @@ const AccordianPanel = ({
           sx={{
             color: "black",
             fontSize: "1.1rem",
-            fontWeight: "regular",
+            fontWeight: "light",
           }}>
           {faq.answer}
         </Typography>

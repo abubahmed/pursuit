@@ -71,7 +71,10 @@ const Reviews = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{
+      py: 6,
+      pb: 10
+    }}>
       <Box
         mb={5}
         sx={{
