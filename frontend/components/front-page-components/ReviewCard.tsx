@@ -21,73 +21,80 @@ const ReviewCard = ({
           padding: "30px",
           borderRadius: "15px",
           backgroundColor: "rgb(242, 242, 242)",
-        }}>
-        <Box
-          sx={{
-        display: "flex",
-          }}>
-          {[...Array(reviewObject.rating)].map((_, i) => (
-        <FaStar key={i} color="gold" size="1rem" />
-          ))}
-        </Box>
-        <Typography
-          variant="body1"
-          sx={{
-        color: "black",
-        fontWeight: "regular",
-        fontSize: "1rem",
-        mt: 2.5,
-          }}>
-          {reviewObject.review}
-        </Typography>
-        <Box
-          sx={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        mt: 4,
-          }}>
-          <Box
-        sx={{
+          height: "320px",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "space-between",
         }}>
-        <img
-          src={reviewObject.image}
-          alt="reviewer"
-          style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-          }}
-        />
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+            }}>
+            {[...Array(reviewObject.rating)].map((_, i) => (
+              <FaStar key={i} color="gold" size="1rem" />
+            ))}
           </Box>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "black",
+              fontWeight: "regular",
+              fontSize: "1rem",
+              mt: 2.5,
+            }}>
+            {reviewObject.review}
+          </Typography>
+        </Box>
+        <Box>
           <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-        }}>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "black",
-            fontWeight: "bold",
-            fontSize: "1rem",
-            textAlign: "right",
-          }}>
-          {reviewObject.name}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "black",
-            fontWeight: "regular",
-            fontSize: "1rem",
-          }}>
-          {reviewObject.title}
-        </Typography>
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}>
+              <img
+                src={reviewObject.image}
+                alt="reviewer"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                }}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "black",
+                  fontWeight: "bold",
+                  fontSize: "1rem",
+                  textAlign: "right",
+                }}>
+                {reviewObject.name}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "black",
+                  fontWeight: "regular",
+                  fontSize: "1rem",
+                }}>
+                {reviewObject.title}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Paper>

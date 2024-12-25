@@ -24,8 +24,8 @@ export default function Navbar() {
               gap: "50px",
               justifyContent: "center",
             }}>
-            <Box sx={{ display: "flex", gap: "15px", justifyContent: "center" }}>
-              {["Lorem", "Dolor", "Ipsum", "Commodi"].map((text, index) => (
+            <Box sx={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+              {["Features", "Pricing", "Questions", "Reviews"].map((text, index) => (
                 <Button
                   key={index}
                   sx={{
@@ -48,7 +48,7 @@ export default function Navbar() {
                   color: "black",
                   textTransform: "none",
                   border: "1px solid black",
-                  borderRadius: "20px",
+                  borderRadius: "10px",
                   padding: "5px 15px",
                   boxShadow: "none",
                   "&:hover": {
@@ -65,7 +65,7 @@ export default function Navbar() {
                   backgroundColor: "black",
                   color: "white",
                   textTransform: "none",
-                  borderRadius: "20px",
+                  borderRadius: "10px",
                   padding: "5px 15px",
                   "&:hover": {
                     backgroundColor: "rgb(60, 60, 60)",

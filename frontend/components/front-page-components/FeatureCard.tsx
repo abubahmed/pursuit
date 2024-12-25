@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Grid, Box, Typography, Paper } from "@mui/material";
-import { FaChartArea } from "react-icons/fa";
 
 const FeatureCard = ({
   feature,
@@ -8,6 +7,7 @@ const FeatureCard = ({
   feature: {
     title: string;
     description: string;
+    Icon: React.ReactNode | any;
   };
 }) => {
   return (
@@ -18,7 +18,7 @@ const FeatureCard = ({
           padding: "50px",
           borderRadius: "15px",
         }}>
-        <FaChartArea color="black" size="2.5rem" />
+        <feature.Icon color="black" size="2rem" />
         <Typography
           variant="h6"
           mb={1}

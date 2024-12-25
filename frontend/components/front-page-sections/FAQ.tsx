@@ -14,54 +14,64 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const FAQ = () => {
   const FAQs = [
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "What is Pursuit?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Pursuit is a job application tracker software that helps you manage and organize your job applications in one place.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "How do I create an account on Pursuit?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "To create an account on Pursuit, click on the 'Sign Up' button on the homepage and fill in the required details. You will receive a confirmation email to verify your account.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "Can I track multiple job applications at once?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Yes, Pursuit allows you to track multiple job applications simultaneously. You can add details for each application and update their status as you progress.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "Is Pursuit free to use?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Pursuit offers both free and premium plans. The free plan includes basic features, while the premium plan provides additional functionalities such as advanced analytics and priority support.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "How do I update the status of my job applications?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "To update the status of your job applications, go to your dashboard, select the application you want to update, and choose the new status from the dropdown menu.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "Can I set reminders for important dates?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Yes, Pursuit allows you to set reminders for important dates such as interview schedules and follow-up deadlines. You can receive notifications via email or within the app.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "How secure is my data on Pursuit?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Pursuit takes data security seriously. We use industry-standard encryption and security measures to protect your personal information and ensure your data is safe.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "Can I export my job application data?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Yes, you can export your job application data in various formats such as CSV or PDF. This feature is available in the premium plan.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "How do I contact Pursuit support?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "You can contact Pursuit support by clicking on the 'Support' link in the app or by sending an email to support@pursuit.com. Our support team is available 24/7 to assist you.",
     },
     {
-      question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
+      question: "Can I customize the job application fields?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
+        "Yes, Pursuit allows you to customize the job application fields to suit your needs. You can add, remove, or modify fields to track the information that is most important to you.",
+    },
+    {
+      question: "What type of analytics does Pursuit provide?",
+      answer:
+        "Pursuit provides detailed analytics on your job application progress, including the number of applications submitted, response rates, and interview success rates. You can use this data to improve your job search strategy.",
+    },
+    {
+      question: "What job characteristics does Pursuit track?",
+      answer:
+        "Pursuit tracks various job characteristics such as job title, company name, job location, salary range, application deadline, and job description. You can view these details for each application in your dashboard.",
     },
   ];
 
@@ -77,7 +87,7 @@ const FAQ = () => {
         py: 6,
       }}>
       <Box
-        mb={3}
+        mb={5}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -90,7 +100,7 @@ const FAQ = () => {
             color: "black",
             fontWeight: "bold",
           }}>
-          Lorem ipsum dolor sit.
+          Frequently Asked Questions
         </Typography>
       </Box>
       <Box
@@ -102,7 +112,7 @@ const FAQ = () => {
         }}>
         <Box>
           {FAQs.map((faq, index) => {
-            if (index % 2 !== 0) {
+            if (index % 2 === 0) {
               return (
                 <AccordianPanel
                   key={index}
@@ -118,7 +128,7 @@ const FAQ = () => {
         </Box>
         <Box>
           {FAQs.map((faq, index) => {
-            if (index % 2 === 0) {
+            if (index % 2 !== 0) {
               return (
                 <AccordianPanel
                   key={index}
@@ -140,26 +150,7 @@ const FAQ = () => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-        }}>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "black",
-            fontSize: "1.1rem",
-            fontWeight: "regular",
-          }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit? Exercitationem, officiis at{" "}
-          <a href="#">
-            <span
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-              }}>
-              email@email.com
-            </span>
-          </a>
-        </Typography>
-      </Box>
+        }}></Box>
     </Container>
   );
 };

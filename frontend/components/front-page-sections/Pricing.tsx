@@ -7,35 +7,38 @@ const Pricing = () => {
   const pricing: any = [
     {
       level: "Free",
-      description: "Lorem ipsum dolor sit amet lorem adipisicing elit. Exercitationem officiis.",
+      description:
+        "Free plan for early-careerists and casual job searchers to get started with job applications.",
       price: "$0",
       features: [
-        "Lorem ipsum dolor sit amet",
-        "Lorem adipiscing elit",
-        "Sed do eiusmod tempor",
-        "Ut enim ad minim veniam",
+        "10 job applications/week",
+        "1 job season",
+        "Limited analytics",
+        "Limited job characteristics",
       ],
     },
     {
       level: "Basic",
-      description: "Lorem ipsum dolor sit amet lorem adipisicing elit. Exercitationem officiis.",
-      price: "$30",
+      description:
+        "Basic plan for active job seekers to keep track of multiple, concurrent job applications.",
+      price: "$10",
       features: [
-        "Lorem ipsum dolor sit amet",
-        "Lorem adipiscing elit",
-        "Sed do eiusmod tempor",
-        "Ut enim ad minim veniam",
+        "100 job applications/week",
+        "Unlimited job seasons",
+        "Full analytics",
+        "Full job characteristics",
       ],
     },
     {
       level: "Premium",
-      description: "Lorem ipsum dolor sit amet lorem adipisicing elit. Exercitationem, officiis.",
-      price: "$10",
+      description:
+        "Premium plan for active job seekers who want to get the most out of their job search.",
+      price: "$30",
       features: [
-        "Lorem ipsum dolor sit amet",
-        "Lorem adipiscing elit",
-        "Sed do eiusmod tempor",
-        "Ut enim ad minim veniam",
+        "Unlimited job applications",
+        "Unlimited job seasons",
+        "Full analytics",
+        "Full job characteristics",
       ],
     },
   ];
@@ -55,21 +58,11 @@ const Pricing = () => {
         }}>
         <Typography
           variant="h4"
-          mb={2}
           sx={{
             color: "black",
             fontWeight: "bold",
           }}>
-          Lorem ipsum dolor sit.
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "black",
-            fontSize: "1.1rem",
-            fontWeight: "regular",
-          }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, officiis.
+          Our Pricing Plans
         </Typography>
       </Box>
       <Grid
@@ -101,24 +94,6 @@ const Pricing = () => {
           alignItems: "center",
           textAlign: "center",
         }}>
-        <Typography
-          variant="body1"
-          sx={{
-            color: "black",
-            fontSize: "1.1rem",
-            fontWeight: "regular",
-          }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit? Exercitationem, officiis at{" "}
-          <a href="#">
-            <span
-              style={{
-                color: "blue",
-                fontWeight: "bold",
-              }}>
-              email@email.com
-            </span>
-          </a>
-        </Typography>
       </Box>
     </Container>
   );

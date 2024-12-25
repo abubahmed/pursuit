@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, Typography, Grid, Link, TextField, Button } from "@mui/material";
+import { Container, Box, Typography, Link, TextField, Button } from "@mui/material";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
@@ -32,8 +32,7 @@ const Footer = () => {
                 color: "white",
                 fontWeight: "bold",
               }}>
-              Lorem ipsum dolor sit
-              <br /> lorem dolor.
+              Subscribe to our newsletter
             </Typography>
             <Box
               sx={{
@@ -100,13 +99,13 @@ const Footer = () => {
             <Typography
               variant="h6"
               sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Lorem Ipsum
+              Company
             </Typography>
             {[
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
+              { text: "About Us", href: "#" },
+              { text: "Careers", href: "#" },
+              { text: "Blog", href: "#" },
+              { text: "Contact Us", href: "#" },
             ].map((link, index) => (
               <Link
                 key={index}
@@ -130,13 +129,13 @@ const Footer = () => {
             <Typography
               variant="h6"
               sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Lorem Ipsum
+              Support
             </Typography>
             {[
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
+              { text: "Help Center", href: "#" },
+              { text: "Safety Center", href: "#" },
+              { text: "Community Guidelines", href: "#" },
+              { text: "Accessibility", href: "#" },
             ].map((link, index) => (
               <Link
                 key={index}
@@ -160,13 +159,13 @@ const Footer = () => {
             <Typography
               variant="h6"
               sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Lorem Ipsum
+              Legal
             </Typography>
             {[
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
-              { text: "Dolor sit", href: "#" },
+              { text: "Privacy Policy", href: "#" },
+              { text: "Terms of Service", href: "#" },
+              { text: "Cookie Policy", href: "#" },
+              { text: "Security", href: "#" },
             ].map((link, index) => (
               <Link
                 key={index}
@@ -190,7 +189,7 @@ const Footer = () => {
             <Typography
               variant="h6"
               sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Lorem Ipsum
+              Contact Us
             </Typography>
             <Link
               href="#"
@@ -200,7 +199,7 @@ const Footer = () => {
                 fontSize: "1rem",
                 textDecoration: "none",
               }}>
-              email@email.com
+              support@pursuit.com
             </Link>
             <Link
               href="#"
@@ -233,7 +232,7 @@ const Footer = () => {
             justifyContent: "space-around",
             px: "15%",
           }}>
-          {["© 2024 Copyright. All Rights Reserved.", "Privacy Policy", "Terms of Service"].map(
+          {["© 2024 Company Name. All Rights Reserved.", "Privacy Policy", "Terms of Service"].map(
             (text, index) => (
               <Typography
                 key={index}

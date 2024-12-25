@@ -3,14 +3,15 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
-import heroImage from "@/public/images/people-working-as-team-company (1).jpg";
+import heroImage from "@/public/images/people-working-as-team-company (3).jpg";
 
 const Hero = () => {
   return (
     <Container
       maxWidth="lg"
       sx={{
-        py: 16,
+        pt: 20,
+        pb: 16,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -30,7 +31,7 @@ const Hero = () => {
               color: "black",
               fontWeight: "bold",
             }}>
-            Lorem, ipsum dolor sit amet adipisicing.
+            Land Your Dream Job With Us
           </Typography>
           <Typography
             variant="body1"
@@ -40,72 +41,8 @@ const Hero = () => {
               fontWeight: "regular",
               fontSize: "1.2rem",
             }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate ratione ducimus,
-            labore quo laudantium aperiam.
+            Manage every step of your job search with our web scraping and AI-powered tracker. Track jobs, set reminders, and get insights to land your dream job.
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "14px",
-              my: 1.5,
-            }}>
-            <FaCircleCheck size="1rem" color="black" />
-            <Typography
-              variant="body1"
-              sx={{
-                color: "black",
-                fontWeight: "regular",
-                fontSize: "1.1rem",
-                textTransform: "uppercase",
-              }}>
-              Lorem ipsum dolor sit amet consectetur elit
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "14px",
-              my: 1.5,
-            }}>
-            <FaCircleCheck size="1rem" color="black" />
-            <Typography
-              variant="body1"
-              sx={{
-                color: "black",
-                fontWeight: "regular",
-                fontSize: "1.1rem",
-                textTransform: "uppercase",
-              }}>
-              Sit amet consectetur elit lorem ipsum dolor
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "14px",
-              my: 1.5,
-            }}>
-            <FaCircleCheck size="1rem" color="black" />
-            <Typography
-              variant="body1"
-              sx={{
-                color: "black",
-                fontWeight: "regular",
-                fontSize: "1.1rem",
-                textTransform: "uppercase",
-              }}>
-              Lorem dolor sit amet consectetur dolor elit
-            </Typography>
-          </Box>
           <Box mt={5}>
             <Button
               variant="contained"
@@ -115,7 +52,7 @@ const Hero = () => {
                 backgroundColor: "black",
                 color: "white",
                 textTransform: "none",
-                borderRadius: "100px",
+                borderRadius: "10px",
                 padding: "10px 25px",
                 "&:hover": {
                   backgroundColor: "rgb(60, 60, 60)",
@@ -136,7 +73,7 @@ const Hero = () => {
                 color: "black",
                 textTransform: "none",
                 border: "1px solid black",
-                borderRadius: "100px",
+                borderRadius: "10px",
                 padding: "10px 25px",
                 fontSize: "1.1rem",
                 fontWeight: "regular",
