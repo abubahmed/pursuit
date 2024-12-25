@@ -201,7 +201,7 @@ const AccordianPanel = ({
           sx={{
             color: "white",
             fontSize: "1.1rem",
-            fontWeight: "regular",
+            fontWeight: "medium",
           }}>
           {faq.question}
         </Typography>
@@ -214,7 +214,7 @@ const AccordianPanel = ({
           sx={{
             color: "white",
             fontSize: "1.1rem",
-            fontWeight: "light",
+            fontWeight: "regular",
           }}>
           {faq.answer}
         </Typography>

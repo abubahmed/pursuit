@@ -15,10 +15,9 @@ const FeatureCard = ({
       <Paper
         elevation={0}
         sx={{
-          padding: "50px",
-          py: "40px",
-          borderRadius: "15px",
-          backgroundColor: "rgb(20,86,57)"
+          padding: "40px",
+          borderRadius: "10px",
+          backgroundColor: "rgb(20,86,57)",
         }}>
         <feature.Icon color="white" size="2.5rem" />
         <Typography
@@ -28,7 +27,7 @@ const FeatureCard = ({
           sx={{
             color: "white",
             fontWeight: "medium",
-            fontSize: "1.3rem",
+            fontSize: "1.5rem",
           }}>
           {feature.title}
         </Typography>

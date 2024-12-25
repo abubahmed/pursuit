@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
-import heroImage from "@/public/images/people-working-as-team-company (8).jpg";
+import heroImage from "@/public/images/people-working-as-team-company (9).jpg";
 
 const Hero = () => {
   return (
@@ -46,29 +46,19 @@ const Hero = () => {
           <Box mt={6}>
             <Button
               variant="contained"
-              color="primary"
-              size="large"
               sx={{
-                backgroundColor: "black",
+                backgroundColor: "#05472A",
                 color: "white",
                 textTransform: "none",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                "&:hover": {
-                  backgroundColor: "rgb(60, 60, 60)",
-                  boxShadow: "none",
-                },
                 fontSize: "1.1rem",
-                boxShadow: "none",
-                fontWeight: "regular",
                 mr: 3,
               }}>
               Request a Demo
             </Button>
             <Button
               variant="outlined"
-              color="primary"
-              size="large"
               sx={{
                 color: "black",
                 textTransform: "none",
@@ -76,12 +66,6 @@ const Hero = () => {
                 borderRadius: "100px",
                 padding: "10px 25px",
                 fontSize: "1.1rem",
-                fontWeight: "regular",
-                boxShadow: "none",
-                "&:hover": {
-                  backgroundColor: "rgb(240, 240, 240)",
-                  boxShadow: "none",
-                },
               }}>
               Sign Up Now
             </Button>

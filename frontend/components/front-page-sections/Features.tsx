@@ -18,7 +18,7 @@ const Features = () => {
     },
     {
       title: "Priority Job Applications",
-      description: "Mark jobs as high priority to keep track of the jobs you love the most.",
+      description: "Mark certain jobs as high priority to keep track of the jobs you love the most.",
       Icon: FaExclamationCircle,
     },
     {

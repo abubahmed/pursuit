@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Box, Typography, Grid, Button, Paper } from "@mui/material";
 import { FaCheckCircle } from "react-icons/fa";
+import SmallButton from "../general-components/SmallButton";
 
 const PricingCard = ({
   plan,
