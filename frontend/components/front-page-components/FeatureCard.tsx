@@ -15,7 +15,7 @@ const FeatureCard = ({
       <Paper
         elevation={0}
         sx={{
-          padding: "45px",
+          padding: "50px",
           py: "40px",
           borderRadius: "15px",
           backgroundColor: "rgb(20,86,57)"
@@ -24,10 +24,10 @@ const FeatureCard = ({
         <Typography
           variant="h6"
           mb={1}
-          mt={6}
+          mt={8}
           sx={{
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "medium",
             fontSize: "1.3rem",
           }}>
           {feature.title}
@@ -37,11 +37,6 @@ const FeatureCard = ({
           sx={{ color: "white", fontSize: "1.1rem", fontWeight: "regular" }}>
           {feature.description}
         </Typography>
-        <Box mt={1.5}>
-          <a href="#" style={{ color: "white", textDecoration: "none", fontWeight: "bold", fontSize: "1.1rem" }}>
-            Learn More
-          </a>
-        </Box>
       </Paper>
     </Grid>
   );

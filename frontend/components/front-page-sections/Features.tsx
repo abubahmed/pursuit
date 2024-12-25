@@ -28,7 +28,7 @@ const Features = () => {
     },
     {
       title: "See Job Characteristics",
-      description: "See detailed information about the jobs you applied right in the app.",
+      description: "See detailed information about the jobs you applied right in your dashboard.",
       Icon: BsFillInfoSquareFill,
     },
     {
@@ -44,9 +44,10 @@ const Features = () => {
   ];
 
   return (
-    <Box sx={{
-      backgroundColor: "#05472A"
-    }}>
+    <Box
+      sx={{
+        backgroundColor: "#05472A",
+      }}>
       <Container maxWidth="lg" sx={{ py: 10 }}>
         <Box
           mb={5}

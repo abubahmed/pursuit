@@ -93,8 +93,7 @@ const Pricing = () => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-        }}>
-      </Box>
+        }}></Box>
     </Container>
   );
 };

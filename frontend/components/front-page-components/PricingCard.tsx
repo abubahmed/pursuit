@@ -23,10 +23,10 @@ const PricingCard = ({
         }}>
         <Typography
           variant="h6"
-          mb={1.5}
+          mb={2}
           sx={{
             color: "black",
-            fontWeight: "bold",
+            fontWeight: "medium",
             textAlign: "left",
             fontSize: "1.5rem",
           }}>
@@ -97,9 +97,9 @@ const PricingCard = ({
                   display: "flex",
                   alignItems: "center",
                   fontSize: "1.1rem",
-                  gap: 1.5,
+                  gap: 2,
                 }}>
-                <FaCheckCircle /> {feature}
+                <FaCheckCircle size="1rem" /> {feature}
               </Typography>
             );
           })}

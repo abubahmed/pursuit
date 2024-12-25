@@ -31,8 +31,8 @@ export default function Navbar() {
                   sx={{
                     color: "black",
                     textTransform: "none",
-                    fontWeight: "medium",
-                    fontSize: "1.05rem",
+                    fontWeight: "regular",
+                    fontSize: "1rem",
                     width: "100px",
                     justifyContent: "center",
                     gap: "5px",

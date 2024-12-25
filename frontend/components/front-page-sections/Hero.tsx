@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
-import heroImage from "@/public/images/people-working-as-team-company (4).jpg";
+import heroImage from "@/public/images/people-working-as-team-company (8).jpg";
 
 const Hero = () => {
   return (
@@ -25,24 +25,25 @@ const Hero = () => {
           <Typography
             variant="h2"
             component="h1"
-            mb={4}
+            mb={3}
             sx={{
               color: "black",
               fontWeight: "bold",
             }}>
-            Land Your Dream Job With Us
+            We'll Help You Land Your Dream Job
           </Typography>
           <Typography
             variant="body1"
-            mb={4}
+            mb={6}
             sx={{
               color: "black",
               fontWeight: "regular",
               fontSize: "1.2rem",
             }}>
-            Manage every step of your job search with our web scraping and AI-powered tracker. Track jobs, set reminders, and get insights to land your dream job.
+            Manage every step of your job search. Track jobs, set reminders, and get insights to
+            land your dream job.
           </Typography>
-          <Box mt={5}>
+          <Box mt={6}>
             <Button
               variant="contained"
               color="primary"
@@ -51,7 +52,7 @@ const Hero = () => {
                 backgroundColor: "black",
                 color: "white",
                 textTransform: "none",
-                borderRadius: "10px",
+                borderRadius: "100px",
                 padding: "10px 25px",
                 "&:hover": {
                   backgroundColor: "rgb(60, 60, 60)",
@@ -72,7 +73,7 @@ const Hero = () => {
                 color: "black",
                 textTransform: "none",
                 border: "1px solid black",
-                borderRadius: "10px",
+                borderRadius: "100px",
                 padding: "10px 25px",
                 fontSize: "1.1rem",
                 fontWeight: "regular",
