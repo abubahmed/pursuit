@@ -12,7 +12,7 @@ export default function Dashboard() {
       <Box
         sx={{
           flexGrow: 1,
-          backgroundColor: "rgb(240, 248, 255, 0.3)"
+          backgroundColor: "rgb(240, 240, 240, 0.4)"
         }}>
         <Navbar />
       </Box>

@@ -4,6 +4,12 @@ import Image from "next/image";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import logoImage from "@/public/logos/Pursuit_transparent-.png";
 import SmallButton from "../general-components/SmallButton";
+import { MdModeNight } from "react-icons/md";
+import { IoSettings } from "react-icons/io5";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { MdOutlineDarkMode } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiMenuUnfold2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const email = "abuahmed0821@gmail.com";
@@ -21,10 +27,22 @@ const Navbar = () => {
           backgroundColor: "white",
           width: "100%",
           py: "5px",
-          boxShadow: "none",
-          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          px: 2,
+          boxShadow: "2px 0px 3px rgba(0,0,0,0.3)",
         }}>
-        <Toolbar sx={{ justifyContent: "flex-end" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "30px",
+            }}>
+            <RiMenuUnfold2Line color="rgb(0,0,0)" size="1.5rem" />
+            <MdOutlineDarkMode color="rgb(0,0,0)" size="1.5rem" />
+            <IoSettingsOutline color="rgb(0,0,0)" size="1.5rem" />
+            <IoMdNotificationsOutline color="rgb(0,0,0)" size="1.5rem" />
+          </Box>
           <Box
             sx={{
               display: "flex",
