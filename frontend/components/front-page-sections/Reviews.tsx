@@ -106,8 +106,7 @@ const Reviews = () => {
     <Container
       maxWidth="lg"
       sx={{
-        py: 6,
-        pb: 10,
+        py: 10,
       }}>
       <Box
         mb={5}

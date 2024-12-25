@@ -81,77 +81,82 @@ const FAQ = () => {
   };
 
   return (
-    <Container
-      maxWidth="lg"
+    <Box
       sx={{
-        py: 6,
+        backgroundColor: "#05472A",
       }}>
-      <Box
-        mb={5}
+      <Container
+        maxWidth="lg"
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
+          py: 10,
         }}>
-        <Typography
-          variant="h4"
+        <Box
+          mb={4}
           sx={{
-            color: "black",
-            fontWeight: "bold",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
           }}>
-          Frequently Asked Questions
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: 8,
-        }}>
-        <Box>
-          {FAQs.map((faq, index) => {
-            if (index % 2 === 0) {
-              return (
-                <AccordianPanel
-                  key={index}
-                  index={index}
-                  faq={faq}
-                  top={index == 0 || index == 1 ? false : true}
-                  onChange={handleChange(`panel${index}`)}
-                  expanded={expanded}
-                />
-              );
-            }
-          })}
+          <Typography
+            variant="h4"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+            }}>
+            Frequently Asked Questions
+          </Typography>
         </Box>
-        <Box>
-          {FAQs.map((faq, index) => {
-            if (index % 2 !== 0) {
-              return (
-                <AccordianPanel
-                  key={index}
-                  index={index}
-                  faq={faq}
-                  top={index == 0 || index == 1 ? false : true}
-                  onChange={handleChange(`panel${index}`)}
-                  expanded={expanded}
-                />
-              );
-            }
-          })}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 8,
+          }}>
+          <Box>
+            {FAQs.map((faq, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <AccordianPanel
+                    key={index}
+                    index={index}
+                    faq={faq}
+                    top={index == 0 || index == 1 ? false : true}
+                    onChange={handleChange(`panel${index}`)}
+                    expanded={expanded}
+                  />
+                );
+              }
+            })}
+          </Box>
+          <Box>
+            {FAQs.map((faq, index) => {
+              if (index % 2 !== 0) {
+                return (
+                  <AccordianPanel
+                    key={index}
+                    index={index}
+                    faq={faq}
+                    top={index == 0 || index == 1 ? false : true}
+                    onChange={handleChange(`panel${index}`)}
+                    expanded={expanded}
+                  />
+                );
+              }
+            })}
+          </Box>
         </Box>
-      </Box>
-      <Box
-        mt={4}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-        }}></Box>
-    </Container>
+        <Box
+          mt={4}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}></Box>
+      </Container>
+    </Box>
   );
 };
 
@@ -182,19 +187,19 @@ const AccordianPanel = ({
         boxShadow: 0,
         borderRadius: 0,
         backgroundColor: "transparent",
-        borderTop: top ? "1px solid gray" : "none",
+        borderTop: top ? "1px solid white" : "none",
         width: "500px",
       }}>
       <AccordionSummary
         sx={{
           px: 0,
         }}
-        expandIcon={<ExpandMoreIcon sx={{ color: "black" }} />}
+        expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
         aria-controls="panel1a-content"
         id="panel1a-header">
         <Typography
           sx={{
-            color: "black",
+            color: "white",
             fontSize: "1.1rem",
             fontWeight: "regular",
           }}>
@@ -207,7 +212,7 @@ const AccordianPanel = ({
         }}>
         <Typography
           sx={{
-            color: "black",
+            color: "white",
             fontSize: "1.1rem",
             fontWeight: "light",
           }}>

@@ -46,7 +46,7 @@ const Pricing = () => {
     <Container
       maxWidth="lg"
       sx={{
-        py: 6,
+        py: 10,
       }}>
       <Box
         mb={5}

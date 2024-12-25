@@ -3,15 +3,14 @@ import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/materi
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Image from "next/image";
-import heroImage from "@/public/images/people-working-as-team-company (3).jpg";
+import heroImage from "@/public/images/people-working-as-team-company (4).jpg";
 
 const Hero = () => {
   return (
     <Container
       maxWidth="lg"
       sx={{
-        pt: 20,
-        pb: 16,
+        py: 20,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

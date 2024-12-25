@@ -29,7 +29,7 @@ const Features = () => {
     {
       title: "See Job Characteristics",
       description: "See detailed information about the jobs you applied right in the app.",
-      Icon: BsFillInfoSquareFill 
+      Icon: BsFillInfoSquareFill,
     },
     {
       title: "Get Follow-up Reminders",
@@ -44,29 +44,33 @@ const Features = () => {
   ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: 6 }}>
-      <Box
-        mb={5}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}>
-        <Typography
-          variant="h4"
+    <Box sx={{
+      backgroundColor: "#05472A"
+    }}>
+      <Container maxWidth="lg" sx={{ py: 10 }}>
+        <Box
+          mb={5}
           sx={{
-            color: "black",
-            fontWeight: "bold",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}>
-          Our Key Features
-        </Typography>
-      </Box>
-      <Grid container spacing={4}>
-        {features.map((feature, index) => (
-          <FeatureCard key={index} feature={feature} />
-        ))}
-      </Grid>
-    </Container>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+            }}>
+            Our Key Features
+          </Typography>
+        </Box>
+        <Grid container spacing={4}>
+          {features.map((feature, index) => (
+            <FeatureCard key={index} feature={feature} />
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

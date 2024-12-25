@@ -13,18 +13,20 @@ const FeatureCard = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Paper
-        elevation={2}
+        elevation={0}
         sx={{
-          padding: "50px",
+          padding: "45px",
+          py: "40px",
           borderRadius: "15px",
+          backgroundColor: "rgb(20,86,57)"
         }}>
-        <feature.Icon color="black" size="2rem" />
+        <feature.Icon color="white" size="2.5rem" />
         <Typography
           variant="h6"
           mb={1}
-          mt={4}
+          mt={6}
           sx={{
-            color: "black",
+            color: "white",
             fontWeight: "bold",
             fontSize: "1.3rem",
           }}>
@@ -32,11 +34,11 @@ const FeatureCard = ({
         </Typography>
         <Typography
           variant="body1"
-          sx={{ color: "black", fontSize: "1.1rem", fontWeight: "regular" }}>
+          sx={{ color: "white", fontSize: "1.1rem", fontWeight: "regular" }}>
           {feature.description}
         </Typography>
-        <Box mt={2}>
-          <a href="#" style={{ color: "blue", textDecoration: "none", fontWeight: "bold", fontSize: "1.1rem" }}>
+        <Box mt={1.5}>
+          <a href="#" style={{ color: "white", textDecoration: "none", fontWeight: "bold", fontSize: "1.1rem" }}>
             Learn More
           </a>
         </Box>
