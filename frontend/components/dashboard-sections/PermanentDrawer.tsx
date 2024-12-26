@@ -26,7 +26,7 @@ import { FiInbox } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { MdPayment } from "react-icons/md";
 
-const drawerWidth = 240;
+const drawerWidth = 230;
 const seasons = [
   {
     name: "Summer 2025",
@@ -128,7 +128,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -139,18 +139,17 @@ export default function MiniDrawer() {
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
+          sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 1 }}>
           {open && (
             <Box
               sx={{
-                pl: 2,
                 display: "flex",
                 justifyContent: "center",
               }}>
               <Image src={logoImage} alt="logo" width={110} height={40} />
             </Box>
           )}
-          <IconButton
+          {/* <IconButton
             onClick={handleDrawer}
             sx={{
               color: "black",
@@ -160,7 +159,7 @@ export default function MiniDrawer() {
             ) : (
               <ChevronLeftIcon sx={{ fontSize: 25 }} />
             )}
-          </IconButton>
+          </IconButton> */}
         </DrawerHeader>
         {/* <Divider /> */}
         <List sx={{
@@ -190,7 +189,7 @@ export default function MiniDrawer() {
                     },
                     open
                       ? {
-                          mr: 3,
+                          mr: 2.5,
                         }
                       : {
                           mr: "auto",
@@ -245,7 +244,7 @@ export default function MiniDrawer() {
                     },
                     open
                       ? {
-                          mr: 3,
+                          mr: 2.5,
                         }
                       : {
                           mr: "auto",

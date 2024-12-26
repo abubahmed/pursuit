@@ -106,7 +106,7 @@ const Reviews = () => {
     <Container
       maxWidth="lg"
       sx={{
-        py: 10,
+        py: 8,
       }}>
       <Box
         mb={5}
@@ -121,6 +121,7 @@ const Reviews = () => {
           sx={{
             color: "black",
             fontWeight: "bold",
+            fontSize: "1.8rem"
           }}>
           What Our Customers Have to Say
         </Typography>

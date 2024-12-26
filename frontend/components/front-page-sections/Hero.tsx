@@ -8,7 +8,7 @@ const Hero = () => {
     <Container
       maxWidth="lg"
       sx={{
-        py: 20,
+        py: 18,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -36,7 +36,7 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
             }}>
             Manage every step of your job search. Track jobs, set reminders, and get insights to
             land your dream job.

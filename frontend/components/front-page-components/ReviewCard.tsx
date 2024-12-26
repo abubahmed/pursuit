@@ -21,7 +21,7 @@ const ReviewCard = ({
           padding: "30px",
           borderRadius: "15px",
           backgroundColor: "rgb(242, 242, 242)",
-          height: "320px",
+          height: "300px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -40,7 +40,7 @@ const ReviewCard = ({
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1rem",
+              fontSize: "0.95rem",
               mt: 2.5,
             }}>
             {reviewObject.review}

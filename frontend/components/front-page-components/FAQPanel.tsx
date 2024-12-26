@@ -46,8 +46,8 @@ const FAQPanel = ({
         <Typography
           sx={{
             color: "white",
-            fontSize: "1.1rem",
-            fontWeight: "medium",
+            fontSize: "1rem",
+            fontWeight: "regular",
           }}>
           {faq.question}
         </Typography>
@@ -59,8 +59,8 @@ const FAQPanel = ({
         <Typography
           sx={{
             color: "white",
-            fontSize: "1.1rem",
-            fontWeight: "regular",
+            fontSize: "1rem",
+            fontWeight: "light",
           }}>
           {faq.answer}
         </Typography>

@@ -19,7 +19,7 @@ const PricingCard = ({
         elevation={2}
         sx={{
           textAlign: "center",
-          padding: "50px",
+          padding: "40px",
           borderRadius: "15px",
         }}>
         <Typography
@@ -29,11 +29,11 @@ const PricingCard = ({
             color: "black",
             fontWeight: "medium",
             textAlign: "left",
-            fontSize: "1.5rem",
+            fontSize: "1.4rem",
           }}>
           {plan.level}
         </Typography>
-        <Typography sx={{ color: "black", textAlign: "left", fontSize: "1.1rem" }} mb={3}>
+        <Typography sx={{ color: "black", textAlign: "left", fontSize: "1rem" }} mb={3}>
           {plan.description}
         </Typography>
         <Typography
@@ -41,9 +41,9 @@ const PricingCard = ({
           variant="h5"
           mb={3}>
           {plan.price}
-          <span style={{ fontSize: "1.1rem" }}>/mo or</span> $
+          <span style={{ fontSize: "1rem" }}>/mo or</span> $
           {Number(plan.price.replace("$", "")) * 12}
-          <span style={{ fontSize: "1.1rem" }}>/yr</span>
+          <span style={{ fontSize: "1rem" }}>/yr</span>
         </Typography>
         <Button
           sx={{
@@ -74,7 +74,7 @@ const PricingCard = ({
             mx={2}
             sx={{
               color: "black",
-              fontSize: "1.1rem",
+              fontSize: "1rem",
             }}>
             Features
           </Typography>
@@ -97,7 +97,7 @@ const PricingCard = ({
                   color: "black",
                   display: "flex",
                   alignItems: "center",
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                   gap: 2,
                 }}>
                 <FaCheckCircle size="1rem" /> {feature}

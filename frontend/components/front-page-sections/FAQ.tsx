@@ -83,10 +83,10 @@ const FAQ = () => {
       <Container
         maxWidth="lg"
         sx={{
-          py: 10,
+          py: 8,
         }}>
         <Box
-          mb={4}
+          mb={3}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -98,6 +98,7 @@ const FAQ = () => {
             sx={{
               color: "white",
               fontWeight: "bold",
+              fontSize: "1.8rem",
             }}>
             Frequently Asked Questions
           </Typography>
@@ -142,14 +143,6 @@ const FAQ = () => {
             })}
           </Box>
         </Box>
-        <Box
-          mt={4}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-          }}></Box>
       </Container>
     </Box>
   );

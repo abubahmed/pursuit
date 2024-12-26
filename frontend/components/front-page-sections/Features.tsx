@@ -48,19 +48,20 @@ const Features = () => {
       sx={{
         backgroundColor: "#05472A",
       }}>
-      <Container maxWidth="lg" sx={{ py: 10 }}>
+      <Container maxWidth="lg" sx={{ py: 8 }}>
         <Box
-          mb={5}
+          mb={4}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}>
           <Typography
-            variant="h4"
+            variant="h5"
             sx={{
               color: "white",
               fontWeight: "bold",
+              fontSize: "1.8rem",
             }}>
             Our Key Features
           </Typography>

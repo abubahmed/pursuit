@@ -12,7 +12,7 @@ const Footer = () => {
         maxWidth="lg"
         sx={{
           py: 4,
-          pt: 8,
+          pt: 6,
         }}>
         <Box
           sx={{
@@ -51,7 +51,7 @@ const Footer = () => {
                     borderRadius: "5px",
                     padding: "5px 15px",
                     color: "white",
-                    fontSize: "1rem",
+                    fontSize: "0.95rem",
                     borderTopRightRadius: 0,
                     borderBottomRightRadius: 0,
                     p: 0,
@@ -84,7 +84,7 @@ const Footer = () => {
                   },
                   boxShadow: "none",
                   fontWeight: "regular",
-                  fontSize: "1rem",
+                  fontSize: "0.95rem",
                 }}>
                 Sign Up
               </Button>
@@ -138,7 +138,7 @@ const Footer = () => {
                   sx={{
                     color: "white",
                     fontWeight: "regular",
-                    fontSize: "1rem",
+                    fontSize: "0.95rem",
                     textDecoration: "none",
                   }}>
                   {link.text}
@@ -164,7 +164,7 @@ const Footer = () => {
                 sx={{
                   color: "white",
                   fontWeight: "regular",
-                  fontSize: "1rem",
+                  fontSize: "0.95rem",
                   textDecoration: "none",
                 }}>
                 {contact}
@@ -198,7 +198,7 @@ const Footer = () => {
                 sx={{
                   color: "white",
                   fontWeight: "regular",
-                  fontSize: "1rem",
+                  fontSize: "0.95rem",
                   textAlign: "center",
                 }}>
                 {text}

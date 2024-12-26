@@ -5,7 +5,7 @@ import PricingCard from "../front-page-components/PricingCard";
 const Pricing = () => {
   const pricing: any = [
     {
-      level: "Free",
+      level: "Free Plan",
       description:
         "Free plan for early-careerists and casual job searchers to get started with job applications.",
       price: "$0",
@@ -14,10 +14,11 @@ const Pricing = () => {
         "1 job season",
         "Limited analytics",
         "Limited job characteristics",
+        "No priority applications",
       ],
     },
     {
-      level: "Basic",
+      level: "Basic Plan",
       description:
         "Basic plan for active job seekers to keep track of multiple, concurrent job applications.",
       price: "$10",
@@ -26,10 +27,11 @@ const Pricing = () => {
         "Unlimited job seasons",
         "Full analytics",
         "Full job characteristics",
+        "Priority applications",
       ],
     },
     {
-      level: "Premium",
+      level: "Premium Plan",
       description:
         "Premium plan for active job seekers who want to get the most out of their job search.",
       price: "$30",
@@ -38,6 +40,7 @@ const Pricing = () => {
         "Unlimited job seasons",
         "Full analytics",
         "Full job characteristics",
+        "Priority applications",
       ],
     },
   ];
@@ -45,10 +48,10 @@ const Pricing = () => {
     <Container
       maxWidth="lg"
       sx={{
-        py: 10,
+        py: 8,
       }}>
       <Box
-        mb={5}
+        mb={4}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -59,6 +62,7 @@ const Pricing = () => {
           variant="h4"
           sx={{
             color: "black",
+            fontSize: "1.8rem",
             fontWeight: "bold",
           }}>
           Our Pricing Plans
@@ -85,14 +89,6 @@ const Pricing = () => {
           }
         )}
       </Grid>
-      <Box
-        mt={5}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          textAlign: "center",
-        }}></Box>
     </Container>
   );
 };

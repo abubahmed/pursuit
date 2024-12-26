@@ -13,29 +13,34 @@ const FeatureCard = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Paper
-        elevation={0}
+        elevation={1}
         sx={{
-          padding: "40px",
+          padding: "35px",
           borderRadius: "10px",
           backgroundColor: "rgb(20,86,57)",
+          height: "290px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
         }}>
-        <feature.Icon color="white" size="2.5rem" />
-        <Typography
-          variant="h6"
-          mb={1}
-          mt={8}
-          sx={{
-            color: "white",
-            fontWeight: "medium",
-            fontSize: "1.5rem",
-          }}>
-          {feature.title}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{ color: "white", fontSize: "1.1rem", fontWeight: "regular" }}>
-          {feature.description}
-        </Typography>
+        <feature.Icon color="white" size="2.25rem" />
+        <Box>
+          <Typography
+            variant="h6"
+            mb={1}
+            sx={{
+              color: "white",
+              fontWeight: "medium",
+              fontSize: "1.4rem",
+            }}>
+            {feature.title}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ color: "white", fontSize: "1rem", fontWeight: "regular" }}>
+            {feature.description}
+          </Typography>
+        </Box>
       </Paper>
     </Grid>
   );
