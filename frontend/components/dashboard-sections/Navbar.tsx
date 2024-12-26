@@ -1,10 +1,9 @@
 import React from "react";
-import { AppBar, Box, Toolbar, Typography, CssBaseline } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, CssBaseline, Paper } from "@mui/material";
 import Image from "next/image";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
-import { RiMenuUnfold2Line } from "react-icons/ri";
 
 const Navbar = () => {
   const email = "abuahmed0821@gmail.com";
@@ -12,7 +11,8 @@ const Navbar = () => {
   const profileImage = "https://avatars.githubusercontent.com/u/54769171?v=4";
 
   return (
-    <Box
+    <Paper
+      elevation={2}
       sx={{
         width: "100%",
       }}>
@@ -26,7 +26,6 @@ const Navbar = () => {
           pr: 2,
           pl: 1,
           boxShadow: "none",
-          borderBottom: "2px solid rgba(0,0,0,0.1)",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box
@@ -47,7 +46,6 @@ const Navbar = () => {
               justifyContent: "center",
               alignItems: "center",
             }}>
-            {" "}
             <Image
               src={profileImage}
               alt="profile image"
@@ -58,25 +56,25 @@ const Navbar = () => {
             <Box
               sx={{
                 display: "flex",
-                gap: "20px",
+                flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "flex-start",
               }}>
               <Typography
                 variant="body1"
                 sx={{ color: "black", fontWeight: "regular", fontSize: "1rem" }}>
                 {name}
-                <Typography
-                  variant="body1"
-                  sx={{ color: "rgb(70,70,70)", fontWeight: "regular", fontSize: "0.9rem" }}>
-                  {email}
-                </Typography>
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ color: "rgb(70,70,70)", fontWeight: "regular", fontSize: "0.9rem" }}>
+                {email}
               </Typography>
             </Box>
           </Box>
         </Toolbar>
       </AppBar>
-    </Box>
+    </Paper>
   );
 };
 

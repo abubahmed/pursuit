@@ -6,26 +6,30 @@ import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { BiSolidHide } from "react-icons/bi";
 import { BiSolidShow } from "react-icons/bi";
-import TransitionsModal from "@/components/dashboard-components/JobForm";
+import TransitionsModal from "../dashboard-components/JobForm";
+import { useState } from "react";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "title", headerName: "Job Title", width: 200 },
-  { field: "company", headerName: "Company", width: 200 },
+  { field: "id", headerName: "ID", headerClassName: "custom-header", flex: 1 },
+  { field: "title", headerName: "Job Title", flex: 1, headerClassName: "custom-header" },
+  { field: "company", headerName: "Company", flex: 1, headerClassName: "custom-header" },
   {
     field: "location",
     headerName: "Location",
-    width: 200,
+    flex: 1,
+    headerClassName: "custom-header",
   },
   {
     field: "status",
     headerName: "Status",
-    width: 200,
+    flex: 1,
+    headerClassName: "custom-header",
   },
   {
     field: "actions",
+    headerClassName: "custom-header",
     headerName: "Actions",
-    width: 200,
+    width: 140,
     renderCell: (params) => (
       <Box
         sx={{
@@ -148,8 +152,8 @@ function DataTable() {
         sx={{
           border: 0,
           fontWeight: "regular",
-          fontSize: "0.95rem",
-          color: "rgb(60,60,60)",
+          fontSize: "1rem",
+          color: "black",
           borderRadius: "15px",
         }}
       />
@@ -158,6 +162,8 @@ function DataTable() {
 }
 
 const JobContainer = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <Paper
       elevation={2}
@@ -166,6 +172,7 @@ const JobContainer = () => {
         backgroundColor: "white",
         borderRadius: "15px",
       }}>
+      <TransitionsModal open={modalOpen} setOpen={setModalOpen} />
       <Box
         sx={{
           display: "flex",
@@ -184,7 +191,14 @@ const JobContainer = () => {
             justifyContent: "center",
             alignItems: "center",
           }}>
-          <SmallButton type="contained">Add Job</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              setModalOpen(true);
+            }}>
+            Add Job
+          </SmallButton>
+          <SmallButton type="contained">Create Season</SmallButton>
           <SmallButton type="outlined">Filter</SmallButton>
           <SmallButton type="outlined">Toggle Attributes</SmallButton>
           <SmallButton type="outlined">Export Data</SmallButton>

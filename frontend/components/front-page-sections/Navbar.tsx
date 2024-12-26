@@ -1,24 +1,23 @@
 import React from "react";
-import { AppBar, Toolbar, Button, Box, Container } from "@mui/material";
+import { AppBar, Toolbar, Button, Box, Container, Paper } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import logoImage from "@/public/logos/Pursuit_transparent-.png";
+import logoImage from "@/public/logos/Logo maker project (2).png";
 import Image from "next/image";
 import SmallButton from "../general-components/SmallButton";
 
 export default function Navbar() {
   return (
-    <Box sx={{ width: "100%" }}>
+    <Paper sx={{ width: "100%" }} elevation={2}>
       <AppBar
         sx={{
           position: "static",
           backgroundColor: "white",
           boxShadow: "none",
-          borderBottom: "2px solid rgba(0,0,0,0.1)",
           py: "5px",
         }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Image src={logoImage} alt="logo" width={130} height={40} />
+            <Image src={logoImage} alt="logo" height={35} />
             <Box
               sx={{
                 display: "flex",
@@ -51,6 +50,6 @@ export default function Navbar() {
           </Toolbar>
         </Container>
       </AppBar>
-    </Box>
+    </Paper>
   );
 }

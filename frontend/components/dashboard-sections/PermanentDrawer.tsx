@@ -2,26 +2,13 @@ import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import Image from "next/image";
-import logoImage from "@/public/logos/Pursuit_transparent-.png";
-import { RiLogoutBoxLine } from "react-icons/ri";
-import { FaFolderOpen } from "react-icons/fa";
+import logoImage from "@/public/logos/Logo maker project (1).png";
 import { FiInbox } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { MdPayment } from "react-icons/md";
@@ -72,35 +59,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-  ],
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" })(({ theme }) => ({
@@ -134,28 +93,34 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: "flex", borderRight: "1px solid rgba(0,0,0,0.1)" }}>
+    <Box sx={{ display: "flex" }}>
       <Drawer
         variant="permanent"
         open={open}
         sx={{
           border: "none",
+          "& .MuiDrawer-paper": {
+            backgroundColor: "#05472A",
+            p: 2
+          },
         }}>
         <DrawerHeader
-          sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 1 }}>
+          sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           {open && (
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                pl: 1,
               }}>
-              <Image src={logoImage} alt="logo" width={110} height={40} />
+              <Image src={logoImage} alt="logo" height={35} />
             </Box>
           )}
           {/* <IconButton
             onClick={handleDrawer}
             sx={{
-              color: "black",
+              color: "white",
             }}>
             {!open ? (
               <ChevronRightIcon sx={{ fontSize: 25 }} />
@@ -167,7 +132,7 @@ export default function MiniDrawer() {
         {/* <Divider /> */}
         <List
           sx={{
-            mt: 1,
+            mt: 2,
           }}>
           {seasons.map((season, index) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
@@ -175,7 +140,6 @@ export default function MiniDrawer() {
                 sx={[
                   {
                     minHeight: 48,
-                    px: 4,
                   },
                   open
                     ? {
@@ -199,7 +163,7 @@ export default function MiniDrawer() {
                           mr: "auto",
                         },
                   ]}>
-                  {<FiInbox color="black" size="1.3rem" />}
+                  {<FiInbox color="white" size="1.3rem" />}
                 </ListItemIcon>
                 <ListItemText
                   primary={season.name}
@@ -207,13 +171,13 @@ export default function MiniDrawer() {
                     open
                       ? {
                           opacity: 1,
-                          color: "black",
+                          color: "white",
                           fontSize: "1rem",
                           fontWeight: "regular",
                         }
                       : {
                           opacity: 0,
-                          color: "black",
+                          color: "white",
                           fontSize: "1rem",
                           fontWeight: "regular",
                         },
@@ -223,14 +187,15 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        <List>
+        <List sx={{
+          mt: "auto",
+        }}>
           {["Billing", "Log Out"].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={[
                   {
                     minHeight: 48,
-                    px: 4,
                   },
                   open
                     ? {
@@ -255,9 +220,9 @@ export default function MiniDrawer() {
                         },
                   ]}>
                   {index % 2 === 1 ? (
-                    <MdLogout size="1.3rem" color="black" />
+                    <MdLogout size="1.3rem" color="white" />
                   ) : (
-                    <MdPayment size="1.3rem" color="black" />
+                    <MdPayment size="1.3rem" color="white" />
                   )}
                 </ListItemIcon>
                 <ListItemText
@@ -266,9 +231,15 @@ export default function MiniDrawer() {
                     open
                       ? {
                           opacity: 1,
+                          color: "white",
+                          fontSize: "1rem",
+                          fontWeight: "regular",
                         }
                       : {
                           opacity: 0,
+                          color: "white",
+                          fontSize: "1rem",
+                          fontWeight: "regular",
                         },
                   ]}
                 />
