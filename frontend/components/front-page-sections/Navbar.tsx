@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
+import { AppBar, Toolbar, Button, Box, Container } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import logoImage from "@/public/logos/Pursuit_transparent-.png";
 import Image from "next/image";
@@ -12,7 +12,8 @@ export default function Navbar() {
         sx={{
           position: "static",
           backgroundColor: "white",
-          boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(0,0,0,0.1)",
           py: "5px",
         }}>
         <Container maxWidth="lg">

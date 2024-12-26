@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Box, Typography, Paper } from "@mui/material";
+import { Container, Grid, Box, Typography } from "@mui/material";
 import FeatureCard from "../front-page-components/FeatureCard";
 import { FaChartArea } from "react-icons/fa";
 import { FaBox } from "react-icons/fa";

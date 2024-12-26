@@ -1,11 +1,6 @@
 import React from "react";
-import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, CssBaseline } from "@mui/material";
 import Image from "next/image";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import logoImage from "@/public/logos/Pursuit_transparent-.png";
-import SmallButton from "../general-components/SmallButton";
-import { MdModeNight } from "react-icons/md";
-import { IoSettings } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -21,14 +16,17 @@ const Navbar = () => {
       sx={{
         width: "100%",
       }}>
+      <CssBaseline />
       <AppBar
         sx={{
           position: "static",
           backgroundColor: "white",
           width: "100%",
           py: "5px",
-          px: 2,
-          boxShadow: "2px 0px 3px rgba(0,0,0,0.3)",
+          pr: 2,
+          pl: 1,
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(0,0,0,0.1)",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box
@@ -38,7 +36,6 @@ const Navbar = () => {
               alignItems: "center",
               gap: "30px",
             }}>
-            <RiMenuUnfold2Line color="rgb(0,0,0)" size="1.5rem" />
             <MdOutlineDarkMode color="rgb(0,0,0)" size="1.5rem" />
             <IoSettingsOutline color="rgb(0,0,0)" size="1.5rem" />
             <IoMdNotificationsOutline color="rgb(0,0,0)" size="1.5rem" />

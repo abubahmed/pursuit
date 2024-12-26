@@ -3,13 +3,8 @@ import {
   Box,
   Container,
   Typography,
-  Accordion,
-  AccordionActions,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FAQPanel from "../front-page-components/FAQPanel";
 
 const FAQ = () => {
   const FAQs = [
@@ -118,7 +113,7 @@ const FAQ = () => {
             {FAQs.map((faq, index) => {
               if (index % 2 === 0) {
                 return (
-                  <AccordianPanel
+                  <FAQPanel
                     key={index}
                     index={index}
                     faq={faq}
@@ -134,7 +129,7 @@ const FAQ = () => {
             {FAQs.map((faq, index) => {
               if (index % 2 !== 0) {
                 return (
-                  <AccordianPanel
+                  <FAQPanel
                     key={index}
                     index={index}
                     faq={faq}
@@ -157,69 +152,6 @@ const FAQ = () => {
           }}></Box>
       </Container>
     </Box>
-  );
-};
-
-const AccordianPanel = ({
-  expanded,
-  index,
-  faq,
-  top,
-  onChange,
-}: {
-  expanded: string | boolean;
-  faq: { question: string; answer: string };
-  top: boolean;
-  onChange?: any;
-  index: number;
-}) => {
-  return (
-    <Accordion
-      disableGutters
-      onChange={onChange}
-      expanded={expanded === `panel${index}` ? true : false}
-      sx={{
-        py: "16px",
-        "&:before": {
-          display: "none",
-        },
-        px: 0,
-        boxShadow: 0,
-        borderRadius: 0,
-        backgroundColor: "transparent",
-        borderTop: top ? "1px solid white" : "none",
-        width: "500px",
-      }}>
-      <AccordionSummary
-        sx={{
-          px: 0,
-        }}
-        expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-        aria-controls="panel1a-content"
-        id="panel1a-header">
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "1.1rem",
-            fontWeight: "medium",
-          }}>
-          {faq.question}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails
-        sx={{
-          px: 0,
-        }}>
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "1.1rem",
-            fontWeight: "regular",
-          }}>
-          {faq.answer}
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
   );
 };
 

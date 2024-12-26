@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Box, Typography, Grid, Button, Paper } from "@mui/material";
-import { FaCheckCircle } from "react-icons/fa";
+import { Container, Box, Typography, Grid } from "@mui/material";
 import PricingCard from "../front-page-components/PricingCard";
 
 const Pricing = () => {

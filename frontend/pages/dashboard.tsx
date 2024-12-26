@@ -4,15 +4,18 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import Sidebar from "@/components/dashboard-sections/Sidebar";
 import Navbar from "@/components/dashboard-sections/Navbar";
+import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
+import { useState } from "react";
 
 export default function Dashboard() {
   return (
     <Box display="flex" height="100vh">
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <MiniDrawer />
       <Box
         sx={{
           flexGrow: 1,
-          backgroundColor: "rgb(240, 240, 240, 0.4)"
+          backgroundColor: "rgb(240, 240, 240, 0.4)",
         }}>
         <Navbar />
       </Box>

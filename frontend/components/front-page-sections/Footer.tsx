@@ -90,96 +90,62 @@ const Footer = () => {
               </Button>
             </Box>
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}>
-            <Typography
-              variant="h6"
-              sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Company
-            </Typography>
-            {[
-              { text: "About Us", href: "#" },
-              { text: "Careers", href: "#" },
-              { text: "Blog", href: "#" },
-              { text: "Contact Us", href: "#" },
-            ].map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                sx={{
-                  color: "white",
-                  fontWeight: "regular",
-                  fontSize: "1rem",
-                  textDecoration: "none",
-                }}>
-                {link.text}
-              </Link>
-            ))}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}>
-            <Typography
-              variant="h6"
-              sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Support
-            </Typography>
-            {[
-              { text: "Help Center", href: "#" },
-              { text: "Safety Center", href: "#" },
-              { text: "Community Guidelines", href: "#" },
-              { text: "Accessibility", href: "#" },
-            ].map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                sx={{
-                  color: "white",
-                  fontWeight: "regular",
-                  fontSize: "1rem",
-                  textDecoration: "none",
-                }}>
-                {link.text}
-              </Link>
-            ))}
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-            }}>
-            <Typography
-              variant="h6"
-              sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
-              Legal
-            </Typography>
-            {[
-              { text: "Privacy Policy", href: "#" },
-              { text: "Terms of Service", href: "#" },
-              { text: "Cookie Policy", href: "#" },
-              { text: "Security", href: "#" },
-            ].map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                sx={{
-                  color: "white",
-                  fontWeight: "regular",
-                  fontSize: "1rem",
-                  textDecoration: "none",
-                }}>
-                {link.text}
-              </Link>
-            ))}
-          </Box>
+          {[
+            {
+              title: "Company",
+              links: [
+                { text: "About Us", href: "#" },
+                { text: "Careers", href: "#" },
+                { text: "Blog", href: "#" },
+                { text: "Contact Us", href: "#" },
+              ],
+            },
+            {
+              title: "Support",
+              links: [
+                { text: "Help Center", href: "#" },
+                { text: "Safety Center", href: "#" },
+                { text: "Community Guidelines", href: "#" },
+                { text: "Accessibility", href: "#" },
+              ],
+            },
+            {
+              title: "Legal",
+              links: [
+                { text: "Privacy Policy", href: "#" },
+                { text: "Terms of Service", href: "#" },
+                { text: "Cookie Policy", href: "#" },
+                { text: "Security", href: "#" },
+              ],
+            },
+          ].map((section, sectionIndex) => (
+            <Box
+              key={sectionIndex}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}>
+              <Typography
+                variant="h6"
+                sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
+                {section.title}
+              </Typography>
+              {section.links.map((link, linkIndex) => (
+                <Link
+                  key={linkIndex}
+                  href={link.href}
+                  sx={{
+                    color: "white",
+                    fontWeight: "regular",
+                    fontSize: "1rem",
+                    textDecoration: "none",
+                  }}>
+                  {link.text}
+                </Link>
+              ))}
+            </Box>
+          ))}
           <Box
             sx={{
               display: "flex",
@@ -191,26 +157,19 @@ const Footer = () => {
               sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
               Contact Us
             </Typography>
-            <Link
-              href="#"
-              sx={{
-                color: "white",
-                fontWeight: "regular",
-                fontSize: "1rem",
-                textDecoration: "none",
-              }}>
-              support@pursuit.com
-            </Link>
-            <Link
-              href="#"
-              sx={{
-                color: "white",
-                fontWeight: "regular",
-                fontSize: "1rem",
-                textDecoration: "none",
-              }}>
-              1-800-123-4567
-            </Link>
+            {["support@pursuit.com", "1-800-123-4567"].map((contact, index) => (
+              <Link
+                key={index}
+                href="#"
+                sx={{
+                  color: "white",
+                  fontWeight: "regular",
+                  fontSize: "1rem",
+                  textDecoration: "none",
+                }}>
+                {contact}
+              </Link>
+            ))}
             <Box
               sx={{
                 display: "flex",

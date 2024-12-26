@@ -1,7 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, Box, Container } from "@mui/material";
-import { FaCircleCheck } from "react-icons/fa6";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { Typography, Button, Box, Container } from "@mui/material";
 import Image from "next/image";
 import heroImage from "@/public/images/people-working-as-team-company (9).jpg";
 
