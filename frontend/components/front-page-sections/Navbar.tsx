@@ -13,7 +13,7 @@ export default function Navbar() {
           position: "static",
           backgroundColor: "white",
           boxShadow: "none",
-          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          borderBottom: "2px solid rgba(0,0,0,0.1)",
           py: "5px",
         }}>
         <Container maxWidth="lg">

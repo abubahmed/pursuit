@@ -107,7 +107,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
-  boxSizing: "border-box",
   variants: [
     {
       props: ({ open }) => open,
@@ -135,9 +134,13 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+    <Box sx={{ display: "flex", borderRight: "1px solid rgba(0,0,0,0.1)" }}>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{
+          border: "none",
+        }}>
         <DrawerHeader
           sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 1 }}>
           {open && (
@@ -162,9 +165,10 @@ export default function MiniDrawer() {
           </IconButton> */}
         </DrawerHeader>
         {/* <Divider /> */}
-        <List sx={{
-          mt: 1
-        }}>
+        <List
+          sx={{
+            mt: 1,
+          }}>
           {seasons.map((season, index) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
               <ListItemButton

@@ -1,7 +1,12 @@
-import { Box, Container, Grid, Typography, Divider, Paper } from "@mui/material";
+import { Box, Container, Grid, Typography, Divider, Paper, Button } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { FaTrash } from "react-icons/fa";
+import { RiEdit2Fill } from "react-icons/ri";
+import { BiSolidHide } from "react-icons/bi";
+import { BiSolidShow } from "react-icons/bi";
+import TransitionsModal from "@/components/dashboard-components/JobForm";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -17,9 +22,37 @@ const columns: GridColDef[] = [
     headerName: "Status",
     width: 200,
   },
+  {
+    field: "actions",
+    headerName: "Actions",
+    width: 200,
+    renderCell: (params) => (
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          alignItems: "center",
+          justifyContent: "flex-start",
+          height: "100%",
+        }}>
+        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
+          <FaTrash />
+        </Box>
+        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
+          <RiEdit2Fill />
+        </Box>
+        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
+          <BiSolidHide />
+        </Box>
+        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
+          <BiSolidShow />
+        </Box>
+      </Box>
+    ),
+  },
 ];
 
-const paginationModel = { page: 0, pageSize: 5 };
+const paginationModel = { page: 0, pageSize: 10 };
 const jobs = [
   {
     id: 1,
@@ -127,7 +160,7 @@ function DataTable() {
 const JobContainer = () => {
   return (
     <Paper
-    elevation={2}
+      elevation={2}
       sx={{
         m: 2.5,
         backgroundColor: "white",
@@ -157,9 +190,10 @@ const JobContainer = () => {
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>
-      <Box sx={{
-        px: 1
-      }}>
+      <Box
+        sx={{
+          px: 1,
+        }}>
         <DataTable />
       </Box>
     </Paper>

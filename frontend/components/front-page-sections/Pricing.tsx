@@ -14,7 +14,6 @@ const Pricing = () => {
         "1 job season",
         "Limited analytics",
         "Limited job characteristics",
-        "No priority applications",
       ],
     },
     {
@@ -27,7 +26,6 @@ const Pricing = () => {
         "Unlimited job seasons",
         "Full analytics",
         "Full job characteristics",
-        "Priority applications",
       ],
     },
     {
@@ -40,7 +38,6 @@ const Pricing = () => {
         "Unlimited job seasons",
         "Full analytics",
         "Full job characteristics",
-        "Priority applications",
       ],
     },
   ];

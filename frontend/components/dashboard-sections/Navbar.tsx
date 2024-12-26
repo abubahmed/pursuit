@@ -26,7 +26,7 @@ const Navbar = () => {
           pr: 2,
           pl: 1,
           boxShadow: "none",
-          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          borderBottom: "2px solid rgba(0,0,0,0.1)",
         }}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box

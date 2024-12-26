@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Grid, Box, Typography, Paper } from "@mui/material";
+import { FaExpandAlt } from "react-icons/fa";
 
 const FeatureCard = ({
   feature,
@@ -13,15 +14,15 @@ const FeatureCard = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Paper
-        elevation={1}
+        elevation={0}
         sx={{
-          padding: "35px",
-          borderRadius: "10px",
+          padding: "40px",
           backgroundColor: "rgb(20,86,57)",
           height: "290px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          borderRadius: "15px",
         }}>
         <feature.Icon color="white" size="2.25rem" />
         <Box>
