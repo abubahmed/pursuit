@@ -223,16 +223,16 @@ const ActionCenter = () => {
         }}
         sx={{
           "& .MuiPaper-root": {
-            borderRadius: "15px",
+            borderRadius: "10px",
             fontWeight: "regular",
             fontSize: "1rem",
             p: 3,
-            boxShadow: 2,
+            boxShadow: 1,
           },
         }}>
         {popupContent && popupContent === "delete" && (
           <Box>
-            <Typography sx={{ mb: 2 }}>Are you sure you want<br/> to delete this job?</Typography>
+            <Typography sx={{ mb: 2 }}>Are you sure you want to delete this job?</Typography>
             <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
               <SmallButton type="contained">Yes</SmallButton>
               <SmallButton type="outlined" onClick={handleClose}>
@@ -243,7 +243,7 @@ const ActionCenter = () => {
         )}
         {popupContent && popupContent === "hide" && (
           <Box>
-            <Typography sx={{ mb: 2 }}>Are you sure you want<br/> to hide this job?</Typography>
+            <Typography sx={{ mb: 2 }}>Are you sure you want to hide this job?</Typography>
             <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
               <SmallButton type="contained">Yes</SmallButton>
               <SmallButton type="outlined" onClick={handleClose}>

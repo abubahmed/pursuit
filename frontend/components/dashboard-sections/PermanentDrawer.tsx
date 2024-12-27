@@ -116,7 +116,7 @@ export default function MiniDrawer() {
                 alignItems: "flex-start",
                 pl: 1,
               }}>
-              <Image src={logoImage} alt="logo" height={35} />
+              <Image src={logoImage} alt="logo" height={40} />
             </Box>
           )}
           {/* <IconButton
@@ -147,6 +147,7 @@ export default function MiniDrawer() {
                   open
                     ? {
                         justifyContent: "initial",
+                        borderRadius: "10px",
                       }
                     : {
                         justifyContent: "center",
@@ -205,10 +206,7 @@ export default function MiniDrawer() {
             mt: "auto",
           }}>
           {["Billing", "Log Out"].map((text, index) => (
-            <ListItem
-              key={text}
-              disablePadding
-              sx={{ display: "block" }}>
+            <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={[
                   {
@@ -217,6 +215,7 @@ export default function MiniDrawer() {
                   open
                     ? {
                         justifyContent: "initial",
+                        borderRadius: "10px",
                       }
                     : {
                         justifyContent: "center",
@@ -243,6 +242,7 @@ export default function MiniDrawer() {
                   )}
                 </ListItemIcon>
                 <ListItemText
+                  disableTypography
                   primary={text}
                   sx={[
                     open

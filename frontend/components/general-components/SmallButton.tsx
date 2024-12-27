@@ -41,6 +41,7 @@ const SmallButton = ({
           padding: "6px 25px",
           border: "1px solid black",
           fontSize: "0.95rem",
+          boxShadow: "none",
         }}>
         {children}
       </Button>

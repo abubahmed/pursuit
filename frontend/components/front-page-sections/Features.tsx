@@ -32,7 +32,7 @@ const Features = () => {
       Icon: BsFillInfoSquareFill,
     },
     {
-      title: "Get Follow-up Reminders",
+      title: "Get Reminders",
       description: "Get reminders for follow-ups and interviews to never miss an opportunity.",
       Icon: RiNotification2Fill,
     },

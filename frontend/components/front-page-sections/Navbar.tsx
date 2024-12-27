@@ -17,7 +17,7 @@ export default function Navbar() {
         }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Image src={logoImage} alt="logo" height={35} />
+            <Image src={logoImage} alt="logo" height={40} />
             <Box
               sx={{
                 display: "flex",

@@ -32,7 +32,7 @@ const FeatureCard = ({
             sx={{
               color: "white",
               fontWeight: "medium",
-              fontSize: "1.4rem",
+              fontSize: "1.3rem",
             }}>
             {feature.title}
           </Typography>

@@ -27,8 +27,9 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "bold",
+              fontSize: "3rem",
             }}>
-            We'll Help You Land Your Dream Job
+            We'll Help You Land Your Dream Job.
           </Typography>
           <Typography
             variant="body1"

@@ -67,7 +67,7 @@ const Navbar = () => {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ color: "rgb(70,70,70)", fontWeight: "regular", fontSize: "0.9rem" }}>
+                sx={{ color: "black", fontWeight: "regular", fontSize: "0.9rem" }}>
                 {email}
               </Typography>
             </Box>

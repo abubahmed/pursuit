@@ -27,10 +27,10 @@ const Footer = () => {
               flexDirection: "column",
             }}>
             <Typography
-              variant="h5"
+              variant="h6"
               sx={{
                 color: "white",
-                fontWeight: "bold",
+                fontWeight: "semibold",
               }}>
               Subscribe to our newsletter
             </Typography>
@@ -51,7 +51,7 @@ const Footer = () => {
                     borderRadius: "5px",
                     padding: "5px 15px",
                     color: "white",
-                    fontSize: "0.95rem",
+                    fontSize: "1rem",
                     borderTopRightRadius: 0,
                     borderBottomRightRadius: 0,
                     p: 0,
@@ -74,7 +74,7 @@ const Footer = () => {
                   backgroundColor: "rgb(40,40,40)",
                   color: "white",
                   textTransform: "none",
-                  padding: "5px 15px",
+                  padding: "6px 15px",
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0,
                   border: "1px solid rgb(40,40,40)",
@@ -128,7 +128,7 @@ const Footer = () => {
               }}>
               <Typography
                 variant="h6"
-                sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
+                sx={{ color: "white", fontWeight: "semibold", fontSize: "1rem" }}>
                 {section.title}
               </Typography>
               {section.links.map((link, linkIndex) => (
@@ -154,7 +154,7 @@ const Footer = () => {
             }}>
             <Typography
               variant="h6"
-              sx={{ color: "white", fontWeight: "bold", fontSize: "1.1rem" }}>
+              sx={{ color: "white", fontWeight: "semibold", fontSize: "1rem" }}>
               Contact Us
             </Typography>
             {["support@pursuit.com", "1-800-123-4567"].map((contact, index) => (
