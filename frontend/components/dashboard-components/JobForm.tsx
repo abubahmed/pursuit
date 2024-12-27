@@ -124,7 +124,7 @@ function FullWidthTabs() {
           variant="h6"
           gutterBottom
           sx={{
-            my: 1,
+            mb: 2,
           }}>
           Add Job by URL
         </Typography>
@@ -139,18 +139,18 @@ function FullWidthTabs() {
           variant="h6"
           gutterBottom
           sx={{
-            my: 1,
+            mb: 2,
           }}>
           Add Job by Text
         </Typography>
-        <TextField label="Enter Job Description" variant="outlined" fullWidth multiline rows={8} />
+        <TextField label="Enter Job Description" variant="outlined" fullWidth multiline rows={6} />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
           <SmallButton type="outlined">Cancel</SmallButton>
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
-        <Typography variant="h6" gutterBottom sx={{ mb: 1 }}>
+        <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
           Add Job by File
         </Typography>
         <SmallButton type="outlined">
@@ -166,7 +166,7 @@ function FullWidthTabs() {
   );
 }
 
-export default function TransitionsModal({ open, setOpen }: { open: boolean; setOpen: any }) {
+export default function JobTransitionsModal({ open, setOpen }: { open: boolean; setOpen: any }) {
   return (
     <Modal
       aria-labelledby="transition-modal-title"

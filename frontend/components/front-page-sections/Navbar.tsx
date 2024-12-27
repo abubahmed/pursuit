@@ -7,7 +7,7 @@ import SmallButton from "../general-components/SmallButton";
 
 export default function Navbar() {
   return (
-    <Paper sx={{ width: "100%" }} elevation={2}>
+    <Paper sx={{ width: "100%" }} elevation={1}>
       <AppBar
         sx={{
           position: "static",

@@ -23,7 +23,7 @@ const SmallButton = ({
           boxShadow: "none",
           textTransform: "none",
           borderRadius: "50px",
-          padding: "8px 25px",
+          padding: "6px 25px",
           fontSize: "0.95rem",
         }}>
         {children}
@@ -38,7 +38,7 @@ const SmallButton = ({
           color: "black",
           textTransform: "none",
           borderRadius: "50px",
-          padding: "8px 25px",
+          padding: "6px 25px",
           border: "1px solid black",
           fontSize: "0.95rem",
         }}>

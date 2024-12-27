@@ -6,55 +6,11 @@ import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { BiSolidHide } from "react-icons/bi";
 import { BiSolidShow } from "react-icons/bi";
-import TransitionsModal from "../dashboard-components/JobForm";
+import JobTransitionsModal from "../dashboard-components/JobForm";
+import SeasonTransitionsModal from "../dashboard-components/SeasonForm";
 import { useState } from "react";
-
-const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", headerClassName: "custom-header", flex: 1 },
-  { field: "title", headerName: "Job Title", flex: 1, headerClassName: "custom-header" },
-  { field: "company", headerName: "Company", flex: 1, headerClassName: "custom-header" },
-  {
-    field: "location",
-    headerName: "Location",
-    flex: 1,
-    headerClassName: "custom-header",
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    flex: 1,
-    headerClassName: "custom-header",
-  },
-  {
-    field: "actions",
-    headerClassName: "custom-header",
-    headerName: "Actions",
-    width: 140,
-    renderCell: (params) => (
-      <Box
-        sx={{
-          display: "flex",
-          gap: 1,
-          alignItems: "center",
-          justifyContent: "flex-start",
-          height: "100%",
-        }}>
-        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
-          <FaTrash />
-        </Box>
-        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
-          <RiEdit2Fill />
-        </Box>
-        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
-          <BiSolidHide />
-        </Box>
-        <Box sx={{ padding: 0.5, border: "1px solid rgb(0,0,0,0.2)", borderRadius: "6px" }}>
-          <BiSolidShow />
-        </Box>
-      </Box>
-    ),
-  },
-];
+import BasicPopover from "../dashboard-components/ConfirmationPopup";
+import Popover from "@mui/material/Popover";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const jobs = [
@@ -140,6 +96,167 @@ const jobs = [
   },
 ];
 
+const columns: GridColDef[] = [
+  { field: "id", headerName: "ID", headerClassName: "custom-header", flex: 1 },
+  { field: "title", headerName: "Job Title", flex: 1, headerClassName: "custom-header" },
+  { field: "company", headerName: "Company", flex: 1, headerClassName: "custom-header" },
+  {
+    field: "location",
+    headerName: "Location",
+    flex: 1,
+    headerClassName: "custom-header",
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    flex: 1,
+    headerClassName: "custom-header",
+  },
+  {
+    field: "actions",
+    headerClassName: "custom-header",
+    headerName: "Actions",
+    width: 140,
+    renderCell: (params) => <ActionCenter />,
+  },
+];
+
+const ActionCenter = () => {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [popupContent, setPopupContent] = useState<string>("");
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const key = event.currentTarget.getAttribute("data-key");
+    switch (key) {
+      case "1":
+        setPopupContent("delete");
+        setAnchorEl(event.currentTarget);
+        break;
+      case "2":
+        setPopupContent("edit");
+        break;
+      case "3":
+        setPopupContent("hide");
+        setAnchorEl(event.currentTarget);
+        break;
+      case "4":
+        setPopupContent("show");
+        break;
+      default:
+        setPopupContent("");
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setPopupContent("");
+  };
+
+  const popoverOpen = Boolean(anchorEl);
+  const popoverId = popoverOpen ? "simple-popover" : undefined;
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        alignItems: "center",
+        justifyContent: "flex-start",
+        height: "100%",
+      }}>
+      <Box
+        data-key="1"
+        onClick={handleClick}
+        sx={{
+          padding: 0.5,
+          border: "1px solid rgb(0,0,0,0.2)",
+          borderRadius: "6px",
+          backgroundColor: "white",
+        }}>
+        <FaTrash />
+      </Box>
+      <Box
+        data-key="2"
+        onClick={handleClick}
+        sx={{
+          padding: 0.5,
+          border: "1px solid rgb(0,0,0,0.2)",
+          borderRadius: "6px",
+          backgroundColor: "white",
+        }}>
+        <RiEdit2Fill />
+      </Box>
+      <Box
+        data-key="3"
+        onClick={handleClick}
+        sx={{
+          padding: 0.5,
+          border: "1px solid rgb(0,0,0,0.2)",
+          borderRadius: "6px",
+          backgroundColor: "white",
+        }}>
+        <BiSolidHide />
+      </Box>
+      <Box
+        data-key="4"
+        onClick={handleClick}
+        sx={{
+          padding: 0.5,
+          border: "1px solid rgb(0,0,0,0.2)",
+          borderRadius: "6px",
+          backgroundColor: "white",
+        }}>
+        <BiSolidShow />
+      </Box>
+      <Popover
+        id={popoverId}
+        open={popoverOpen}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        sx={{
+          "& .MuiPaper-root": {
+            borderRadius: "15px",
+            fontWeight: "regular",
+            fontSize: "1rem",
+            p: 3,
+            boxShadow: 2,
+          },
+        }}>
+        {popupContent && popupContent === "delete" && (
+          <Box>
+            <Typography sx={{ mb: 2 }}>Are you sure you want<br/> to delete this job?</Typography>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+              <SmallButton type="contained">Yes</SmallButton>
+              <SmallButton type="outlined" onClick={handleClose}>
+                No
+              </SmallButton>
+            </Box>
+          </Box>
+        )}
+        {popupContent && popupContent === "hide" && (
+          <Box>
+            <Typography sx={{ mb: 2 }}>Are you sure you want<br/> to hide this job?</Typography>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+              <SmallButton type="contained">Yes</SmallButton>
+              <SmallButton type="outlined" onClick={handleClose}>
+                No
+              </SmallButton>
+            </Box>
+          </Box>
+        )}
+      </Popover>
+    </Box>
+  );
+};
+
 function DataTable() {
   return (
     <Paper elevation={0} sx={{ width: "100%", border: 0, borderRadius: "15px" }}>
@@ -162,7 +279,8 @@ function DataTable() {
 }
 
 const JobContainer = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [jobModalOpen, setJobModalOpen] = useState(false);
+  const [seasonModalOpen, setSeasonModalOpen] = useState(false);
 
   return (
     <Paper
@@ -172,7 +290,8 @@ const JobContainer = () => {
         backgroundColor: "white",
         borderRadius: "15px",
       }}>
-      <TransitionsModal open={modalOpen} setOpen={setModalOpen} />
+      <JobTransitionsModal open={jobModalOpen} setOpen={setJobModalOpen} />
+      <SeasonTransitionsModal open={seasonModalOpen} setOpen={setSeasonModalOpen} />
       <Box
         sx={{
           display: "flex",
@@ -194,13 +313,17 @@ const JobContainer = () => {
           <SmallButton
             type="contained"
             onClick={() => {
-              setModalOpen(true);
+              setJobModalOpen(true);
             }}>
             Add Job
           </SmallButton>
-          <SmallButton type="contained">Create Season</SmallButton>
-          <SmallButton type="outlined">Filter</SmallButton>
-          <SmallButton type="outlined">Toggle Attributes</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              setSeasonModalOpen(true);
+            }}>
+            Create Season
+          </SmallButton>
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>

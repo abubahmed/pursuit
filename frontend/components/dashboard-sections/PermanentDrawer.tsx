@@ -12,6 +12,8 @@ import logoImage from "@/public/logos/Logo maker project (1).png";
 import { FiInbox } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { MdPayment } from "react-icons/md";
+import { IoCalendarClearOutline } from "react-icons/io5";
+import { IoCalendarClear } from "react-icons/io5";
 
 const drawerWidth = 230;
 const seasons = [
@@ -87,6 +89,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [selected, setSelected] = React.useState(0);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -101,11 +104,10 @@ export default function MiniDrawer() {
           border: "none",
           "& .MuiDrawer-paper": {
             backgroundColor: "#05472A",
-            p: 2
+            p: 2,
           },
         }}>
-        <DrawerHeader
-          sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+        <DrawerHeader sx={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           {open && (
             <Box
               sx={{
@@ -137,6 +139,7 @@ export default function MiniDrawer() {
           {seasons.map((season, index) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
               <ListItemButton
+                onClick={() => setSelected(index)}
                 sx={[
                   {
                     minHeight: 48,
@@ -163,22 +166,32 @@ export default function MiniDrawer() {
                           mr: "auto",
                         },
                   ]}>
-                  {<FiInbox color="white" size="1.3rem" />}
+                  {selected !== index ? (
+                    <IoCalendarClearOutline color="white" size="1.3rem" />
+                  ) : (
+                    <IoCalendarClear color="white" size="1.3rem" />
+                  )}
                 </ListItemIcon>
                 <ListItemText
                   primary={season.name}
+                  disableTypography
                   sx={[
                     open
                       ? {
                           opacity: 1,
                           color: "white",
                           fontSize: "1rem",
-                          fontWeight: "regular",
                         }
                       : {
                           opacity: 0,
                           color: "white",
                           fontSize: "1rem",
+                        },
+                    selected === index
+                      ? {
+                          fontWeight: "medium",
+                        }
+                      : {
                           fontWeight: "regular",
                         },
                   ]}
@@ -187,11 +200,15 @@ export default function MiniDrawer() {
             </ListItem>
           ))}
         </List>
-        <List sx={{
-          mt: "auto",
-        }}>
+        <List
+          sx={{
+            mt: "auto",
+          }}>
           {["Billing", "Log Out"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              key={text}
+              disablePadding
+              sx={{ display: "block" }}>
               <ListItemButton
                 sx={[
                   {
