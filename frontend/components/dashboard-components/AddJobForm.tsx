@@ -1,9 +1,7 @@
-import { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import * as React from "react";
@@ -21,7 +19,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
@@ -38,16 +36,16 @@ function TabPanel(props: TabPanelProps) {
       )}
     </div>
   );
-}
+};
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
   return {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
   };
-}
+};
 
-function FullWidthTabs() {
+const FullWidthTabs = () => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -129,7 +127,7 @@ function FullWidthTabs() {
           Add Job by URL
         </Typography>
         <TextField label="Enter URL" variant="outlined" fullWidth />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4, gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
           <SmallButton type="outlined">Cancel</SmallButton>
         </Box>
@@ -144,7 +142,7 @@ function FullWidthTabs() {
           Add Job by Text
         </Typography>
         <TextField label="Enter Job Description" variant="outlined" fullWidth multiline rows={6} />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4, gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
           <SmallButton type="outlined">Cancel</SmallButton>
         </Box>
@@ -157,16 +155,16 @@ function FullWidthTabs() {
           Upload File
           <input type="file" hidden accept="image/*,.pdf,.doc,.docx" />
         </SmallButton>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4, gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
           <SmallButton type="outlined">Cancel</SmallButton>
         </Box>
       </TabPanel>
     </Box>
   );
-}
+};
 
-export default function JobTransitionsModal({ open, setOpen }: { open: boolean; setOpen: any }) {
+const AddJobForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -200,4 +198,6 @@ export default function JobTransitionsModal({ open, setOpen }: { open: boolean; 
       </Fade>
     </Modal>
   );
-}
+};
+
+export default AddJobForm;

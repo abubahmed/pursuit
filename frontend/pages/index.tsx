@@ -7,7 +7,6 @@ import Pricing from "@/components/front-page-sections/Pricing";
 import Reviews from "@/components/front-page-sections/Reviews";
 import Footer from "@/components/front-page-sections/Footer";
 import FAQ from "@/components/front-page-sections/FAQ";
-import { Box } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();

@@ -8,6 +8,10 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import SmallButton from "../general-components/SmallButton";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -35,9 +39,14 @@ const TabPanel = (props: TabPanelProps) => {
   );
 };
 
-const FullWidthTabs = () => {
+const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const [status, setStatus] = useState("");
+
+  const handleChange = (event: any) => {
+    setStatus(event.target.value as string);
+  };
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%", borderRadius: "15px" }}>
@@ -48,29 +57,41 @@ const FullWidthTabs = () => {
           sx={{
             mb: 2,
           }}>
-          Create New Season
+          Edit Application Status
         </Typography>
-        <TextField label="Enter New Season Name" variant="outlined" fullWidth />
-        <TextField
-          label="Enter New Season Description"
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={4}
-          sx={{
-            mt: 2,
-          }}
-        />
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Select Application Status</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={status}
+            label="Age"
+            onChange={handleChange}>
+            <MenuItem value="research">Research</MenuItem>
+            <MenuItem value="applied">Applied</MenuItem>
+            <MenuItem value="interview">Interview</MenuItem>
+            <MenuItem value="assessment">Assessment</MenuItem>
+            <MenuItem value="offer">Offer</MenuItem>
+            <MenuItem value="rejection">Rejection</MenuItem>
+            <MenuItem value="waitlist">Waitlist</MenuItem>
+          </Select>
+        </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton type="outlined">Cancel</SmallButton>
+          <SmallButton
+            type="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}>
+            Cancel
+          </SmallButton>
         </Box>
       </TabPanel>
     </Box>
   );
 };
 
-const SeasonForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
+const EditJobForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -99,11 +120,11 @@ const SeasonForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs />
+          <FullWidthTabs setOpen={setOpen} />
         </Paper>
       </Fade>
     </Modal>
   );
 };
 
-export default SeasonForm;
+export default EditJobForm;

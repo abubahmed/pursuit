@@ -9,19 +9,9 @@ import FAQPanel from "../front-page-components/FAQPanel";
 const FAQ = () => {
   const FAQs = [
     {
-      question: "What is Pursuit?",
-      answer:
-        "Pursuit is a job application tracker software that helps you manage and organize your job applications in one place.",
-    },
-    {
       question: "How do I create an account on Pursuit?",
       answer:
         "To create an account on Pursuit, click on the 'Sign Up' button on the homepage and fill in the required details. You will receive a confirmation email to verify your account.",
-    },
-    {
-      question: "Can I track multiple job applications at once?",
-      answer:
-        "Yes, Pursuit allows you to track multiple job applications simultaneously. You can add details for each application and update their status as you progress.",
     },
     {
       question: "Is Pursuit free to use?",

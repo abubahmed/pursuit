@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography, Grid, Paper } from "@mui/material";
+import { Box, Typography, Grid, Paper } from "@mui/material";
 import { FaStar } from "react-icons/fa";
 
 const ReviewCard = ({
@@ -79,7 +79,7 @@ const ReviewCard = ({
                 variant="body1"
                 sx={{
                   color: "black",
-                  fontWeight: "bold",
+                  fontWeight: "regular",
                   fontSize: "1rem",
                   textAlign: "right",
                 }}>
@@ -89,7 +89,7 @@ const ReviewCard = ({
                 variant="body1"
                 sx={{
                   color: "black",
-                  fontWeight: "regular",
+                  fontWeight: "light",
                   fontSize: "1rem",
                 }}>
                 {reviewObject.title}

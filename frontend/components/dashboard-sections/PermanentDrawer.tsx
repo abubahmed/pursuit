@@ -9,7 +9,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Image from "next/image";
 import logoImage from "@/public/logos/Logo maker project (1).png";
-import { FiInbox } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 import { MdPayment } from "react-icons/md";
 import { IoCalendarClearOutline } from "react-icons/io5";
@@ -119,19 +118,7 @@ export default function MiniDrawer() {
               <Image src={logoImage} alt="logo" height={40} />
             </Box>
           )}
-          {/* <IconButton
-            onClick={handleDrawer}
-            sx={{
-              color: "white",
-            }}>
-            {!open ? (
-              <ChevronRightIcon sx={{ fontSize: 25 }} />
-            ) : (
-              <ChevronLeftIcon sx={{ fontSize: 25 }} />
-            )}
-          </IconButton> */}
         </DrawerHeader>
-        {/* <Divider /> */}
         <List
           sx={{
             mt: 2,

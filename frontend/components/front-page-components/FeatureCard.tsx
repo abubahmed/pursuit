@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Grid, Box, Typography, Paper } from "@mui/material";
-import { FaExpandAlt } from "react-icons/fa";
+import { Grid, Box, Typography, Paper } from "@mui/material";
 
 const FeatureCard = ({
   feature,

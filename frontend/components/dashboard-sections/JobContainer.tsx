@@ -1,16 +1,14 @@
-import { Box, Container, Grid, Typography, Divider, Paper, Button } from "@mui/material";
+import { Box, Typography, Paper, Popover } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
-import * as React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridCellParams, gridClasses } from "@mui/x-data-grid";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
-import { BiSolidHide } from "react-icons/bi";
-import { BiSolidShow } from "react-icons/bi";
-import JobTransitionsModal from "../dashboard-components/JobForm";
-import SeasonTransitionsModal from "../dashboard-components/SeasonForm";
+import { BiSolidHide, BiSolidShow } from "react-icons/bi";
+import { IoIosStar } from "react-icons/io";
+import AddJobForm from "../dashboard-components/AddJobForm";
+import EditJobForm from "../dashboard-components/EditJobForm";
+import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState } from "react";
-import BasicPopover from "../dashboard-components/ConfirmationPopup";
-import Popover from "@mui/material/Popover";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const jobs = [
@@ -116,16 +114,17 @@ const columns: GridColDef[] = [
     field: "actions",
     headerClassName: "custom-header",
     headerName: "Actions",
-    width: 140,
+    width: 180,
     renderCell: (params) => <ActionCenter />,
   },
 ];
 
 const ActionCenter = () => {
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
+  const [editJobFormOpen, setEditJobFormOpen] = useState(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: any) => {
     const key = event.currentTarget.getAttribute("data-key");
     switch (key) {
       case "1":
@@ -142,6 +141,9 @@ const ActionCenter = () => {
       case "4":
         setPopupContent("show");
         break;
+      case "5":
+        setPopupContent("star");
+        break;
       default:
         setPopupContent("");
     }
@@ -151,7 +153,6 @@ const ActionCenter = () => {
     setAnchorEl(null);
     setPopupContent("");
   };
-
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "simple-popover" : undefined;
 
@@ -164,6 +165,7 @@ const ActionCenter = () => {
         justifyContent: "flex-start",
         height: "100%",
       }}>
+      <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} />
       <Box
         data-key="1"
         onClick={handleClick}
@@ -177,7 +179,9 @@ const ActionCenter = () => {
       </Box>
       <Box
         data-key="2"
-        onClick={handleClick}
+        onClick={() => {
+          setEditJobFormOpen(true);
+        }}
         sx={{
           padding: 0.5,
           border: "1px solid rgb(0,0,0,0.2)",
@@ -207,6 +211,17 @@ const ActionCenter = () => {
           backgroundColor: "white",
         }}>
         <BiSolidShow />
+      </Box>
+      <Box
+        data-key="5"
+        onClick={handleClick}
+        sx={{
+          padding: 0.5,
+          border: "1px solid rgb(0,0,0,0.2)",
+          borderRadius: "6px",
+          backgroundColor: "white",
+        }}>
+        <IoIosStar />
       </Box>
       <Popover
         id={popoverId}
@@ -259,13 +274,32 @@ const ActionCenter = () => {
 
 function DataTable() {
   return (
-    <Paper elevation={0} sx={{ width: "100%", border: 0, borderRadius: "15px" }}>
+    <Paper
+      elevation={0}
+      sx={{
+        width: "100%",
+        border: 0,
+        borderRadius: "15px",
+        [`.${gridClasses.cell}.applied`]: {},
+      }}>
       <DataGrid
         rows={jobs}
         columns={columns}
         initialState={{ pagination: { paginationModel } }}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        getCellClassName={(params: GridCellParams<any, any, number>) => {
+          if (params.field != "status") return "";
+          return params.value === "Applied"
+            ? "applied"
+            : params.value === "Assessment"
+            ? "assessment"
+            : params.value === "Interview"
+            ? "interview"
+            : params.value === "Offer"
+            ? "offer"
+            : "rejected";
+        }}
         sx={{
           border: 0,
           fontWeight: "regular",
@@ -279,19 +313,19 @@ function DataTable() {
 }
 
 const JobContainer = () => {
-  const [jobModalOpen, setJobModalOpen] = useState(false);
-  const [seasonModalOpen, setSeasonModalOpen] = useState(false);
+  const [addJobFormOpen, setAddJobFormOpen] = useState(false);
+  const [seasonFormOpen, setSeasonFormOpen] = useState(false);
 
   return (
     <Paper
       elevation={2}
       sx={{
-        m: 2.5,
+        m: 3,
         backgroundColor: "white",
         borderRadius: "15px",
       }}>
-      <JobTransitionsModal open={jobModalOpen} setOpen={setJobModalOpen} />
-      <SeasonTransitionsModal open={seasonModalOpen} setOpen={setSeasonModalOpen} />
+      <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} />
+      <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
       <Box
         sx={{
           display: "flex",
@@ -313,24 +347,21 @@ const JobContainer = () => {
           <SmallButton
             type="contained"
             onClick={() => {
-              setJobModalOpen(true);
+              setAddJobFormOpen(true);
             }}>
             Add Job
           </SmallButton>
           <SmallButton
             type="contained"
             onClick={() => {
-              setSeasonModalOpen(true);
+              setSeasonFormOpen(true);
             }}>
             Create Season
           </SmallButton>
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>
-      <Box
-        sx={{
-          px: 1,
-        }}>
+      <Box px={1}>
         <DataTable />
       </Box>
     </Paper>

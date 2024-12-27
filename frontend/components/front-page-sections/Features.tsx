@@ -57,7 +57,7 @@ const Features = () => {
             alignItems: "center",
           }}>
           <Typography
-            variant="h5"
+            variant="h4"
             sx={{
               color: "white",
               fontWeight: "bold",

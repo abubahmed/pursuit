@@ -1,7 +1,6 @@
 import React from "react";
-import { Container, Box, Typography, Grid, Button, Paper } from "@mui/material";
+import { Box, Typography, Grid, Button, Paper } from "@mui/material";
 import { FaCheckCircle } from "react-icons/fa";
-import SmallButton from "../general-components/SmallButton";
 
 const PricingCard = ({
   plan,
@@ -19,12 +18,12 @@ const PricingCard = ({
         elevation={2}
         sx={{
           textAlign: "center",
-          padding: "40px",
+          padding: "45px",
           borderRadius: "15px",
         }}>
         <Typography
           variant="h6"
-          mb={2}
+          mb={1}
           sx={{
             color: "black",
             fontWeight: "medium",

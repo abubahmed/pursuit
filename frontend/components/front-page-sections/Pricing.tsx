@@ -5,7 +5,7 @@ import PricingCard from "../front-page-components/PricingCard";
 const Pricing = () => {
   const pricing: any = [
     {
-      level: "Free Plan",
+      level: "Free",
       description:
         "Free plan for early-careerists and casual job searchers to get started with job applications.",
       price: "$0",
@@ -17,7 +17,7 @@ const Pricing = () => {
       ],
     },
     {
-      level: "Basic Plan",
+      level: "Basic",
       description:
         "Basic plan for active job seekers to keep track of multiple, concurrent job applications.",
       price: "$10",
@@ -29,7 +29,7 @@ const Pricing = () => {
       ],
     },
     {
-      level: "Premium Plan",
+      level: "Premium",
       description:
         "Premium plan for active job seekers who want to get the most out of their job search.",
       price: "$30",
