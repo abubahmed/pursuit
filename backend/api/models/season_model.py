@@ -6,23 +6,12 @@ User = get_user_model()
 
 
 class Season(models.Model):
-    SEASON_STATUS_CHOICES = [
-        ("Active", "Active"),
-        ("Inactive", "Inactive"),
-        ("Upcoming", "Upcoming"),
-    ]
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
     description = models.TextField(max_length=200, blank=True, null=True)
-    status = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-        choices=SEASON_STATUS_CHOICES,
-    )
+    number_jobs = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

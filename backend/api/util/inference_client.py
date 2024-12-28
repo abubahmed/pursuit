@@ -37,19 +37,16 @@ class InferenceClientClass:
             Variables to extract:
             - title: The job title or position name. Type: string. ~1-20 tokens.
             - company: The name of the company or organization. Type: string. ~1-5 tokens.
-            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence. Type: string. ~5-30 tokens.
+            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence. Type: string. ~10-50 tokens.
             - location: The location of the job or position. Type: string. ~1-5 tokens.
             - salary: The salary or compensation offered for the job or position (hourly, yearly, etc.). Type: string. ~1-5 tokens.
-            - status: The current hiring status of the job. Choose one of the following options: "Open", "Closed", "Opening soon", or "Other". Type: string.
             - skills: The required or preferred skills for the job. List the skills as an array of strings (e.g., ["Python", "Java", "SQL"]). Type: array of strings.
             - during: The time period of the job or position. Choose one of the following options: "Winter", "Spring", "Summer", "Fall", "Year-round", or "Other". Type: string.
-            - type: The type of job or position. Choose one of the following options: "Full-time", "Part-time", "Contract", "Internship", "Freelance", "Fellowship", or "Other". Type: string.
+            - type: The type of job or position. Choose one of the following options: "Full-time", "Part-time", "Contract", "Internship", "Freelance", or "Other". Type: string.
             - level: The experience level required for the job. Choose one of the following options: "Entry", "Mid", "Senior", "Lead", "Manager", "Director", or "Other". Type: string.
             - mode: The work mode or arrangement for the job. Choose one of the following options: "Remote", "Onsite", "Hybrid", or "Other". Type: string.
-            - commitment: The expected time commitment for the job. Type: string. ~1-5 tokens.
             - education: The required or preferred education level for the job. Type: string. ~1-5 tokens.
             - contact: The contact information for inquiries (email, phone, etc.). Type: string. ~1-5 tokens.
-            - deadline: The application deadline for the job. Type: string. ~1-5 tokens.
 
             Example output:
             {{
@@ -58,16 +55,13 @@ class InferenceClientClass:
               "description": "Amazon is looking for passionate software development engineers to join our team in Seattle, WA. This internship is open to students graduating in 2025.",
               "location": "Seattle, WA",
               "salary": "$10,000/month",
-              "status": "Open",
               "skills": ["Java", "Python", "C++"],
               "during": "Summer",
               "type": "Internship",
               "level": "Entry",
               "mode": "Onsite",
-              "commitment": "40 hours/week, 12 weeks",
               "education": "BS in Computer Science",
               "contact": "amazonjobs@example.com",
-              "deadline": "December 31, 2024"
             }}
 
             Expected output format:
@@ -77,16 +71,13 @@ class InferenceClientClass:
               "description": <description>,
               "location": <location>,
               "salary": <salary>,
-              "status": <status>,
               "skills": <skills>,
               "during": <during>,
               "type": <type>,
               "level": <level>,
               "mode": <mode>,
-              "commitment": <commitment>,
               "education": <education>,
               "contact": <contact>,
-              "deadline": <deadline>
             }}
             
             Input text:
@@ -103,16 +94,13 @@ class InferenceClientClass:
             "description": "",
             "location": "",
             "salary": "",
-            "status": "",
             "skills": [],
             "during": "",
             "type": "",
             "level": "",
             "mode": "",
-            "commitment": "",
             "education": "",
             "contact": "",
-            "deadline": "",
         }
         return data_schema
 

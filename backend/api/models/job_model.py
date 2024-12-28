@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth import get_user_model
+from numpy import number
 from .season_model import Season
 
 User = get_user_model()
@@ -8,18 +9,10 @@ User = get_user_model()
 
 class Job(models.Model):
     JOB_STATUS_CHOICES = [
-        ("Open", "Open"),
-        ("Closed", "Closed"),
-        ("Opening soon", "Opening soon"),
-        ("Other", "Other"),
-        ("", "None"),
-    ]
-    JOB_STAGE_CHOICES = [
         ("Research", "Research"),
-        ("Application", "Application"),
+        ("Applied", "Applied"),
         ("Assessment", "Assessment"),
         ("Interview", "Interview"),
-        ("Pending", "Pending"),
         ("Offer", "Offer"),
         ("Rejected", "Rejected"),
         ("Waitlisted", "Waitlisted"),
@@ -41,7 +34,6 @@ class Job(models.Model):
         ("Contract", "Contract"),
         ("Internship", "Internship"),
         ("Freelance", "Freelance"),
-        ("Fellowship", "Fellowship"),
         ("Other", "Other"),
         ("", "None"),
     ]
@@ -63,7 +55,7 @@ class Job(models.Model):
         ("", "None"),
     ]
 
-    url = models.URLField(max_length=1000, blank=True, null=True)
+    url = models.URLField(max_length=2000, blank=True, null=True)
     title = models.CharField(max_length=200, blank=True, null=True)
     company = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -74,12 +66,6 @@ class Job(models.Model):
         blank=True,
         null=True,
         choices=JOB_STATUS_CHOICES,
-    )
-    stage = models.CharField(
-        max_length=200,
-        blank=True,
-        null=True,
-        choices=JOB_STAGE_CHOICES,
     )
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
@@ -110,10 +96,11 @@ class Job(models.Model):
         blank=True,
         null=True,
     )
-    commitment = models.CharField(max_length=200, blank=True, null=True)
     education = models.CharField(max_length=200, blank=True, null=True)
     contact = models.CharField(max_length=200, blank=True, null=True)
-    deadline = models.CharField(max_length=200, blank=True, null=True)
+    starred = models.BooleanField(default=False)
+    hidden = models.BooleanField(default=False)
+    number = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="job_user", blank=True, null=True
     )
