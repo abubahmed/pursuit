@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.models.job_model import Job
 from api.models.season_model import Season
-from api.serializer import JobSerializer, SeasonSerializer
+from api.serializer import JobSerializer
 from api.util.inference_client import InferenceClientClass
 from api.util.scraper import Scraper
 from django.contrib.auth import get_user_model

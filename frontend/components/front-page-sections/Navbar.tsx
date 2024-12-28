@@ -4,16 +4,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import logoImage from "@/public/logos/Logo maker project (2).png";
 import Image from "next/image";
 import SmallButton from "../general-components/SmallButton";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Navbar() {
   return (
-    <Paper sx={{ width: "100%" }} elevation={1}>
+    <Paper sx={{ width: "100%" }} elevation={0}>
       <AppBar
         sx={{
           position: "static",
           backgroundColor: "white",
           boxShadow: "none",
           py: "5px",
+          borderBottom: "1px solid #e0e0e0",
         }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -42,8 +44,20 @@ export default function Navbar() {
                 ))}
               </Box>
               <Box sx={{ display: "flex", gap: "20px" }}>
-                <SmallButton type="outlined">Log In</SmallButton>
-                <SmallButton type="contained">Sign Up</SmallButton>
+                <SmallButton
+                  type="outlined"
+                  onClick={() => {
+                    signIn(undefined, { callbackUrl: "/dashboard" });
+                  }}>
+                  Log In
+                </SmallButton>
+                <SmallButton
+                  type="contained"
+                  onClick={() => {
+                    signIn(undefined, { callbackUrl: "/dashboard" });
+                  }}>
+                  Sign Up
+                </SmallButton>
               </Box>
             </Box>
           </Toolbar>

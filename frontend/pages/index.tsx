@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   if (session) {
-    router.push("profile");
+    router.push("dashboard");
     return;
   }
 

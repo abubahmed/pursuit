@@ -1,13 +1,29 @@
 import { useRouter } from "next/router";
 import { signIn, useSession } from "next-auth/react";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import Navbar from "@/components/dashboard-sections/Navbar";
 import JobContainer from "@/components/dashboard-sections/JobContainer";
 import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Dashboard() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress
+          size="3rem"
+          sx={{
+            color: "rgb(20,86,57)",
+          }}
+        />
+      </Box>
+    );
+  }
+
   return (
     <Box display="flex" height="100vh">
       <MiniDrawer />

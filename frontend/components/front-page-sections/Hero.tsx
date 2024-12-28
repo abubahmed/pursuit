@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, Button, Box, Container } from "@mui/material";
 import Image from "next/image";
 import heroImage from "@/public/images/people-working-as-team-company (9).jpg";
+import { signIn, useSession } from "next-auth/react";
 
 const Hero = () => {
   return (
@@ -27,7 +28,7 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "bold",
-              fontSize: "3rem",
+              fontSize: "3.2rem",
             }}>
             We'll Help You Land Your <span className="text-[rgb(20,86,57)]">Dream Job.</span>
           </Typography>
@@ -37,12 +38,12 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1rem",
+              fontSize: "1.1rem",
             }}>
-            Manage every step of your job search. Track jobs with detail, set reminders, and get insights to
-            land your dream job.
+            Manage every step of your job search. Track jobs with detail, set reminders, and get
+            insights to land your dream job.
           </Typography>
-          <Box mt={6}>
+          <Box>
             <Button
               variant="contained"
               sx={{
@@ -51,12 +52,13 @@ const Hero = () => {
                 textTransform: "none",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 mr: 3,
               }}>
               Request a Demo
             </Button>
             <Button
+              onClick={() => signIn(undefined, { callbackUrl: "/dashboard" })}
               variant="outlined"
               sx={{
                 color: "black",
@@ -64,7 +66,7 @@ const Hero = () => {
                 border: "1px solid black",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
               }}>
               Sign Up Now
             </Button>

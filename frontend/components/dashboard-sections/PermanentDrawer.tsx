@@ -14,6 +14,7 @@ import { MdLogout, MdPayment } from "react-icons/md";
 import { IoCalendarClearOutline, IoCalendarClear } from "react-icons/io5";
 import { seasons } from "@/data/data";
 import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const drawerWidth = 230;
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -173,64 +174,59 @@ export default function MiniDrawer() {
           sx={{
             mt: "auto",
           }}>
-          {["Billing", "Log Out"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              onClick={() => signOut({ callbackUrl: "/" })}
+              sx={[
+                {
+                  minHeight: 48,
+                },
+                open
+                  ? {
+                      justifyContent: "initial",
+                      borderRadius: "10px",
+                    }
+                  : {
+                      justifyContent: "center",
+                    },
+              ]}>
+              <ListItemIcon
                 sx={[
                   {
-                    minHeight: 48,
+                    minWidth: 0,
+                    justifyContent: "center",
                   },
                   open
                     ? {
-                        justifyContent: "initial",
-                        borderRadius: "10px",
+                        mr: 2.5,
                       }
                     : {
-                        justifyContent: "center",
+                        mr: "auto",
                       },
                 ]}>
-                <ListItemIcon
-                  sx={[
-                    {
-                      minWidth: 0,
-                      justifyContent: "center",
-                    },
-                    open
-                      ? {
-                          mr: 2.5,
-                        }
-                      : {
-                          mr: "auto",
-                        },
-                  ]}>
-                  {index % 2 === 1 ? (
-                    <MdLogout size="1.3rem" color="white" />
-                  ) : (
-                    <MdPayment size="1.3rem" color="white" />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  disableTypography
-                  primary={text}
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                          color: "white",
-                          fontSize: "1rem",
-                          fontWeight: "regular",
-                        }
-                      : {
-                          opacity: 0,
-                          color: "white",
-                          fontSize: "1rem",
-                          fontWeight: "regular",
-                        },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                <MdLogout size="1.3rem" color="white" />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary="Log Out"
+                sx={[
+                  open
+                    ? {
+                        opacity: 1,
+                        color: "white",
+                        fontSize: "1rem",
+                        fontWeight: "regular",
+                      }
+                    : {
+                        opacity: 0,
+                        color: "white",
+                        fontSize: "1rem",
+                        fontWeight: "regular",
+                      },
+                ]}
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     </Box>
