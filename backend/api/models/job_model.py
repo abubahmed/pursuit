@@ -16,6 +16,7 @@ class Job(models.Model):
         ("Offer", "Offer"),
         ("Rejected", "Rejected"),
         ("Waitlisted", "Waitlisted"),
+        ("Withdrawn", "Withdrawn"),
         ("Other", "Other"),
         ("", "None"),
     ]

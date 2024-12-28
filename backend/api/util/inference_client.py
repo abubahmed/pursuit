@@ -3,6 +3,7 @@ from loguru import logger
 from api.models.job_model import Job
 import json
 from api.util.secrets import HUGGINGFACE_API_KEY
+import copy
 
 
 class InferenceClientClass:
@@ -29,7 +30,7 @@ class InferenceClientClass:
             - Ensure the JSON output strictly adheres to the specified format without any additional fields or text.
             
             Additional points:
-            - The provided input is the result of a web scraping process and may contain some noise or irrelevant information. Focus only on extracting relevant details.
+            - The provided input is the result of a web scraping process and may contain some noise or irrelevant information (such as related job postings). Focus only on extracting relevant details.
             - If the input text does not contain information for a specific variable, please return a falsy value ("" or [] depending on variable type).
             - If the input text contains information that suggests it is not from a job posting or a failure in the extraction process (404 error, verification required, etc.), please return falsy values for all variables ("" or [] depending on variable type).
             - If the input text contains information that suggests the job listing has been removed or is no longer available, please return falsy values for all variables ("" or [] depending on variable type) except for "status", which should be set to "Closed".
@@ -130,10 +131,10 @@ class InferenceClientClass:
             schema = self.get_schema()
             if not all(key in structured_data for key in schema):
                 logger.exception("Failed to extract variables")
-                return {}
+                return copy.deepcopy(schema)
             if all(not value for value in structured_data.values()):
                 logger.exception("No variables extracted")
-                return {}
+                return copy.deepcopy(schema)
             choices_map = {
               "mode": Job.JOB_MODE_CHOICES,
               "level": Job.JOB_LEVEL_CHOICES,
@@ -145,8 +146,8 @@ class InferenceClientClass:
                 structured_data[key] = ""
             return structured_data
         except Exception as e:
-            logger.exception("Failed to extract variables")
-            return {}
+            logger.exception("Failed to extract variables " + str(e))
+            return copy.deepcopy(schema)
 
 
 def test_inference_client():

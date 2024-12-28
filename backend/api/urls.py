@@ -5,13 +5,11 @@ from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
 from rest_framework_simplejwt.views import TokenVerifyView
 from allauth.socialaccount.views import signup
 from .views.views import GoogleLogin
-from .views.job_views import JobListView, JobCreateView, JobDeleteView
+from .views.job_views import JobListView, JobCreateURLView, JobDeleteView, JobUpdateView
 from .views.profile_views import (
     UserListView,
     ProfileListView,
     ProfileUpdateBasicView,
-    ProfileUpdatePreferencesView,
-    ProfileUpdateSkillsView,
 )
 from .views.season_views import (
     SeasonListView,
@@ -32,22 +30,15 @@ urlpatterns = [
     path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
     path("google/", GoogleLogin.as_view(), name="google_login"),
     path("jobs/", JobListView.as_view(), name="job_list"),
-    path("jobs/add/", JobCreateView.as_view(), name="job_add"),
+    path("jobs/add/", JobCreateURLView.as_view(), name="job_add"),
     path("jobs/delete/", JobDeleteView.as_view(), name="job_delete"),
+    path("jobs/update/", JobUpdateView.as_view(), name="job_update"),
     path("users/", UserListView.as_view(), name="user_list"),
     path("users/profile/", ProfileListView.as_view(), name="profile_list"),
     path(
-        "users/profile/basic/", ProfileUpdateBasicView.as_view(), name="profile_put_basic"
-    ),
-    path(
-        "users/profile/preferences/",
-        ProfileUpdatePreferencesView.as_view(),
-        name="profile_put_preferences",
-    ),
-    path(
-        "users/profile/skills/",
-        ProfileUpdateSkillsView.as_view(),
-        name="profile_put_skills",
+        "users/profile/basic/",
+        ProfileUpdateBasicView.as_view(),
+        name="profile_put_basic",
     ),
     path("seasons/", SeasonListView.as_view(), name="season_list"),
     path("seasons/add/", SeasonCreateView.as_view(), name="season_add"),

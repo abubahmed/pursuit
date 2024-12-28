@@ -64,13 +64,21 @@ const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
             value={status}
             label="Age"
             onChange={handleChange}>
-            <MenuItem value="research">Research</MenuItem>
-            <MenuItem value="applied">Applied</MenuItem>
-            <MenuItem value="interview">Interview</MenuItem>
-            <MenuItem value="assessment">Assessment</MenuItem>
-            <MenuItem value="offer">Offer</MenuItem>
-            <MenuItem value="rejection">Rejection</MenuItem>
-            <MenuItem value="waitlist">Waitlist</MenuItem>
+            {[
+              "Research",
+              "Applied",
+              "Interview",
+              "Assessment",
+              "Offer",
+              "Rejection",
+              "Waitlisted",
+              "Other",
+              "Withdrawn",
+            ].map((status) => (
+              <MenuItem key={status} value={status.toLowerCase()}>
+                {status}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>

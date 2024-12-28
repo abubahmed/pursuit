@@ -13,17 +13,12 @@ User = get_user_model()
 
 class SeasonListView(APIView):
     def get(self, request):
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated or not request.user.id:
             return Response(
                 {"successs": False, "message": "User is not authenticated"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
-        if not user_id:
-            return Response(
-                {"success": False, "message": "User ID is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         try:
             seasons = Season.objects.filter(user_id=user_id)
             serializer = SeasonSerializer(seasons, many=True)
@@ -49,17 +44,12 @@ class SeasonListView(APIView):
 
 class SeasonCreateView(APIView):
     def post(self, request):
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated or not request.user.id:
             return Response(
                 {"success": False, "message": "User is not authenticated"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
-        if not user_id:
-            return Response(
-                {"success": False, "message": "User ID is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
         try:
             name = request.data.get("name")
             start_date = datetime.now()
@@ -102,43 +92,27 @@ class SeasonCreateView(APIView):
 
 class SeasonUpdateView(APIView):
     def put(self, request):
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated or not request.user.id:
             return Response(
                 {"success": False, "message": "User is not authenticated"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         season_id = request.data.get("season_id")
-        if not user_id or not season_id:
+        season = Season.objects.get(id=season_id, user_id=user_id)
+        if not season_id or not season:
             return Response(
-                {"success": False, "message": "User ID and Season ID are required"},
+                {
+                    "success": False,
+                    "message": "Season ID is missing or season not found",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            season = Season.objects.get(id=season_id, user_id=user_id)
-            if not season:
-                return Response(
-                    {"success": False, "message": "Season not found"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
             name = request.data.get("name")
-            start_date = request.data.get("start_date")
             description = request.data.get("description")
-            season_status = request.data.get("status")
             season.name = name if name else season.name
-            season.start_date = (
-                start_date
-                if start_date and start_date > date.today()
-                else season.start_date
-            )
             season.description = description if description else season.description
-            season.status = (
-                season_status
-                if season_status
-                and season_status
-                in [choice[0] for choice in Season.SEASON_STATUS_CHOICES]
-                else season.status
-            )
             season.save()
             return Response(
                 {"success": True, "message": "Season updated successfully"},
@@ -154,25 +128,23 @@ class SeasonUpdateView(APIView):
 
 class SeasonDeleteView(APIView):
     def delete(self, request):
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated or not request.user.id:
             return Response(
                 {"success": False, "message": "User is not authenticated"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         season_id = request.data.get("season_id")
-        if not user_id or not season_id:
+        season = Season.objects.get(id=season_id, user_id=user_id)
+        if not season_id or not season:
             return Response(
-                {"success": False, "message": "User ID and Season ID are required"},
+                {
+                    "success": False,
+                    "message": "Season ID is missing or season not found",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            season = Season.objects.get(id=season_id, user_id=user_id)
-            if not season:
-                return Response(
-                    {"success": False, "message": "Season not found"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
             season.delete()
             return Response(
                 {"success": True, "message": "Season deleted successfully"},
