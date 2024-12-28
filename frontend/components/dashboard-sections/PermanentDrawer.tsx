@@ -1,39 +1,21 @@
-import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {
+  Box,
+  Drawer as MuiDrawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import Image from "next/image";
 import logoImage from "@/public/logos/Logo maker project (1).png";
-import { MdLogout } from "react-icons/md";
-import { MdPayment } from "react-icons/md";
-import { IoCalendarClearOutline } from "react-icons/io5";
-import { IoCalendarClear } from "react-icons/io5";
+import { MdLogout, MdPayment } from "react-icons/md";
+import { IoCalendarClearOutline, IoCalendarClear } from "react-icons/io5";
+import { seasons } from "@/data/data";
+import { useState, useEffect } from "react";
 
 const drawerWidth = 230;
-const seasons = [
-  {
-    name: "Summer 2025",
-    startDate: "2025-06-01",
-  },
-  {
-    name: "Fall 2025",
-    startDate: "2025-09-01",
-  },
-  {
-    name: "Winter 2025",
-    startDate: "2025-12-01",
-  },
-  {
-    name: "Spring 2026",
-    startDate: "2026-03-01",
-  },
-];
-
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -87,9 +69,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 
 export default function MiniDrawer() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-  const [selected, setSelected] = React.useState(0);
-
+  const [open, setOpen] = useState(true);
+  const [selected, setSelected] = useState(0);
   const handleDrawer = () => {
     setOpen(!open);
   };

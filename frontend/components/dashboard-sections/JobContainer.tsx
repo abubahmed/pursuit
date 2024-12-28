@@ -9,91 +9,9 @@ import AddJobForm from "../dashboard-components/AddJobForm";
 import EditJobForm from "../dashboard-components/EditJobForm";
 import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState } from "react";
+import { jobs } from "@/data/data";
 
 const paginationModel = { page: 0, pageSize: 10 };
-const jobs = [
-  {
-    id: 1,
-    title: "Software Engineer",
-    company: "Google",
-    location: "Mountain View, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 2,
-    title: "Software Engineer",
-    company: "Facebook",
-    location: "Menlo Park, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 3,
-    title: "Software Engineer",
-    company: "Amazon",
-    location: "Seattle, WA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 4,
-    title: "Software Engineer",
-    company: "Apple",
-    location: "Cupertino, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 5,
-    title: "Software Engineer",
-    company: "Microsoft",
-    location: "Redmond, WA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 6,
-    title: "Software Engineer",
-    company: "Netflix",
-    location: "Los Gatos, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 7,
-    title: "Software Engineer",
-    company: "Twitter",
-    location: "San Francisco, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 8,
-    title: "Software Engineer",
-    company: "LinkedIn",
-    location: "Sunnyvale, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 9,
-    title: "Software Engineer",
-    company: "Uber",
-    location: "San Francisco, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-  {
-    id: 10,
-    title: "Software Engineer",
-    company: "Lyft",
-    location: "San Francisco, CA",
-    date: "2021-10-01",
-    status: "Applied",
-  },
-];
-
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", headerClassName: "custom-header", flex: 1 },
   { field: "title", headerName: "Job Title", flex: 1, headerClassName: "custom-header" },
@@ -118,6 +36,44 @@ const columns: GridColDef[] = [
     renderCell: (params) => <ActionCenter />,
   },
 ];
+
+const IconBox = ({
+  dataKey,
+  onClick,
+  children,
+}: {
+  dataKey: string;
+  onClick: (event: any) => void;
+  children: React.ReactNode;
+}) => {
+  return (
+    <Box
+      data-key={dataKey}
+      onClick={onClick}
+      sx={{
+        padding: 0.5,
+        border: "1px solid rgb(0,0,0,0.2)",
+        borderRadius: "6px",
+        backgroundColor: "white",
+      }}>
+      {children}
+    </Box>
+  );
+};
+
+const PopoverContent = ({ content, handleClose }: { content: string; handleClose: any }) => {
+  return (
+    <Box>
+      <Typography sx={{ mb: 2 }}>{content}</Typography>
+      <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+        <SmallButton type="contained">Yes</SmallButton>
+        <SmallButton type="outlined" onClick={handleClose}>
+          No
+        </SmallButton>
+      </Box>
+    </Box>
+  );
+};
 
 const ActionCenter = () => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
@@ -148,7 +104,6 @@ const ActionCenter = () => {
         setPopupContent("");
     }
   };
-
   const handleClose = () => {
     setAnchorEl(null);
     setPopupContent("");
@@ -166,63 +121,21 @@ const ActionCenter = () => {
         height: "100%",
       }}>
       <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} />
-      <Box
-        data-key="1"
-        onClick={handleClick}
-        sx={{
-          padding: 0.5,
-          border: "1px solid rgb(0,0,0,0.2)",
-          borderRadius: "6px",
-          backgroundColor: "white",
-        }}>
+      <IconBox dataKey="1" onClick={handleClick}>
         <FaTrash />
-      </Box>
-      <Box
-        data-key="2"
-        onClick={() => {
-          setEditJobFormOpen(true);
-        }}
-        sx={{
-          padding: 0.5,
-          border: "1px solid rgb(0,0,0,0.2)",
-          borderRadius: "6px",
-          backgroundColor: "white",
-        }}>
+      </IconBox>
+      <IconBox dataKey="2" onClick={handleClick}>
         <RiEdit2Fill />
-      </Box>
-      <Box
-        data-key="3"
-        onClick={handleClick}
-        sx={{
-          padding: 0.5,
-          border: "1px solid rgb(0,0,0,0.2)",
-          borderRadius: "6px",
-          backgroundColor: "white",
-        }}>
+      </IconBox>
+      <IconBox dataKey="3" onClick={handleClick}>
         <BiSolidHide />
-      </Box>
-      <Box
-        data-key="4"
-        onClick={handleClick}
-        sx={{
-          padding: 0.5,
-          border: "1px solid rgb(0,0,0,0.2)",
-          borderRadius: "6px",
-          backgroundColor: "white",
-        }}>
+      </IconBox>
+      <IconBox dataKey="4" onClick={handleClick}>
         <BiSolidShow />
-      </Box>
-      <Box
-        data-key="5"
-        onClick={handleClick}
-        sx={{
-          padding: 0.5,
-          border: "1px solid rgb(0,0,0,0.2)",
-          borderRadius: "6px",
-          backgroundColor: "white",
-        }}>
+      </IconBox>
+      <IconBox dataKey="5" onClick={handleClick}>
         <IoIosStar />
-      </Box>
+      </IconBox>
       <Popover
         id={popoverId}
         open={popoverOpen}
@@ -242,37 +155,27 @@ const ActionCenter = () => {
             fontWeight: "regular",
             fontSize: "1rem",
             p: 3,
-            boxShadow: 1,
+            boxShadow: 2,
           },
         }}>
         {popupContent && popupContent === "delete" && (
-          <Box>
-            <Typography sx={{ mb: 2 }}>Are you sure you want to delete this job?</Typography>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-              <SmallButton type="contained">Yes</SmallButton>
-              <SmallButton type="outlined" onClick={handleClose}>
-                No
-              </SmallButton>
-            </Box>
-          </Box>
+          <PopoverContent
+            content="Are you sure you want to delete this job?"
+            handleClose={handleClose}
+          />
         )}
         {popupContent && popupContent === "hide" && (
-          <Box>
-            <Typography sx={{ mb: 2 }}>Are you sure you want to hide this job?</Typography>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-              <SmallButton type="contained">Yes</SmallButton>
-              <SmallButton type="outlined" onClick={handleClose}>
-                No
-              </SmallButton>
-            </Box>
-          </Box>
+          <PopoverContent
+            content="Are you sure you want to hide this job?"
+            handleClose={handleClose}
+          />
         )}
       </Popover>
     </Box>
   );
 };
 
-function DataTable() {
+const DataTable = () => {
   return (
     <Paper
       elevation={0}
@@ -310,7 +213,7 @@ function DataTable() {
       />
     </Paper>
   );
-}
+};
 
 const JobContainer = () => {
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
@@ -361,9 +264,7 @@ const JobContainer = () => {
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>
-      <Box px={1}>
-        <DataTable />
-      </Box>
+      <DataTable />
     </Paper>
   );
 };

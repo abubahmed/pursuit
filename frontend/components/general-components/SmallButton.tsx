@@ -18,7 +18,7 @@ const SmallButton = ({
         onClick={onClick}
         variant="contained"
         style={{
-          backgroundColor: "#05472A",
+          backgroundColor: "rgb(20,86,57)",
           color: "white",
           boxShadow: "none",
           textTransform: "none",

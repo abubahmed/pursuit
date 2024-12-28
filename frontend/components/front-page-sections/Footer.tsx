@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Box, Typography, Link, TextField, Button } from "@mui/material";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import { footer } from "@/data/data";
 
 const Footer = () => {
   return (
@@ -90,35 +91,7 @@ const Footer = () => {
               </Button>
             </Box>
           </Box>
-          {[
-            {
-              title: "Company",
-              links: [
-                { text: "About Us", href: "#" },
-                { text: "Careers", href: "#" },
-                { text: "Blog", href: "#" },
-                { text: "Contact Us", href: "#" },
-              ],
-            },
-            {
-              title: "Support",
-              links: [
-                { text: "Help Center", href: "#" },
-                { text: "Safety Center", href: "#" },
-                { text: "Community Guidelines", href: "#" },
-                { text: "Accessibility", href: "#" },
-              ],
-            },
-            {
-              title: "Legal",
-              links: [
-                { text: "Privacy Policy", href: "#" },
-                { text: "Terms of Service", href: "#" },
-                { text: "Cookie Policy", href: "#" },
-                { text: "Security", href: "#" },
-              ],
-            },
-          ].map((section, sectionIndex) => (
+          {footer.map((section, sectionIndex) => (
             <Box
               key={sectionIndex}
               sx={{

@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <Paper
-      elevation={2}
+      elevation={1}
       sx={{
         width: "100%",
       }}>

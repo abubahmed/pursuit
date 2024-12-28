@@ -18,7 +18,7 @@ const ReviewCard = ({
       <Paper
         elevation={0}
         sx={{
-          padding: "30px",
+          padding: "25px",
           borderRadius: "15px",
           backgroundColor: "rgb(242, 242, 242)",
           height: "300px",

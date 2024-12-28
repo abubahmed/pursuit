@@ -1,24 +1,15 @@
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import { Backdrop, Box, Modal, Fade, Typography, Paper, TextField } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import SmallButton from "../general-components/SmallButton";
 
-interface TabPanelProps {
+const TabPanel = (props: {
   children?: React.ReactNode;
   dir?: string;
   index: number;
   value: number;
-}
-
-const TabPanel = (props: TabPanelProps) => {
+}) => {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"

@@ -14,7 +14,7 @@ export default function Dashboard() {
       <Box
         sx={{
           flexGrow: 1,
-          backgroundColor: "rgb(240, 240, 240, 0.4)",
+          backgroundColor: "rgb(240, 240, 240, 0.5)",
           overflow: "auto",
         }}>
         <Navbar />

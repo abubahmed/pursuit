@@ -7,13 +7,14 @@ import SmallButton from "../general-components/SmallButton";
 
 export default function Navbar() {
   return (
-    <Paper sx={{ width: "100%" }} elevation={1}>
+    <Paper sx={{ width: "100%" }} elevation={0}>
       <AppBar
         sx={{
           position: "static",
           backgroundColor: "white",
           boxShadow: "none",
           py: "5px",
+          borderBottom: "1px solid #E0E0E0",
         }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -21,7 +22,7 @@ export default function Navbar() {
             <Box
               sx={{
                 display: "flex",
-                gap: "50px",
+                gap: "40px",
                 justifyContent: "center",
               }}>
               <Box sx={{ display: "flex", gap: "20px", justifyContent: "center" }}>
@@ -33,7 +34,6 @@ export default function Navbar() {
                       textTransform: "none",
                       fontWeight: "regular",
                       fontSize: "1rem",
-                      width: "100px",
                       justifyContent: "center",
                       gap: "5px",
                     }}>

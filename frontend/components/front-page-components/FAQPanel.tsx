@@ -1,9 +1,4 @@
-import {
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@mui/material";
+import { Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const FAQPanel = ({

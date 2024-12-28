@@ -29,7 +29,7 @@ const Hero = () => {
               fontWeight: "bold",
               fontSize: "3rem",
             }}>
-            We'll Help You Land Your Dream Job.
+            We'll Help You Land Your <span className="text-[rgb(20,86,57)]">Dream Job.</span>
           </Typography>
           <Typography
             variant="body1"
@@ -37,21 +37,21 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1.1rem",
+              fontSize: "1rem",
             }}>
-            Manage every step of your job search. Track jobs, set reminders, and get insights to
+            Manage every step of your job search. Track jobs with detail, set reminders, and get insights to
             land your dream job.
           </Typography>
           <Box mt={6}>
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "#05472A",
+                backgroundColor: "rgb(20,86,57)",
                 color: "white",
                 textTransform: "none",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1.1rem",
+                fontSize: "1rem",
                 mr: 3,
               }}>
               Request a Demo
@@ -64,7 +64,7 @@ const Hero = () => {
                 border: "1px solid black",
                 borderRadius: "100px",
                 padding: "10px 25px",
-                fontSize: "1.1rem",
+                fontSize: "1rem",
               }}>
               Sign Up Now
             </Button>
