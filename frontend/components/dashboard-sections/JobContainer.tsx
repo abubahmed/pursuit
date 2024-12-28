@@ -7,6 +7,7 @@ import { BiSolidHide, BiSolidShow } from "react-icons/bi";
 import { IoIosStar } from "react-icons/io";
 import AddJobForm from "../dashboard-components/AddJobForm";
 import EditJobForm from "../dashboard-components/EditJobForm";
+import JobInfoModal from "../dashboard-components/JobInfoModal";
 import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState } from "react";
 import { jobs } from "@/data/data";
@@ -79,6 +80,7 @@ const ActionCenter = () => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
   const [editJobFormOpen, setEditJobFormOpen] = useState(false);
+  const [jobInfoOpen, setJobInfoOpen] = useState(false);
 
   const handleClick = (event: any) => {
     const key = event.currentTarget.getAttribute("data-key");
@@ -121,16 +123,25 @@ const ActionCenter = () => {
         height: "100%",
       }}>
       <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} />
+      <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} />
       <IconBox dataKey="1" onClick={handleClick}>
         <FaTrash />
       </IconBox>
-      <IconBox dataKey="2" onClick={handleClick}>
+      <IconBox
+        dataKey="2"
+        onClick={() => {
+          setEditJobFormOpen(true);
+        }}>
         <RiEdit2Fill />
       </IconBox>
       <IconBox dataKey="3" onClick={handleClick}>
         <BiSolidHide />
       </IconBox>
-      <IconBox dataKey="4" onClick={handleClick}>
+      <IconBox
+        dataKey="4"
+        onClick={() => {
+          setJobInfoOpen(true);
+        }}>
         <BiSolidShow />
       </IconBox>
       <IconBox dataKey="5" onClick={handleClick}>

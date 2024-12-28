@@ -96,7 +96,7 @@ export default function MiniDrawer() {
                 alignItems: "flex-start",
                 pl: 1,
               }}>
-              <Image src={logoImage} alt="logo" height={40} />
+              <Image src={logoImage} alt="logo" height={36} />
             </Box>
           )}
         </DrawerHeader>
