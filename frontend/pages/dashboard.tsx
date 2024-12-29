@@ -5,11 +5,23 @@ import { Typography } from "@mui/material";
 import Navbar from "@/components/dashboard-sections/Navbar";
 import JobContainer from "@/components/dashboard-sections/JobContainer";
 import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import useApi from "@/util/apiClient";
+import { fetchUser, fetchProfile } from "@/util/apiRequests";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
+  const [userDetails, setUserDetails] = useState({});
+  const apiClient = useApi({ useToken: true });
+
+  useEffect(() => {
+    if (session && status === "authenticated") {
+      fetchProfile({ apiClient }).then((data) => {
+        setUserDetails(data);
+        console.log(data);
+      });
+    }
+  }, [session]);
 
   if (status === "loading") {
     return (

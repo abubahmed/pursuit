@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Box, Typography, Grid } from "@mui/material";
 import PricingCard from "../front-page-components/PricingCard";
-import { pricing } from "@/data/data";
+import { pricing } from "@/util/pageContent";
 
 const Pricing = () => {
   return (

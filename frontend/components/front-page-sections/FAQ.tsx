@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import FAQPanel from "../front-page-components/FAQPanel";
-import { FAQs } from "@/data/data";
+import { FAQs } from "@/util/pageContent";
 
 const FAQ = () => {
   const [expanded, setExpanded] = useState<string | boolean>(false);

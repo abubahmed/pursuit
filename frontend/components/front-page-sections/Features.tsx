@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Grid, Box, Typography } from "@mui/material";
 import FeatureCard from "../front-page-components/FeatureCard";
-import { features } from "@/data/data";
+import { features } from "@/util/pageContent";
 
 const Features = () => {
   return (

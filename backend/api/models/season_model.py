@@ -9,9 +9,8 @@ class Season(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
-    start_date = models.DateTimeField(blank=True, null=True)
     description = models.TextField(max_length=200, blank=True, null=True)
-    number_jobs = models.IntegerField(blank=True, null=True)
+    number_jobs = models.IntegerField(default=0, blank=True, null=True)
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

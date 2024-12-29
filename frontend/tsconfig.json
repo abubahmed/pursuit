@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jobs.api.test.mjs"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jobs.api.test.mjs", "util/apiClient.ts"],
   "exclude": ["node_modules"]
 }

@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
-import { jobs } from "@/data/data";
+import { jobs } from "@/util/pageContent";
 
 const job = jobs[0];
 let rows = [];

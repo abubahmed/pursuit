@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Box, Typography, Link, TextField, Button } from "@mui/material";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
-import { footer } from "@/data/data";
+import { footer } from "@/util/pageContent";
 
 const Footer = () => {
   return (

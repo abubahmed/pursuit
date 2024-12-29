@@ -12,9 +12,10 @@ const Navbar = () => {
 
   return (
     <Paper
-      elevation={1}
+      elevation={0}
       sx={{
         width: "100%",
+        borderBottom: "1px solid #e0e0e0",
       }}>
       <CssBaseline />
       <AppBar

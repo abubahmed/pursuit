@@ -52,9 +52,7 @@ class SeasonCreateView(APIView):
         user_id = request.user.id
         try:
             name = request.data.get("name")
-            start_date = datetime.now()
             description = request.data.get("description")
-            season_status = "Active"
             if not name or not description:
                 return Response(
                     {"success": False, "message": "Name and description is required"},
@@ -62,9 +60,7 @@ class SeasonCreateView(APIView):
                 )
             season_data = {
                 "name": name,
-                "start_date": start_date,
                 "description": description,
-                "status": season_status,
                 "user": user_id,
             }
             serializer = SeasonSerializer(data=season_data)

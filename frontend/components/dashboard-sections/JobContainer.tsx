@@ -10,7 +10,7 @@ import EditJobForm from "../dashboard-components/EditJobForm";
 import JobInfoModal from "../dashboard-components/JobInfoModal";
 import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState } from "react";
-import { jobs } from "@/data/data";
+import { jobs } from "@/util/pageContent";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const columns: GridColDef[] = [
@@ -232,11 +232,12 @@ const JobContainer = () => {
 
   return (
     <Paper
-      elevation={2}
+      elevation={0}
       sx={{
         m: 3,
         backgroundColor: "white",
         borderRadius: "15px",
+        border: "1px solid #e0e0e0",
       }}>
       <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} />
       <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />

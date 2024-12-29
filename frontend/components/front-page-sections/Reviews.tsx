@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Typography, Box, Grid } from "@mui/material";
 import ReviewCard from "../front-page-components/ReviewCard";
-import { reviews } from "@/data/data";
+import { reviews } from "@/util/pageContent";
 
 const Reviews = () => {
   return (
