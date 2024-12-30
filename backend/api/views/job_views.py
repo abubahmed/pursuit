@@ -71,8 +71,7 @@ class JobCreateURLView(APIView):
             )
         try:
             scraper = Scraper()
-            soup = scraper.scrape_data(url)
-            text = scraper.get_text(soup)
+            text = scraper.get_text(url)
             logger.info(text)
             client = OpenAIClient()
             variables = client.extract_variables(text)

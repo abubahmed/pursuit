@@ -30,7 +30,6 @@ class Scraper:
             trimmed_text = " ".join(text.split())
             allowed_chars = string.ascii_letters + string.digits + string.punctuation + " "
             cleaned_text = "".join(char for char in trimmed_text if char in allowed_chars)
-            logger.info(cleaned_text)
             return cleaned_text
         except Exception as e:
             logger.exception(e)

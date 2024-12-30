@@ -15,9 +15,18 @@ import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const columns: GridColDef[] = [
-  { field: "number", headerName: "#", headerClassName: "custom-header", flex: 0.01 },
-  { field: "title", headerName: "Job Title", headerClassName: "custom-header", flex: 1 },
-  { field: "company", headerName: "Company", headerClassName: "custom-header", flex: 1 },
+  {
+    field: "title",
+    headerName: "Job Title",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "company",
+    headerName: "Company",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
   {
     field: "location",
     headerName: "Location",
@@ -243,22 +252,29 @@ const DataTable = ({ data }: { data: any }) => {
         width: "100%",
         border: 0,
         borderRadius: "15px",
-        [`.${gridClasses.cell}.applied`]: {},
+        [`.${gridClasses.cell}`]: {
+          display: "flex",
+          alignItems: "center",
+          py: "2px",
+        },
       }}>
       {data && (
         <DataGrid
-          columnVisibilityModel={{
-            description: false,
-            during: false,
-            level: false,
-            mode: false,
-            type: false,
-            skills: false,
-            url: false,
+          initialState={{
+            columns: {
+              columnVisibilityModel: {
+                description: false,
+                url: false,
+                during: false,
+                type: false,
+                mode: false,
+                level: false,
+              },
+            },
+            pagination: { paginationModel },
           }}
           rows={data}
           columns={columns}
-          initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
@@ -277,10 +293,17 @@ const DataTable = ({ data }: { data: any }) => {
           sx={{
             border: 0,
             fontWeight: "regular",
-            fontSize: "1rem",
+            fontSize: "0.95rem",
             color: "black",
             borderRadius: "15px",
+            "& .MuiDataGrid-columnHeaders": {
+              fontWeight: "regular",
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "regular",
+            }
           }}
+          getRowHeight={() => "auto"}
         />
       )}
     </Paper>
@@ -297,6 +320,9 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
   useEffect(() => {
     if (currentSeason) {
       fetchJobs({ apiClient, seasonId: currentSeason }).then((data) => {
+        for (let i = 0; i < data.jobs.length; i++) {
+          data.jobs[i].skills = data.jobs[i].skills.join(", ");
+        }
         setJobs(data.jobs);
         console.log(data.jobs);
         setLoading(false);
