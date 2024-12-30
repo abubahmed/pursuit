@@ -5,17 +5,16 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 
-const Navbar = () => {
-  const email = "abuahmed0821@gmail.com";
-  const name = "Abu Ahmed";
-  const profileImage = "https://avatars.githubusercontent.com/u/54769171?v=4";
+const Navbar = ({ profileDetails }: { profileDetails: any }) => {
+  const { email, first_name, last_name, avatar_url } = profileDetails;
+  const name =
+    first_name && last_name ? `${first_name} ${last_name}` : first_name ? first_name : "User";
 
   return (
     <Paper
-      elevation={0}
+      elevation={1}
       sx={{
         width: "100%",
-        borderBottom: "1px solid #e0e0e0",
       }}>
       <CssBaseline />
       <AppBar
@@ -48,7 +47,7 @@ const Navbar = () => {
               alignItems: "center",
             }}>
             <Image
-              src={profileImage}
+              src={avatar_url}
               alt="profile image"
               width={40}
               height={40}

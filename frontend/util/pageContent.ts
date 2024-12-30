@@ -328,36 +328,4 @@ export const reviews = [
       "I highly recommend this app to anyone looking for a job. It’s easy to use and has all the features you need to stay on top of your job search.",
     image: "https://randomuser.me/api/portraits/women/4.jpg",
   },
-  {
-    name: "Hannah White",
-    title: "Graphic Designer",
-    rating: 5,
-    review:
-      "This app has been a lifesaver in keeping my job search organized. The design is intuitive and the features are exactly what I need.",
-    image: "https://randomuser.me/api/portraits/women/5.jpg",
-  },
-  {
-    name: "Ian Black",
-    title: "Financial Analyst",
-    rating: 4,
-    review:
-      "A very practical tool for job seekers. The reminders and tracking features have helped me stay on top of my applications.",
-    image: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    name: "Jessica Green",
-    title: "Content Writer",
-    rating: 5,
-    review:
-      "I love how easy it is to use this app. It has made my job search process so much more efficient and less stressful.",
-    image: "https://randomuser.me/api/portraits/women/6.jpg",
-  },
-  {
-    name: "Kevin Brown",
-    title: "Operations Manager",
-    rating: 4,
-    review:
-      "The app is very helpful for managing job applications. The analytics feature is particularly useful for tracking my progress.",
-    image: "https://randomuser.me/api/portraits/men/6.jpg",
-  },
 ];

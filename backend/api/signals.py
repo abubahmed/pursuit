@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up, user_logged_in
-from .serializer import ProfileSerializer
+from .serializer import ProfileSerializer, SeasonSerializer
 from loguru import logger
 
 
@@ -26,6 +26,16 @@ def user_signed_up_handler(sociallogin, user, **kwargs):
             "avatar_url": "",
         }
     serializer = ProfileSerializer(data=profile_data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        logger.exception(serializer.errors)
+        
+    season_data = {
+        "name": "Season 1",
+        "user": user.id,
+    }
+    serializer = SeasonSerializer(data=season_data)
     if serializer.is_valid():
         serializer.save()
     else:

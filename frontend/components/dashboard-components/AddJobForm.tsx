@@ -13,6 +13,9 @@ import {
   TextField,
 } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
+import useApi from "@/util/apiClient";
+import { addJobUrl } from "@/util/apiRequests";
+import { useState, useEffect } from "react";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -44,11 +47,34 @@ const a11yProps = (index: number) => {
   };
 };
 
-const FullWidthTabs = () => {
+const FullWidthTabs = ({
+  currentSeason,
+  setOpen,
+}: {
+  currentSeason: number | null;
+  setOpen: any;
+}) => {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [jobUrl, setJobUrl] = useState("");
+  const [jobText, setJobText] = useState("");
+  const [jobFile, setJobFile] = useState(null);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+  const apiClient = useApi({ useToken: true });
+
+  const handleAddJobUrl = async ({
+    apiClient,
+    currentSeason,
+    jobUrl,
+  }: {
+    apiClient: any;
+    currentSeason: number | null;
+    jobUrl: string;
+  }) => {
+    const response = await addJobUrl({ apiClient, seasonId: currentSeason, jobUrl });
+    console.log(response);
   };
 
   return (
@@ -124,10 +150,25 @@ const FullWidthTabs = () => {
           }}>
           Add Job by URL
         </Typography>
-        <TextField label="Enter URL" variant="outlined" fullWidth />
+        <TextField
+          label="Enter URL"
+          variant="outlined"
+          fullWidth
+          value={jobUrl}
+          onChange={(e) => setJobUrl(e.target.value)}
+        />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton type="outlined">Cancel</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              handleAddJobUrl({ apiClient, currentSeason, jobUrl });
+              setOpen(false);
+            }}>
+            Submit
+          </SmallButton>
+          <SmallButton type="outlined" onClick={() => setOpen(false)}>
+            Cancel
+          </SmallButton>
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
@@ -142,7 +183,13 @@ const FullWidthTabs = () => {
         <TextField label="Enter Job Description" variant="outlined" fullWidth multiline rows={6} />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton type="outlined">Cancel</SmallButton>
+          <SmallButton
+            type="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}>
+            Cancel
+          </SmallButton>
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2} dir={theme.direction}>
@@ -155,14 +202,28 @@ const FullWidthTabs = () => {
         </SmallButton>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton type="outlined">Cancel</SmallButton>
+          <SmallButton
+            type="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}>
+            Cancel
+          </SmallButton>
         </Box>
       </TabPanel>
     </Box>
   );
 };
 
-const AddJobForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
+const AddJobForm = ({
+  open,
+  setOpen,
+  currentSeason,
+}: {
+  open: boolean;
+  setOpen: any;
+  currentSeason: number | null;
+}) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -191,7 +252,7 @@ const AddJobForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs />
+          <FullWidthTabs currentSeason={currentSeason} setOpen={setOpen} />
         </Paper>
       </Fade>
     </Modal>

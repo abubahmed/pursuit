@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, Popover } from "@mui/material";
+import { Box, Typography, Paper, Popover, CircularProgress } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
 import { DataGrid, GridColDef, GridCellParams, gridClasses } from "@mui/x-data-grid";
 import { FaTrash } from "react-icons/fa";
@@ -9,25 +9,74 @@ import AddJobForm from "../dashboard-components/AddJobForm";
 import EditJobForm from "../dashboard-components/EditJobForm";
 import JobInfoModal from "../dashboard-components/JobInfoModal";
 import SeasonForm from "../dashboard-components/SeasonForm";
-import { useState } from "react";
-import { jobs } from "@/util/pageContent";
+import { useState, useEffect } from "react";
+import { fetchJobs, addJobUrl } from "@/util/apiRequests";
+import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", headerClassName: "custom-header", flex: 1 },
-  { field: "title", headerName: "Job Title", flex: 1, headerClassName: "custom-header" },
-  { field: "company", headerName: "Company", flex: 1, headerClassName: "custom-header" },
+  { field: "number", headerName: "#", headerClassName: "custom-header", flex: 0.01 },
+  { field: "title", headerName: "Job Title", headerClassName: "custom-header", flex: 1 },
+  { field: "company", headerName: "Company", headerClassName: "custom-header", flex: 1 },
   {
     field: "location",
     headerName: "Location",
-    flex: 1,
     headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "during",
+    headerName: "During",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "level",
+    headerName: "Level",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "mode",
+    headerName: "Mode",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "salary",
+    headerName: "Salary",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "skills",
+    headerName: "Skills",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "type",
+    headerName: "Type",
+    headerClassName: "custom-header",
+    flex: 1,
+  },
+  {
+    field: "url",
+    headerName: "URL",
+    headerClassName: "custom-header",
+    flex: 1,
   },
   {
     field: "status",
     headerName: "Status",
-    flex: 1,
     headerClassName: "custom-header",
+    flex: 1,
   },
   {
     field: "actions",
@@ -186,7 +235,7 @@ const ActionCenter = () => {
   );
 };
 
-const DataTable = () => {
+const DataTable = ({ data }: { data: any }) => {
   return (
     <Paper
       elevation={0}
@@ -196,50 +245,93 @@ const DataTable = () => {
         borderRadius: "15px",
         [`.${gridClasses.cell}.applied`]: {},
       }}>
-      <DataGrid
-        rows={jobs}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        getCellClassName={(params: GridCellParams<any, any, number>) => {
-          if (params.field != "status") return "";
-          return params.value === "Applied"
-            ? "applied"
-            : params.value === "Assessment"
-            ? "assessment"
-            : params.value === "Interview"
-            ? "interview"
-            : params.value === "Offer"
-            ? "offer"
-            : "rejected";
-        }}
-        sx={{
-          border: 0,
-          fontWeight: "regular",
-          fontSize: "1rem",
-          color: "black",
-          borderRadius: "15px",
-        }}
-      />
+      {data && (
+        <DataGrid
+          columnVisibilityModel={{
+            description: false,
+            during: false,
+            level: false,
+            mode: false,
+            type: false,
+            skills: false,
+            url: false,
+          }}
+          rows={data}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          disableRowSelectionOnClick
+          getCellClassName={(params: GridCellParams<any, any, number>) => {
+            if (params.field != "status") return "";
+            return params.value === "Applied"
+              ? "applied"
+              : params.value === "Assessment"
+              ? "assessment"
+              : params.value === "Interview"
+              ? "interview"
+              : params.value === "Offer"
+              ? "offer"
+              : "rejected";
+          }}
+          sx={{
+            border: 0,
+            fontWeight: "regular",
+            fontSize: "1rem",
+            color: "black",
+            borderRadius: "15px",
+          }}
+        />
+      )}
     </Paper>
   );
 };
 
-const JobContainer = () => {
+const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
   const [seasonFormOpen, setSeasonFormOpen] = useState(false);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const apiClient = useApi({ useToken: true });
+
+  useEffect(() => {
+    if (currentSeason) {
+      fetchJobs({ apiClient, seasonId: currentSeason }).then((data) => {
+        setJobs(data.jobs);
+        console.log(data.jobs);
+        setLoading(false);
+      });
+    }
+  }, [currentSeason]);
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          height: "90vh",
+        }}>
+        <CircularProgress
+          size="3rem"
+          sx={{
+            color: "rgb(20,86,57)",
+          }}
+        />
+      </Box>
+    );
+  }
 
   return (
     <Paper
-      elevation={0}
+      elevation={1}
       sx={{
         m: 3,
         backgroundColor: "white",
         borderRadius: "15px",
-        border: "1px solid #e0e0e0",
       }}>
-      <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} />
+      <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} currentSeason={currentSeason} />
       <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
       <Box
         sx={{
@@ -276,7 +368,7 @@ const JobContainer = () => {
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>
-      <DataTable />
+      {jobs && <DataTable data={jobs} />}
     </Paper>
   );
 };

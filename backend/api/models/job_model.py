@@ -97,8 +97,6 @@ class Job(models.Model):
         blank=True,
         null=True,
     )
-    education = models.CharField(max_length=200, blank=True, null=True)
-    contact = models.CharField(max_length=200, blank=True, null=True)
     starred = models.BooleanField(default=False)
     hidden = models.BooleanField(default=False)
     number = models.IntegerField(blank=True, null=True)

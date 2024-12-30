@@ -5,7 +5,7 @@ from rest_framework import status
 from api.models.job_model import Job
 from api.models.season_model import Season
 from api.serializer import JobSerializer
-from api.util.inference_client import InferenceClientClass
+from api.util.openai_client import OpenAIClient
 from api.util.scraper import Scraper
 from django.contrib.auth import get_user_model
 
@@ -74,7 +74,7 @@ class JobCreateURLView(APIView):
             soup = scraper.scrape_data(url)
             text = scraper.get_text(soup)
             logger.info(text)
-            client = InferenceClientClass()
+            client = OpenAIClient()
             variables = client.extract_variables(text)
             if not variables:
                 return Response(
@@ -94,12 +94,10 @@ class JobCreateURLView(APIView):
                 "salary": variables["salary"] or "",
                 "skills": variables["skills"] or [],
                 "during": variables["during"] or "",
-                "stage": "Applied",
+                "status": "Applied",
                 "type": variables["type"] or "",
                 "level": variables["level"] or "",
                 "mode": variables["mode"] or "",
-                "education": variables["education"] or "",
-                "contact": variables["contact"] or "",
                 "user": user_id,
                 "season": season_id,
                 "url": url,
@@ -151,7 +149,7 @@ class JobUpdateView(APIView):
             )
         user_id = request.user.id
         job_id = request.data.get("job_id")
-        stage = request.data.get("stage")
+        status = request.data.get("status")
         starred = request.data.get("starred")
         hidden = request.data.get("hidden")
         if not job_id:
@@ -159,7 +157,7 @@ class JobUpdateView(APIView):
                 {"success": False, "message": "Job ID is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not stage and not starred and not hidden:
+        if not status and not starred and not hidden:
             return Response(
                 {"success": False, "message": "No data to update"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -171,20 +169,20 @@ class JobUpdateView(APIView):
                     {"success": False, "message": "Job not found"},
                     status=status.HTTP_404_NOT_FOUND,
                 )
-            STAGE_CHOICES = Job.JOB_STATUS_CHOICES
+            STATUS_CHOICES = Job.JOB_STATUS_CHOICES
             HIDDEN_CHOICES = ["True", "False"]
             STARRED_CHOICES = ["True", "False"]
             if (
                 (starred and starred not in STARRED_CHOICES)
-                or (stage and stage not in STAGE_CHOICES)
+                or (status and status not in STATUS_CHOICES)
                 or (hidden and hidden not in HIDDEN_CHOICES)
             ):
                 return Response(
                     {"success": False, "message": "Invalid data to update"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            if stage and stage in STAGE_CHOICES:
-                job.stage = stage
+            if status and status in STATUS_CHOICES:
+                job.status = status
             if starred and starred in STARRED_CHOICES:
                 job.starred = True if starred == "True" else False
             if hidden and hidden in HIDDEN_CHOICES:

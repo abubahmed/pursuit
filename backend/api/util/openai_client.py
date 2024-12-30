@@ -1,27 +1,27 @@
-from huggingface_hub import InferenceClient
 from loguru import logger
+from api.util.secrets import OPENAI_API_KEY
 from api.models.job_model import Job
 import json
-from api.util.secrets import HUGGINGFACE_API_KEY
 import copy
+from openai import OpenAI
 
 
-class InferenceClientClass:
+class OpenAIClient:
     def __init__(self):
-        self.MODEL = "Qwen/Qwen2.5-Coder-32B-Instruct"
-        self.client = InferenceClient(api_key=HUGGINGFACE_API_KEY)
+        self.client = OpenAI(api_key=OPENAI_API_KEY)
 
     def get_prompt(self, text):
         prompt = f"""
-            Please extract the specified variables of interest from the input text below and return them in JSON format.
+            Please extract the specified variables of interest from provided input text and return them in JSON format.
 
             Instructions:
-            - For each variable, extract the most relevant and explicit information from the input text. 
-            - If a variable is not mentioned or cannot be clearly identified, return a falsy value for that variable ("" or [] depending on variable type).
+            - For each variable, extract the most relevant and explicit information from the input text.
+            - If a variable is not mentioned or cannot be clearly identified, return a falsy value for that variable ("" or [] depending on variable type). For example, if the salary is not mentioned, return "".
             - Ensure the JSON output strictly adheres to the specified format without any syntax.
-            
+
             Additional points:
-            - The provided input is the result of a web scraping process and may contain some noise. Focus only on extracting relevant details.
+            - The provided input is the result of a web scraping process and may contain some noise (such as additional job postings). Focus only on extracting relevant details.
+            - While the text is expected to represent a job posting, it may also represent other types of applications and opportunities such as fellowships, internships, and scholarships. In such cases, proceed with extraction as usual.
             - If the input text does not contain information for a specific variable, please return a falsy value ("" or [] depending on variable type).
             - If the input text contains information that suggests a failure in the extraction process (404 error, verification required, etc.), please return falsy values for all variables ("" or [] depending on variable type).
             - If the input text contains information that suggests the job listing has been removed or is no longer available, please return falsy values for all variables ("" or [] depending on variable type).
@@ -66,6 +66,7 @@ class InferenceClientClass:
               "mode": <mode>,
             }}
             
+            
             Input text:
             ---
             {text}
@@ -89,24 +90,25 @@ class InferenceClientClass:
         return data_schema
 
     def extract_variables(self, text):
-        if self.client is None:
-            return None
-        if not text:
-            logger.exception("No text provided")
+        if self.client is None or text is None:
+            logger.exception("Invalid input for client")
             return None
         try:
-            prompt = self.get_prompt(text)
-            messages = [{"role": "user", "content": prompt}]
-            stream = self.client.chat.completions.create(
-                model=self.MODEL,
-                messages=messages,
-                temperature=0.5,
-                max_tokens=512,
-                top_p=0.7,
-                stream=False,
+            instructions = self.get_prompt(text)
+            completion = self.client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "user", "content": instructions},
+                ],
+                response_format={"type": "text"},
+                temperature=1,
+                max_completion_tokens=1024,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0,
             )
-            response = stream.choices[0].message.content
-            logger.info("Inference client response: " + response)
+            response = completion.choices[0].message.content
+            logger.info("OpenAI client response: " + response)
             start = response.find("{")
             end = response.rfind("}") + 1
             json_data = response[start:end]
@@ -136,7 +138,7 @@ class InferenceClientClass:
 
 
 def test_inference_client():
-    client = InferenceClientClass()
+    client = OpenAIClient()
     text = "Software Engineer at Google in New York"
     variables = client.extract_variables(text)
     logger.info(variables["title"])

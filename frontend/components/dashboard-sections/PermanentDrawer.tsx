@@ -68,10 +68,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
   ],
 }));
 
-export default function MiniDrawer() {
+const MiniDrawer = ({
+  seasons,
+  setSelectedSeason,
+  selectedSeason,
+}: {
+  seasons: any;
+  setSelectedSeason: any;
+  selectedSeason: number | null;
+}) => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const [selected, setSelected] = useState(0);
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -105,10 +112,10 @@ export default function MiniDrawer() {
           sx={{
             mt: 2,
           }}>
-          {seasons.map((season, index) => (
+          {seasons.map((season: any, index: number) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
               <ListItemButton
-                onClick={() => setSelected(index)}
+                onClick={() => setSelectedSeason(season.id)}
                 sx={[
                   {
                     minHeight: 48,
@@ -136,7 +143,7 @@ export default function MiniDrawer() {
                           mr: "auto",
                         },
                   ]}>
-                  {selected !== index ? (
+                  {selectedSeason !== season.id ? (
                     <IoCalendarClearOutline color="white" size="1.3rem" />
                   ) : (
                     <IoCalendarClear color="white" size="1.3rem" />
@@ -157,7 +164,7 @@ export default function MiniDrawer() {
                           color: "white",
                           fontSize: "1rem",
                         },
-                    selected === index
+                    selectedSeason === season.id
                       ? {
                           fontWeight: "medium",
                         }
@@ -231,4 +238,6 @@ export default function MiniDrawer() {
       </Drawer>
     </Box>
   );
-}
+};
+
+export default MiniDrawer;

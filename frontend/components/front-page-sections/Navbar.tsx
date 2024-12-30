@@ -15,7 +15,6 @@ export default function Navbar() {
           backgroundColor: "white",
           boxShadow: "none",
           py: "5px",
-          borderBottom: "1px solid #e0e0e0",
         }}>
         <Container maxWidth="lg">
           <Toolbar sx={{ justifyContent: "space-between" }}>

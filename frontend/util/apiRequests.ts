@@ -1,6 +1,7 @@
 import useApi from "./apiClient";
 
 export const fetchUser = async ({ apiClient }: { apiClient: ReturnType<typeof useApi> }) => {
+  if (!apiClient) return {};
   try {
     const response = await apiClient.get("user/");
     const userDetails = response?.data;
@@ -12,6 +13,7 @@ export const fetchUser = async ({ apiClient }: { apiClient: ReturnType<typeof us
 };
 
 export const fetchProfile = async ({ apiClient }: { apiClient: ReturnType<typeof useApi> }) => {
+  if (!apiClient) return { profileDetails: {}, message: "Invalid data" };
   try {
     const response = await apiClient.get("users/profile/");
     const profileDetails = response?.data?.data?.profile;
@@ -24,6 +26,7 @@ export const fetchProfile = async ({ apiClient }: { apiClient: ReturnType<typeof
 };
 
 export const fetchSeasons = async ({ apiClient }: { apiClient: ReturnType<typeof useApi> }) => {
+  if (!apiClient) return { seasons: [], message: "Invalid data" };
   try {
     const response = await apiClient.get("seasons/");
     const seasons = response?.data?.data?.seasons;
@@ -44,6 +47,8 @@ export const createSeason = async ({
   seasonName: string;
   seasonDescription: string;
 }) => {
+  if (!seasonName || !seasonDescription || !apiClient)
+    return { season: null, message: "Invalid data" };
   try {
     const response = await apiClient.post("seasons/add/", {
       name: seasonName,
@@ -63,8 +68,9 @@ export const fetchJobs = async ({
   seasonId,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  seasonId: string;
+  seasonId: number;
 }) => {
+  if (!seasonId || !apiClient) return { jobs: [], message: "Invalid data" };
   try {
     const response = await apiClient.post("jobs/", { season_id: seasonId });
     const jobs = response?.data?.data?.jobs;
@@ -82,9 +88,10 @@ export const addJobUrl = async ({
   jobUrl,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  seasonId: string;
+  seasonId: number | null;
   jobUrl: string;
 }) => {
+  if (!seasonId || !jobUrl || !apiClient) return { message: "Invalid data", job: null };
   try {
     const response = await apiClient.post("jobs/add/", { season_id: seasonId, url: jobUrl });
     const message = response?.data?.message;

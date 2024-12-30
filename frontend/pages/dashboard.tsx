@@ -7,23 +7,37 @@ import JobContainer from "@/components/dashboard-sections/JobContainer";
 import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
 import { useState, useEffect } from "react";
 import useApi from "@/util/apiClient";
-import { fetchUser, fetchProfile } from "@/util/apiRequests";
+import { fetchUser, fetchProfile, fetchSeasons } from "@/util/apiRequests";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const [userDetails, setUserDetails] = useState({});
+  const [profileDetails, setProfileDetails] = useState({});
+  const [seasons, setSeasons] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(null);
+  const [loading, setLoading] = useState({
+    profileDetails: true,
+    seasons: true,
+  });
   const apiClient = useApi({ useToken: true });
 
   useEffect(() => {
     if (session && status === "authenticated") {
       fetchProfile({ apiClient }).then((data) => {
-        setUserDetails(data);
-        console.log(data);
+        setProfileDetails(data.profileDetails);
+        setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
+        console.log(data.profileDetails);
+      });
+
+      fetchSeasons({ apiClient }).then((data) => {
+        setSeasons(data.seasons);
+        setSelectedSeason(data.seasons[0].id);
+        setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
+        console.log(data.seasons);
       });
     }
   }, [session]);
 
-  if (status === "loading") {
+  if (status === "loading" || loading.profileDetails || loading.seasons) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <CircularProgress
@@ -38,27 +52,20 @@ export default function Dashboard() {
 
   return (
     <Box display="flex" height="100vh">
-      <MiniDrawer />
+      <MiniDrawer
+        seasons={seasons}
+        setSelectedSeason={setSelectedSeason}
+        selectedSeason={selectedSeason}
+      />
       <Box
         sx={{
           flexGrow: 1,
-          backgroundColor: "rgb(240, 240, 240, 0.5)",
+          backgroundColor: "rgb(240, 240, 240, 0.3)",
           overflow: "auto",
         }}>
-        <Navbar />
-        <JobContainer />
+        <Navbar profileDetails={profileDetails} />
+        <JobContainer currentSeason={selectedSeason} />
       </Box>
     </Box>
   );
-
-  // return (
-  //   <Box m={8}>
-  //     <VStack>
-  //       <Text>You are not authenticated.</Text>
-  //       <Button colorScheme="blue" onClick={() => signIn(undefined, { callbackUrl: "/profile" })}>
-  //         Sign in
-  //       </Button>
-  //     </VStack>
-  //   </Box>
-  // );
 }
