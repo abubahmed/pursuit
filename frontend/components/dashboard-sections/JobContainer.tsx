@@ -10,7 +10,7 @@ import EditJobForm from "../dashboard-components/EditJobForm";
 import JobInfoModal from "../dashboard-components/JobInfoModal";
 import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState, useEffect } from "react";
-import { fetchJobs, fetchJobsExport } from "@/util/apiRequests";
+import { fetchJobs, fetchJobsExport, deleteJob, editJob } from "@/util/apiRequests";
 import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
@@ -38,12 +38,22 @@ const IconBox = ({
   );
 };
 
-const PopoverContent = ({ content, handleClose }: { content: string; handleClose: any }) => {
+const PopoverContent = ({
+  content,
+  handleClose,
+  handleSubmit,
+}: {
+  content: string;
+  handleClose: any;
+  handleSubmit: any;
+}) => {
   return (
     <Box>
       <Typography sx={{ mb: 2 }}>{content}</Typography>
       <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-        <SmallButton type="contained">Yes</SmallButton>
+        <SmallButton type="contained" onClick={handleSubmit}>
+          Yes
+        </SmallButton>
         <SmallButton type="outlined" onClick={handleClose}>
           No
         </SmallButton>
@@ -67,6 +77,7 @@ const ActionCenter = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
+  const apiClient = useApi({ useToken: true });
 
   const handleClick = (event: any) => {
     const key = event.currentTarget.getAttribute("data-key");
@@ -98,6 +109,37 @@ const ActionCenter = ({
   };
   const popoverOpen = Boolean(anchorEl);
   const popoverId = popoverOpen ? "simple-popover" : undefined;
+
+  const handleDeleteJob = async ({ jobId, apiClient }: { jobId: any; apiClient: any }) => {
+    try {
+      console.log("Job ID " + jobId);
+      const { message } = await deleteJob({ jobId, apiClient });
+      console.log(message);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAnchorEl(null);
+      setPopupContent("");
+    }
+  };
+
+  const handleHideJob = async ({ apiClient, jobId }: { apiClient: any; jobId: number | null }) => {
+    try {
+      const { message } = await editJob({
+        jobId,
+        apiClient,
+        hidden: "True",
+        status: null,
+        starred: null,
+      });
+      console.log(message);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setAnchorEl(null);
+      setPopupContent("");
+    }
+  };
 
   return (
     <Box
@@ -159,12 +201,18 @@ const ActionCenter = ({
           <PopoverContent
             content="Are you sure you want to delete this job?"
             handleClose={handleClose}
+            handleSubmit={() => {
+              handleDeleteJob({ jobId, apiClient });
+            }}
           />
         )}
         {popupContent && popupContent === "hide" && (
           <PopoverContent
             content="Are you sure you want to hide this job?"
             handleClose={handleClose}
+            handleSubmit={() => {
+              handleHideJob({ apiClient, jobId });
+            }}
           />
         )}
       </Popover>
@@ -331,8 +379,8 @@ const DataTable = ({
               fontWeight: "regular",
             },
             "& .MuiDataGrid-cell": {
-              py: "10px"
-            }
+              py: "10px",
+            },
           }}
           getRowHeight={() => "auto"}
         />
@@ -356,15 +404,27 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
   useEffect(() => {
     if (currentSeason) {
       fetchJobs({ apiClient, seasonId: currentSeason }).then((data) => {
-        for (let i = 0; i < data.jobs.length; i++) {
-          data.jobs[i].skills = data.jobs[i].skills.join(", ");
-        }
-        setJobs(data.jobs);
-        console.log(data.jobs);
+        const notHiddenJobs = data.jobs.filter((job: any) => job.hidden === false);
+        setJobs(notHiddenJobs);
+        console.log(notHiddenJobs);
         setLoading(false);
       });
     }
   }, [currentSeason]);
+
+  const refetchJobs = async () => {
+    try {
+      const response = await fetchJobs({ apiClient, seasonId: currentSeason });
+      if (response.message === "successful get" && response.jobs) {
+        const notHiddenJobs = response.jobs.filter((job: any) => job.hidden === false);
+        setJobs(notHiddenJobs);
+      } else {
+        console.error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (infoJobId && jobs) {
@@ -428,7 +488,12 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
         backgroundColor: "white",
         borderRadius: "15px",
       }}>
-      <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} currentSeason={currentSeason} />
+      <AddJobForm
+        open={addJobFormOpen}
+        setOpen={setAddJobFormOpen}
+        currentSeason={currentSeason}
+        refetchJobs={refetchJobs}
+      />
       <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
       <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} jobId={editJobId} />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
@@ -446,7 +511,7 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
         <Box
           sx={{
             display: "flex",
-            gap: "15px",
+            gap: "20px",
             justifyContent: "center",
             alignItems: "center",
           }}>

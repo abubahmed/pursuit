@@ -13,6 +13,8 @@ import {
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
+import { editJob } from "@/util/apiRequests";
+import useApi from "@/util/apiClient";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -37,7 +39,7 @@ const TabPanel = (props: {
   );
 };
 
-const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
+const FullWidthTabs = ({ setOpen, handleEditJob }: { setOpen: any; handleEditJob: any }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [status, setStatus] = useState("");
@@ -70,19 +72,26 @@ const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
               "Interview",
               "Assessment",
               "Offer",
-              "Rejection",
+              "Rejected",
               "Waitlisted",
-              "Other",
               "Withdrawn",
+              "Other",
             ].map((status) => (
-              <MenuItem key={status} value={status.toLowerCase()}>
+              <MenuItem key={status} value={status}>
                 {status}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton type="contained">Submit</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              console.log(status);
+              handleEditJob({ status });
+            }}>
+            Submit
+          </SmallButton>
           <SmallButton
             type="outlined"
             onClick={() => {
@@ -105,6 +114,24 @@ const EditJobForm = ({
   setOpen: any;
   jobId: number | null;
 }) => {
+  const apiClient = useApi({ useToken: true });
+  const handleEditJob = async ({
+    status,
+  }: {
+    apiClient: ReturnType<typeof useApi>;
+    jobId: number | null;
+    status: string | null;
+  }) => {
+    try {
+      const { message } = await editJob({ apiClient, jobId, status, starred: null, hidden: null });
+      console.log(message);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setOpen(false);
+    }
+  };
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -133,7 +160,7 @@ const EditJobForm = ({
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs setOpen={setOpen} />
+          <FullWidthTabs setOpen={setOpen} handleEditJob={handleEditJob} />
         </Paper>
       </Fade>
     </Modal>

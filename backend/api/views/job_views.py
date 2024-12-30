@@ -51,6 +51,89 @@ class JobListView(APIView):
             )
 
 
+class JobCreateTextView(APIView):
+    def post(self, request):
+        print("request.data", request.data)
+        if not request.user.is_authenticated or not request.user.id:
+            return Response(
+                {"success": False, "message": "User is not authenticated"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        text = request.data.get("text")
+        season_id = int(request.data.get("season_id"))
+        season = Season.objects.get(id=season_id)
+        user_id = request.user.id
+        if not text or not season_id or not season:
+            return Response(
+                {
+                    "success": False,
+                    "message": "URL and Season ID are required",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            logger.info(text)
+            client = OpenAIClient()
+            variables = client.extract_variables(text)
+            if not variables:
+                return Response(
+                    {"success": False, "message": "Failed to extract variables"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+            logger.info(variables)
+            job_data = {
+                "title": variables["title"] or "",
+                "company": variables["company"] or "",
+                "description": variables["description"] or "",
+                "location": variables["location"] or "",
+                "salary": variables["salary"] or "",
+                "skills": variables["skills"] or [],
+                "during": variables["during"] or "",
+                "status": "Applied",
+                "type": variables["type"] or "",
+                "level": variables["level"] or "",
+                "mode": variables["mode"] or "",
+                "contact": variables["contact"] or "",
+                "user": user_id,
+                "season": season_id,
+                "starred": False,
+                "hidden": False,
+            }
+            serializer = JobSerializer(data=job_data)
+            if not serializer.is_valid():
+                return Response(
+                    {
+                        "success": False,
+                        "message": "Invalid job data " + str(serializer.errors),
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            serializer.save()
+            saved_instance = serializer.instance
+            serialized_data = JobSerializer(saved_instance).data
+            job = Job.objects.get(id=saved_instance.id)
+            season.jobs.add(job)
+            season.save()
+            logger.info(serialized_data)
+            return Response(
+                {
+                    "success": True,
+                    "message": "Job created successfully",
+                    "data": serialized_data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+        except Exception as e:
+            logger.exception(e)
+            return Response(
+                {
+                    "success": False,
+                    "message": "Failed to create job with error " + str(e),
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
 class JobCreateURLView(APIView):
     def post(self, request):
         print("request.data", request.data)
@@ -146,7 +229,7 @@ class JobUpdateView(APIView):
             )
         user_id = request.user.id
         job_id = request.data.get("job_id")
-        status = request.data.get("status")
+        status_attribute = request.data.get("status")
         starred = request.data.get("starred")
         hidden = request.data.get("hidden")
         if not job_id:
@@ -154,7 +237,7 @@ class JobUpdateView(APIView):
                 {"success": False, "message": "Job ID is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not status and not starred and not hidden:
+        if not status_attribute and not starred and not hidden:
             return Response(
                 {"success": False, "message": "No data to update"},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -167,19 +250,20 @@ class JobUpdateView(APIView):
                     status=status.HTTP_404_NOT_FOUND,
                 )
             STATUS_CHOICES = Job.JOB_STATUS_CHOICES
+            STATUS_CHOICES = [status[0] for status in STATUS_CHOICES]
             HIDDEN_CHOICES = ["True", "False"]
             STARRED_CHOICES = ["True", "False"]
             if (
                 (starred and starred not in STARRED_CHOICES)
-                or (status and status not in STATUS_CHOICES)
+                or (status_attribute and status_attribute not in STATUS_CHOICES)
                 or (hidden and hidden not in HIDDEN_CHOICES)
             ):
                 return Response(
                     {"success": False, "message": "Invalid data to update"},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            if status and status in STATUS_CHOICES:
-                job.status = status
+            if status_attribute and status_attribute in STATUS_CHOICES:
+                job.status = status_attribute
             if starred and starred in STARRED_CHOICES:
                 job.starred = True if starred == "True" else False
             if hidden and hidden in HIDDEN_CHOICES:
@@ -198,7 +282,7 @@ class JobUpdateView(APIView):
 
 
 class JobDeleteView(APIView):
-    def delete(self, request):
+    def post(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
                 {"success": False, "message": "User is not authenticated"},

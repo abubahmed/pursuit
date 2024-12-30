@@ -8,6 +8,7 @@ from .views.views import GoogleLogin
 from .views.job_views import (
     JobListView,
     JobCreateURLView,
+    JobCreateTextView,
     JobDeleteView,
     JobUpdateView,
     JobExportView,
@@ -37,6 +38,7 @@ urlpatterns = [
     path("google/", GoogleLogin.as_view(), name="google_login"),
     path("jobs/", JobListView.as_view(), name="job_list"),
     path("jobs/add/", JobCreateURLView.as_view(), name="job_add"),
+    path("jobs/add/text/", JobCreateTextView.as_view(), name="job_add_text"),
     path("jobs/delete/", JobDeleteView.as_view(), name="job_delete"),
     path("jobs/update/", JobUpdateView.as_view(), name="job_update"),
     path("jobs/export/", JobExportView.as_view(), name="job_export"),

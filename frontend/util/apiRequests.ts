@@ -63,12 +63,30 @@ export const createSeason = async ({
   }
 };
 
+export const deleteJob = async ({
+  apiClient,
+  jobId,
+}: {
+  apiClient: ReturnType<typeof useApi>;
+  jobId: number | null;
+}) => {
+  if (!jobId || !apiClient) return { message: "Invalid data" };
+  try {
+    const response = await apiClient.post("jobs/delete/", { job_id: jobId } as any);
+    const message = response?.data?.message;
+    return { message };
+  } catch (error) {
+    console.error(error);
+    return { message: error };
+  }
+};
+
 export const fetchJobs = async ({
   apiClient,
   seasonId,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  seasonId: number;
+  seasonId: number | null;
 }) => {
   if (!seasonId || !apiClient) return { jobs: [], message: "Invalid data" };
   try {
@@ -77,6 +95,7 @@ export const fetchJobs = async ({
     if (jobs) {
       jobs.forEach((job: any) => {
         job.created_at = new Date(job.created_at as string).toLocaleDateString();
+        job.skills = job.skills.join(", ");
       });
     }
     const message = response?.data?.message;
@@ -92,7 +111,7 @@ export const fetchJobsExport = async ({
   seasonId,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  seasonId: number | null
+  seasonId: number | null;
 }) => {
   if (!seasonId || !apiClient) return { message: "Invalid data", jobs: null };
   try {
@@ -124,5 +143,51 @@ export const addJobUrl = async ({
   } catch (error) {
     console.error(error);
     return { message: error, job: null };
+  }
+};
+
+export const addJobText = async ({
+  apiClient,
+  seasonId,
+  jobText,
+}: {
+  apiClient: ReturnType<typeof useApi>;
+  seasonId: number | null;
+  jobText: string;
+}) => {
+  if (!seasonId || !jobText || !apiClient) return { message: "Invalid data", job: null };
+  try {
+    const response = await apiClient.post("jobs/add/text/", { season_id: seasonId, text: jobText });
+    const message = response?.data?.message;
+    const job = response?.data?.data;
+    return { message, job };
+  } catch (error) {
+    console.error(error);
+    return { message: error, job: null };
+  }
+};
+
+export const editJob = async ({
+  apiClient,
+  jobId,
+  status,
+  starred,
+  hidden,
+}: {
+  apiClient: ReturnType<typeof useApi>;
+  jobId: number | null;
+  status: string | null;
+  starred: string | null;
+  hidden: string | null;
+}) => {
+  if (!apiClient || !jobId || (!starred && !status && !hidden)) return { message: "Invalid data" };
+  try {
+    const params: any = { status, starred, hidden, job_id: jobId };
+    const response = await apiClient.post(`jobs/update/`, params);
+    const message = response?.data?.message;
+    return { message };
+  } catch (error) {
+    console.error(error);
+    return { message: error };
   }
 };

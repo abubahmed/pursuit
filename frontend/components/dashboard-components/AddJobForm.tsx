@@ -11,10 +11,11 @@ import {
   Tabs,
   Tab,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
 import useApi from "@/util/apiClient";
-import { addJobUrl } from "@/util/apiRequests";
+import { addJobUrl, addJobText } from "@/util/apiRequests";
 import { useState, useEffect } from "react";
 
 const TabPanel = (props: {
@@ -50,15 +51,21 @@ const a11yProps = (index: number) => {
 const FullWidthTabs = ({
   currentSeason,
   setOpen,
+  refetchJobs,
+  loading,
+  setLoading,
 }: {
   currentSeason: number | null;
   setOpen: any;
+  refetchJobs: any;
+  loading: any;
+  setLoading: any;
 }) => {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
   const [jobUrl, setJobUrl] = useState("");
   const [jobText, setJobText] = useState("");
   const [jobFile, setJobFile] = useState(null);
+  const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -68,13 +75,52 @@ const FullWidthTabs = ({
     apiClient,
     currentSeason,
     jobUrl,
+    refetchJobs,
   }: {
     apiClient: any;
     currentSeason: number | null;
     jobUrl: string;
+    refetchJobs: any;
   }) => {
-    const response = await addJobUrl({ apiClient, seasonId: currentSeason, jobUrl });
-    console.log(response);
+    if (!jobUrl || loading) return;
+    setLoading(true);
+    try {
+      const response = await addJobUrl({ apiClient, seasonId: currentSeason, jobUrl });
+      console.log(response);
+      await refetchJobs();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setJobUrl("");
+      setOpen(false);
+      setLoading(false);
+    }
+  };
+
+  const handleAddJobText = async ({
+    apiClient,
+    currentSeason,
+    jobText,
+    refetchJobs,
+  }: {
+    apiClient: any;
+    currentSeason: number | null;
+    jobText: string;
+    refetchJobs: any;
+  }) => {
+    if (!jobText || loading) return;
+    setLoading(true);
+    try {
+      const response = await addJobText({ apiClient, seasonId: currentSeason, jobText });
+      console.log(response);
+      await refetchJobs();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setJobText("");
+      setOpen(false);
+      setLoading(false);
+    }
   };
 
   return (
@@ -161,8 +207,7 @@ const FullWidthTabs = ({
           <SmallButton
             type="contained"
             onClick={() => {
-              handleAddJobUrl({ apiClient, currentSeason, jobUrl });
-              setOpen(false);
+              handleAddJobUrl({ apiClient, currentSeason, jobUrl, refetchJobs });
             }}>
             Submit
           </SmallButton>
@@ -180,9 +225,23 @@ const FullWidthTabs = ({
           }}>
           Add Job by Text
         </Typography>
-        <TextField label="Enter Job Description" variant="outlined" fullWidth multiline rows={6} />
+        <TextField
+          label="Enter Job Description"
+          variant="outlined"
+          fullWidth
+          multiline
+          rows={6}
+          value={jobText}
+          onChange={(e) => setJobText(e.target.value)}
+        />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton type="contained">Submit</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              handleAddJobText({ apiClient, currentSeason, jobText, refetchJobs });
+            }}>
+            Submit
+          </SmallButton>
           <SmallButton
             type="outlined"
             onClick={() => {
@@ -219,11 +278,15 @@ const AddJobForm = ({
   open,
   setOpen,
   currentSeason,
+  refetchJobs,
 }: {
   open: boolean;
   setOpen: any;
   currentSeason: number | null;
+  refetchJobs: any;
 }) => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -252,7 +315,36 @@ const AddJobForm = ({
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs currentSeason={currentSeason} setOpen={setOpen} />
+          {loading && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "white",
+                zIndex: 2,
+                borderRadius: "15px",
+              }}>
+              <CircularProgress
+                size="3rem"
+                sx={{
+                  color: "rgb(20,86,57)",
+                }}
+              />
+            </Box>
+          )}
+          <FullWidthTabs
+            currentSeason={currentSeason}
+            setOpen={setOpen}
+            refetchJobs={refetchJobs}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </Paper>
       </Fade>
     </Modal>
