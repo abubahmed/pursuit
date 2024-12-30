@@ -82,6 +82,37 @@ export const fetchJobs = async ({
   }
 };
 
+export const fetchJob = async ({
+  apiClient,
+  jobId,
+}: {
+  apiClient: ReturnType<typeof useApi>;
+  jobId: number | null;
+}) => {
+  if (!jobId || !apiClient) return { job: null, message: "Invalid data" };
+  try {
+    const response = await apiClient.post(`job/`, { job_id: jobId });
+    const job = response?.data?.data;
+    const message = response?.data?.message;
+    return { job: {
+      id: jobId,
+      title: "Software Engineer",
+      company: "Google",
+      location: "Mountain View, CA",
+      description: "Work on the world's most popular search engine.",
+      url: "https://careers.google.com/jobs/results/123456",
+      status: "Applied",
+      notes: "Applied on 10/1/2021",
+      date_applied: "2021-10-01",
+      date_updated: "2021-10-01",
+      date_created: "2021-10-01",
+    }, message };
+  } catch (error) {
+    console.error(error);
+    return { job: null, message: error };
+  }
+};
+
 export const addJobUrl = async ({
   apiClient,
   seasonId,

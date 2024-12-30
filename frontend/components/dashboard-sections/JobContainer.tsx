@@ -14,88 +14,6 @@ import { fetchJobs, addJobUrl } from "@/util/apiRequests";
 import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
-const columns: GridColDef[] = [
-  {
-    field: "title",
-    headerName: "Job Title",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "company",
-    headerName: "Company",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "location",
-    headerName: "Location",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "during",
-    headerName: "During",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "level",
-    headerName: "Level",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "mode",
-    headerName: "Mode",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "salary",
-    headerName: "Salary",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "skills",
-    headerName: "Skills",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "type",
-    headerName: "Type",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "url",
-    headerName: "URL",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    headerClassName: "custom-header",
-    flex: 1,
-  },
-  {
-    field: "actions",
-    headerClassName: "custom-header",
-    headerName: "Actions",
-    width: 180,
-    renderCell: (params) => <ActionCenter />,
-  },
-];
-
 const IconBox = ({
   dataKey,
   onClick,
@@ -134,11 +52,21 @@ const PopoverContent = ({ content, handleClose }: { content: string; handleClose
   );
 };
 
-const ActionCenter = () => {
+const ActionCenter = ({
+  jobId,
+  setEditJobFormOpen,
+  setJobInfoOpen,
+  setInfoJobId,
+  setEditJobId,
+}: {
+  jobId: number | null;
+  setEditJobFormOpen: any;
+  setJobInfoOpen: any;
+  setInfoJobId: any;
+  setEditJobId: any;
+}) => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
-  const [editJobFormOpen, setEditJobFormOpen] = useState(false);
-  const [jobInfoOpen, setJobInfoOpen] = useState(false);
 
   const handleClick = (event: any) => {
     const key = event.currentTarget.getAttribute("data-key");
@@ -180,8 +108,6 @@ const ActionCenter = () => {
         justifyContent: "flex-start",
         height: "100%",
       }}>
-      <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} />
-      <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} />
       <IconBox dataKey="1" onClick={handleClick}>
         <FaTrash />
       </IconBox>
@@ -189,6 +115,7 @@ const ActionCenter = () => {
         dataKey="2"
         onClick={() => {
           setEditJobFormOpen(true);
+          setEditJobId(jobId);
         }}>
         <RiEdit2Fill />
       </IconBox>
@@ -199,6 +126,7 @@ const ActionCenter = () => {
         dataKey="4"
         onClick={() => {
           setJobInfoOpen(true);
+          setInfoJobId(jobId);
         }}>
         <BiSolidShow />
       </IconBox>
@@ -244,7 +172,19 @@ const ActionCenter = () => {
   );
 };
 
-const DataTable = ({ data }: { data: any }) => {
+const DataTable = ({
+  data,
+  setJobInfoOpen,
+  setEditJobFormOpen,
+  setInfoJobId,
+  setEditJobId,
+}: {
+  data: any;
+  setJobInfoOpen: any;
+  setEditJobFormOpen: any;
+  setInfoJobId: any;
+  setEditJobId: any;
+}) => {
   return (
     <Paper
       elevation={0}
@@ -274,22 +214,98 @@ const DataTable = ({ data }: { data: any }) => {
             pagination: { paginationModel },
           }}
           rows={data}
-          columns={columns}
+          columns={[
+            {
+              field: "title",
+              headerName: "Job Title",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "company",
+              headerName: "Company",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "location",
+              headerName: "Location",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "description",
+              headerName: "Description",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "during",
+              headerName: "During",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "level",
+              headerName: "Level",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "mode",
+              headerName: "Mode",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "salary",
+              headerName: "Salary",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "skills",
+              headerName: "Skills",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "type",
+              headerName: "Type",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "url",
+              headerName: "URL",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "status",
+              headerName: "Status",
+              headerClassName: "custom-header",
+              flex: 1,
+            },
+            {
+              field: "actions",
+              headerClassName: "custom-header",
+              headerName: "Actions",
+              width: 180,
+              renderCell: (params) => (
+                <ActionCenter
+                  jobId={params.row.id}
+                  setEditJobFormOpen={setEditJobFormOpen}
+                  setJobInfoOpen={setJobInfoOpen}
+                  setInfoJobId={setInfoJobId}
+                  setEditJobId={setEditJobId}
+                />
+              ),
+            },
+          ]}
           pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
-          getCellClassName={(params: GridCellParams<any, any, number>) => {
-            if (params.field != "status") return "";
-            return params.value === "Applied"
-              ? "applied"
-              : params.value === "Assessment"
-              ? "assessment"
-              : params.value === "Interview"
-              ? "interview"
-              : params.value === "Offer"
-              ? "offer"
-              : "rejected";
-          }}
           sx={{
             border: 0,
             fontWeight: "regular",
@@ -301,7 +317,7 @@ const DataTable = ({ data }: { data: any }) => {
             },
             "& .MuiDataGrid-columnHeaderTitle": {
               fontWeight: "regular",
-            }
+            },
           }}
           getRowHeight={() => "auto"}
         />
@@ -313,6 +329,11 @@ const DataTable = ({ data }: { data: any }) => {
 const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
   const [seasonFormOpen, setSeasonFormOpen] = useState(false);
+  const [editJobFormOpen, setEditJobFormOpen] = useState(false);
+  const [jobInfoOpen, setJobInfoOpen] = useState(false);
+  const [infoJobId, setInfoJobId] = useState(null);
+  const [editJobId, setEditJobId] = useState(null);
+  const [infoJob, setInfoJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const apiClient = useApi({ useToken: true });
@@ -329,6 +350,15 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
       });
     }
   }, [currentSeason]);
+
+  useEffect(() => {
+    if (infoJobId && jobs) {
+      const job = jobs.find((job: any) => job.id === infoJobId);
+      if (job) {
+        setInfoJob(job);
+      }
+    }
+  }, [infoJobId, jobs]);
 
   if (loading) {
     return (
@@ -359,6 +389,12 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
       }}>
       <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} currentSeason={currentSeason} />
       <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
+      <EditJobForm
+        open={editJobFormOpen}
+        setOpen={setEditJobFormOpen}
+        jobId={editJobId}
+      />
+      <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box
         sx={{
           display: "flex",
@@ -394,7 +430,15 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
           <SmallButton type="outlined">Export Data</SmallButton>
         </Box>
       </Box>
-      {jobs && <DataTable data={jobs} />}
+      {jobs && (
+        <DataTable
+          data={jobs}
+          setEditJobFormOpen={setEditJobFormOpen}
+          setJobInfoOpen={setJobInfoOpen}
+          setInfoJobId={setInfoJobId}
+          setEditJobId={setEditJobId}
+        />
+      )}
     </Paper>
   );
 };

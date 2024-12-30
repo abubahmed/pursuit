@@ -5,7 +5,13 @@ from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
 from rest_framework_simplejwt.views import TokenVerifyView
 from allauth.socialaccount.views import signup
 from .views.views import GoogleLogin
-from .views.job_views import JobListView, JobCreateURLView, JobDeleteView, JobUpdateView
+from .views.job_views import (
+    JobListView,
+    JobCreateURLView,
+    JobDeleteView,
+    JobUpdateView,
+    JobFindView,
+)
 from .views.profile_views import (
     UserListView,
     ProfileListView,
@@ -30,6 +36,7 @@ urlpatterns = [
     path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
     path("google/", GoogleLogin.as_view(), name="google_login"),
     path("jobs/", JobListView.as_view(), name="job_list"),
+    path("job/", JobFindView.as_view(), name="job_find"),
     path("jobs/add/", JobCreateURLView.as_view(), name="job_add"),
     path("jobs/delete/", JobDeleteView.as_view(), name="job_delete"),
     path("jobs/update/", JobUpdateView.as_view(), name="job_update"),

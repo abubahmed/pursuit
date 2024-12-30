@@ -96,7 +96,15 @@ const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
   );
 };
 
-const EditJobForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
+const EditJobForm = ({
+  open,
+  setOpen,
+  jobId,
+}: {
+  open: boolean;
+  setOpen: any;
+  jobId: number | null;
+}) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"

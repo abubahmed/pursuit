@@ -139,6 +139,38 @@ class JobCreateURLView(APIView):
             )
 
 
+class JobFindView(APIView):
+    def post(self, request):
+        if not request.user.is_authenticated or not request.user.id:
+            return Response(
+                {"success": False, "message": "User is not authenticated"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        job_id = request.data.get("job_id")
+        if not job_id:
+            return Response(
+                {"success": False, "message": "Job ID is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            job = Job.objects.get(id=job_id)
+            serializer = JobSerializer(job)
+            return Response(
+                {
+                    "success": True,
+                    "message": "successful get",
+                    "data": serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            logger.exception(e)
+            return Response(
+                {"success": False, "message": "Failed to get job"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
 class JobUpdateView(APIView):
     def post(self, request):
         if not request.user.is_authenticated or not request.user.id:

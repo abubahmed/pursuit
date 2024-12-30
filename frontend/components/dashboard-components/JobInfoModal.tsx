@@ -9,34 +9,50 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
-import { jobs } from "@/util/pageContent";
 
-const job = jobs[0];
-let rows = [];
-for (const [key, value] of Object.entries(job)) {
-  let keyCap = key.charAt(0).toUpperCase() + key.slice(1);
-  if (key === "id") {
-    keyCap = "ID";
-  }
-  rows.push({ feature: keyCap, value });
-}
+const BasicTable = ({ job }: { job: any }) => {
+  const [rows, setRows] = useState([]) as any;
+  const valueWidth = 600;
 
-const BasicTable = () => {
+  useEffect(() => {
+    if (!job) return;
+    const rows = [];
+    for (const [key, value] of Object.entries(job)) {
+      const skipKeys = [
+        "id",
+        "created_at",
+        "updated_at",
+        "season",
+        "starred",
+        "hidden",
+        "number",
+        "user",
+      ];
+      if (skipKeys.includes(key)) continue;
+      let name = key.charAt(0).toUpperCase() + key.slice(1);
+      if (key === "url") name = "Link";
+      rows.push({ feature: name, value });
+    }
+    setRows(rows);
+  }, [job]);
+
   return (
-    <TableContainer component={Box}>
+    <TableContainer component={Box} sx={{
+      maxHeight: 500,
+      overflowY: "scroll",
+    }}>
       <Table
         aria-label="simple table"
         sx={{
           boxShadow: "none",
         }}>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row: any) => (
             <TableRow key={row.feature} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell
                 component="th"
@@ -51,9 +67,12 @@ const BasicTable = () => {
               <TableCell
                 align="right"
                 sx={{
+                  maxWidth: valueWidth,
                   fontWeight: "regular",
                   fontSize: "1rem",
                   color: "black",
+                  wordWrap: "break-word",
+                  overflowWrap: "break-word",
                 }}>
                 {row.value}
               </TableCell>
@@ -88,7 +107,7 @@ const TabPanel = (props: {
   );
 };
 
-const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
+const FullWidthTabs = ({ setOpen, job }: { setOpen: any; job: any }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
@@ -103,7 +122,7 @@ const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
           }}>
           View Job Details
         </Typography>
-        <BasicTable />
+        <BasicTable job={job} />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="outlined"
@@ -118,7 +137,7 @@ const FullWidthTabs = ({ setOpen }: { setOpen: any }) => {
   );
 };
 
-const JobInfoModal = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
+const JobInfoModal = ({ open, setOpen, job }: { open: boolean; setOpen: any; job: any }) => {
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -143,11 +162,10 @@ const JobInfoModal = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
             borderRadius: "15px",
             border: "none",
             transform: "translate(-50%, -50%)",
-            width: 500,
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs setOpen={setOpen} />
+          <FullWidthTabs setOpen={setOpen} job={job} />
         </Paper>
       </Fade>
     </Modal>
