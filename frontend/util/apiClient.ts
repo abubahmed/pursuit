@@ -12,7 +12,7 @@ const useApi = ({ useToken }: { useToken: boolean }) => {
   const apiInstance = useMemo(() => {
     const instance = axios.create({
       baseURL: backendUrl,
-      timeout: 10000,
+      timeout: 100000,
       headers: {
         "Content-Type": "application/json",
         Authorization: token && useToken ? `Bearer ${token}` : "",

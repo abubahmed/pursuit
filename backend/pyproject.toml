@@ -18,6 +18,7 @@ dependencies = [
     "huggingface-hub>=0.26.2",
     "loguru>=0.7.2",
     "openai>=1.58.1",
+    "pandas>=2.2.3",
     "psycopg2>=2.9.10",
     "selenium>=4.26.1",
     "setuptools>=75.3.0",

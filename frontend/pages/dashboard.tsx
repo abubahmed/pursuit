@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       fetchSeasons({ apiClient }).then((data) => {
         setSeasons(data.seasons);
-        setSelectedSeason(data.seasons[0].id);
+        setSelectedSeason(data?.seasons[0]?.id);
         setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
         console.log(data.seasons);
       });

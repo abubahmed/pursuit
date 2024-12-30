@@ -8,6 +8,8 @@ from api.serializer import JobSerializer
 from api.util.openai_client import OpenAIClient
 from api.util.scraper import Scraper
 from django.contrib.auth import get_user_model
+import csv
+import io
 
 User = get_user_model()
 
@@ -81,10 +83,6 @@ class JobCreateURLView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
             logger.info(variables)
-            number_jobs = season.number_jobs
-            job_number = number_jobs + 1
-            season.number_jobs = job_number
-            season.save()
             job_data = {
                 "title": variables["title"] or "",
                 "company": variables["company"] or "",
@@ -97,12 +95,12 @@ class JobCreateURLView(APIView):
                 "type": variables["type"] or "",
                 "level": variables["level"] or "",
                 "mode": variables["mode"] or "",
+                "contact": variables["contact"] or "",
                 "user": user_id,
                 "season": season_id,
                 "url": url,
                 "starred": False,
                 "hidden": False,
-                "number": job_number,
             }
             serializer = JobSerializer(data=job_data)
             if not serializer.is_valid():
@@ -135,38 +133,6 @@ class JobCreateURLView(APIView):
                     "success": False,
                     "message": "Failed to create job with error " + str(e),
                 },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
-
-
-class JobFindView(APIView):
-    def post(self, request):
-        if not request.user.is_authenticated or not request.user.id:
-            return Response(
-                {"success": False, "message": "User is not authenticated"},
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
-        job_id = request.data.get("job_id")
-        if not job_id:
-            return Response(
-                {"success": False, "message": "Job ID is required"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        try:
-            job = Job.objects.get(id=job_id)
-            serializer = JobSerializer(job)
-            return Response(
-                {
-                    "success": True,
-                    "message": "successful get",
-                    "data": serializer.data,
-                },
-                status=status.HTTP_200_OK,
-            )
-        except Exception as e:
-            logger.exception(e)
-            return Response(
-                {"success": False, "message": "Failed to get job"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -261,5 +227,86 @@ class JobDeleteView(APIView):
             logger.exception(e)
             return Response(
                 {"success": False, "message": "Failed to delete job"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class JobExportView(APIView):
+    def post(self, request):
+        if not request.user.is_authenticated or not request.user.id:
+            return Response(
+                {"success": False, "message": "User is not authenticated"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+        user_id = request.user.id
+        season_id = int(request.data.get("season_id"))
+        if not season_id:
+            return Response(
+                {"success": False, "message": "Season Id is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        try:
+            jobs = Job.objects.filter(user_id=user_id, season_id=season_id)
+            serializer = JobSerializer(jobs, many=True)
+            logger.info(serializer.data)
+            csv_data = [
+                [
+                    "ID",
+                    "Title",
+                    "Company",
+                    "Description",
+                    "Location",
+                    "Salary",
+                    "Skills",
+                    "During",
+                    "Status",
+                    "Type",
+                    "Level",
+                    "Mode",
+                    "Contact",
+                    "Starred",
+                    "Hidden",
+                    "Link",
+                    "Added On",
+                ]
+            ]
+            for job in serializer.data:
+                csv_data.append(
+                    [
+                        job["id"],
+                        job["title"],
+                        job["company"],
+                        job["description"],
+                        job["location"],
+                        job["salary"],
+                        job["skills"],
+                        job["during"],
+                        job["status"],
+                        job["type"],
+                        job["level"],
+                        job["mode"],
+                        job["contact"],
+                        job["starred"],
+                        job["hidden"],
+                        job["url"],
+                        job["created_at"],
+                    ]
+                )
+            output = io.StringIO()
+            csv.writer(output).writerows(csv_data)
+            file_string = output.getvalue()
+            output.close()
+            return Response(
+                {
+                    "success": True,
+                    "message": "successful get",
+                    "data": file_string,
+                },
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            logger.exception(e)
+            return Response(
+                {"success": False, "message": "Failed to get jobs"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

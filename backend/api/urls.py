@@ -10,7 +10,7 @@ from .views.job_views import (
     JobCreateURLView,
     JobDeleteView,
     JobUpdateView,
-    JobFindView,
+    JobExportView,
 )
 from .views.profile_views import (
     UserListView,
@@ -36,10 +36,10 @@ urlpatterns = [
     path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
     path("google/", GoogleLogin.as_view(), name="google_login"),
     path("jobs/", JobListView.as_view(), name="job_list"),
-    path("job/", JobFindView.as_view(), name="job_find"),
     path("jobs/add/", JobCreateURLView.as_view(), name="job_add"),
     path("jobs/delete/", JobDeleteView.as_view(), name="job_delete"),
     path("jobs/update/", JobUpdateView.as_view(), name="job_update"),
+    path("jobs/export/", JobExportView.as_view(), name="job_export"),
     path("users/", UserListView.as_view(), name="user_list"),
     path("users/profile/", ProfileListView.as_view(), name="profile_list"),
     path(

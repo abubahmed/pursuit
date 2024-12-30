@@ -29,14 +29,15 @@ class OpenAIClient:
             Variables to extract:
             - title: The job title or position name. Type: string. ~1-20 tokens.
             - company: The name of the company or organization. Type: string. ~1-5 tokens.
-            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence. Type: string. ~10-50 tokens.
-            - location: The location of the job or position. Type: string. ~1-5 tokens.
+            - description: A brief description of the job or position. Summarize the key responsibilities or requirements in one brief sentence. Type: string. ~20-50 tokens.
+            - location: The physical location of the job or position. Type: string. ~1-5 tokens. If the physical location is not mentioned, use the general location (e.g. US). Do not enter "Remote" as the location.
             - salary: The salary or compensation offered for the job or position (hourly, yearly, etc.). Type: string. ~1-5 tokens.
             - skills: The required or preferred skills for the job. List the skills as an array of strings (e.g., ["Python", "Java", "SQL"]). Type: array of strings.
             - during: The time period of the job or position. Choose one of the following options: "Winter", "Spring", "Summer", "Fall", "Year-round", or "Other". Type: string.
             - type: The type of job or position. Choose one of the following options: "Full-time", "Part-time", "Contract", "Internship", "Freelance", or "Other". Type: string.
             - level: The experience level required for the job. Choose one of the following options: "Entry", "Mid", "Senior", "Lead", "Manager", "Director", or "Other". Type: string.
             - mode: The work mode or arrangement for the job. Choose one of the following options: "Remote", "Onsite", "Hybrid", or "Other". Type: string.
+            - contact: The contact information for the job or position (email, phone number, etc.). Type: string. ~1-5 tokens.
 
             Example output:
             {{
@@ -50,6 +51,7 @@ class OpenAIClient:
               "type": "Internship",
               "level": "Entry",
               "mode": "Onsite",
+              "contact": "amazonjobs@amazon.com"
             }}
 
             Expected output format:
@@ -64,6 +66,7 @@ class OpenAIClient:
               "type": <type>,
               "level": <level>,
               "mode": <mode>,
+              "contact": <contact>
             }}
             
             
@@ -86,6 +89,7 @@ class OpenAIClient:
             "type": "",
             "level": "",
             "mode": "",
+            "contact": "",
         }
         return data_schema
 

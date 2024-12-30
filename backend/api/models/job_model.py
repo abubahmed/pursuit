@@ -57,13 +57,13 @@ class Job(models.Model):
     ]
 
     url = models.URLField(max_length=2000, blank=True, null=True)
-    title = models.CharField(max_length=200, blank=True, null=True)
-    company = models.CharField(max_length=200, blank=True, null=True)
+    title = models.CharField(max_length=500, blank=True, null=True)
+    company = models.CharField(max_length=500, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    location = models.CharField(max_length=200, blank=True, null=True)
-    salary = models.CharField(max_length=200, blank=True, null=True)
+    location = models.CharField(max_length=500, blank=True, null=True)
+    salary = models.CharField(max_length=500, blank=True, null=True)
     status = models.CharField(
-        max_length=200,
+        max_length=500,
         blank=True,
         null=True,
         choices=JOB_STATUS_CHOICES,
@@ -71,35 +71,35 @@ class Job(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     skills = ArrayField(
-        models.CharField(max_length=200), blank=True, default=list, null=True
+        models.CharField(max_length=500), blank=True, default=list, null=True
     )
     during = models.CharField(
-        max_length=200,
+        max_length=500,
         blank=True,
         null=True,
         choices=JOB_DURING_CHOICES,
     )
     type = models.CharField(
-        max_length=200,
+        max_length=500,
         choices=JOB_TYPE_CHOICES,
         blank=True,
         null=True,
     )
     level = models.CharField(
-        max_length=200,
+        max_length=500,
         blank=True,
         null=True,
         choices=JOB_LEVEL_CHOICES,
     )
     mode = models.CharField(
-        max_length=200,
+        max_length=500,
         choices=JOB_MODE_CHOICES,
         blank=True,
         null=True,
     )
+    contact = models.CharField(max_length=500, blank=True, null=True)
     starred = models.BooleanField(default=False)
     hidden = models.BooleanField(default=False)
-    number = models.IntegerField(blank=True, null=True)
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="job_user", blank=True, null=True
     )

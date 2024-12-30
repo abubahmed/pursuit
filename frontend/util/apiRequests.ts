@@ -74,6 +74,11 @@ export const fetchJobs = async ({
   try {
     const response = await apiClient.post("jobs/", { season_id: seasonId });
     const jobs = response?.data?.data?.jobs;
+    if (jobs) {
+      jobs.forEach((job: any) => {
+        job.created_at = new Date(job.created_at as string).toLocaleDateString();
+      });
+    }
     const message = response?.data?.message;
     return { jobs, message };
   } catch (error) {
@@ -82,34 +87,22 @@ export const fetchJobs = async ({
   }
 };
 
-export const fetchJob = async ({
+export const fetchJobsExport = async ({
   apiClient,
-  jobId,
+  seasonId,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  jobId: number | null;
+  seasonId: number | null
 }) => {
-  if (!jobId || !apiClient) return { job: null, message: "Invalid data" };
+  if (!seasonId || !apiClient) return { message: "Invalid data", jobs: null };
   try {
-    const response = await apiClient.post(`job/`, { job_id: jobId });
-    const job = response?.data?.data;
+    const response = await apiClient.post("jobs/export/", { season_id: seasonId });
     const message = response?.data?.message;
-    return { job: {
-      id: jobId,
-      title: "Software Engineer",
-      company: "Google",
-      location: "Mountain View, CA",
-      description: "Work on the world's most popular search engine.",
-      url: "https://careers.google.com/jobs/results/123456",
-      status: "Applied",
-      notes: "Applied on 10/1/2021",
-      date_applied: "2021-10-01",
-      date_updated: "2021-10-01",
-      date_created: "2021-10-01",
-    }, message };
+    const jobs = response?.data?.data;
+    return { message, jobs };
   } catch (error) {
     console.error(error);
-    return { job: null, message: error };
+    return { message: error, jobs: null };
   }
 };
 
@@ -126,7 +119,7 @@ export const addJobUrl = async ({
   try {
     const response = await apiClient.post("jobs/add/", { season_id: seasonId, url: jobUrl });
     const message = response?.data?.message;
-    const job = response?.data?.data?.job;
+    const job = response?.data?.data;
     return { message, job };
   } catch (error) {
     console.error(error);

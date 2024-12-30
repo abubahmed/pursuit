@@ -18,66 +18,65 @@ import SmallButton from "../general-components/SmallButton";
 const BasicTable = ({ job }: { job: any }) => {
   const [rows, setRows] = useState([]) as any;
   const valueWidth = 600;
+  const tableHeight = 500;
 
   useEffect(() => {
     if (!job) return;
     const rows = [];
-    for (const [key, value] of Object.entries(job)) {
-      const skipKeys = [
-        "id",
-        "created_at",
-        "updated_at",
-        "season",
-        "starred",
-        "hidden",
-        "number",
-        "user",
-      ];
+    for (let [key, value] of Object.entries(job)) {
+      const skipKeys = ["id", "updated_at", "season", "starred", "hidden", "number", "user"];
       if (skipKeys.includes(key)) continue;
       let name = key.charAt(0).toUpperCase() + key.slice(1);
       if (key === "url") name = "Link";
+      if (key === "created_at") name = "Added On";
       rows.push({ feature: name, value });
     }
     setRows(rows);
   }, [job]);
 
   return (
-    <TableContainer component={Box} sx={{
-      maxHeight: 500,
-      overflowY: "scroll",
-    }}>
+    <TableContainer
+      component={Box}
+      sx={{
+        maxHeight: tableHeight,
+        overflowY: "scroll",
+      }}>
       <Table
         aria-label="simple table"
         sx={{
           boxShadow: "none",
         }}>
         <TableBody>
-          {rows.map((row: any) => (
-            <TableRow key={row.feature} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-              <TableCell
-                component="th"
-                scope="row"
-                sx={{
-                  fontWeight: "regular",
-                  fontSize: "1rem",
-                  color: "black",
-                }}>
-                {row.feature}
-              </TableCell>
-              <TableCell
-                align="right"
-                sx={{
-                  maxWidth: valueWidth,
-                  fontWeight: "regular",
-                  fontSize: "1rem",
-                  color: "black",
-                  wordWrap: "break-word",
-                  overflowWrap: "break-word",
-                }}>
-                {row.value}
-              </TableCell>
-            </TableRow>
-          ))}
+          {rows.map((row: any) => {
+            if (row.value === null || row.value === "") return null;
+            return (
+              <TableRow
+                key={row.feature}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{
+                    fontWeight: "regular",
+                    fontSize: "1rem",
+                    color: "black",
+                  }}>
+                  {row.feature}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    fontWeight: "regular",
+                    fontSize: "1rem",
+                    color: "black",
+                    wordWrap: "break-word",
+                    overflowWrap: "break-word",
+                  }}>
+                  {row.value}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

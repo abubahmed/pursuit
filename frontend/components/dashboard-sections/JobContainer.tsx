@@ -10,7 +10,7 @@ import EditJobForm from "../dashboard-components/EditJobForm";
 import JobInfoModal from "../dashboard-components/JobInfoModal";
 import SeasonForm from "../dashboard-components/SeasonForm";
 import { useState, useEffect } from "react";
-import { fetchJobs, addJobUrl } from "@/util/apiRequests";
+import { fetchJobs, fetchJobsExport } from "@/util/apiRequests";
 import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
@@ -195,7 +195,6 @@ const DataTable = ({
         [`.${gridClasses.cell}`]: {
           display: "flex",
           alignItems: "center",
-          py: "2px",
         },
       }}>
       {data && (
@@ -209,6 +208,7 @@ const DataTable = ({
                 type: false,
                 mode: false,
                 level: false,
+                contact: false,
               },
             },
             pagination: { paginationModel },
@@ -219,73 +219,85 @@ const DataTable = ({
               field: "title",
               headerName: "Job Title",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 200,
             },
             {
               field: "company",
               headerName: "Company",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 200,
             },
             {
               field: "location",
               headerName: "Location",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "description",
               headerName: "Description",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 300,
             },
             {
               field: "during",
               headerName: "During",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "level",
               headerName: "Level",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "mode",
               headerName: "Mode",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "salary",
               headerName: "Salary",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 200,
             },
             {
               field: "skills",
               headerName: "Skills",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 200,
             },
             {
               field: "type",
               headerName: "Type",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "url",
-              headerName: "URL",
+              headerName: "Link",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 200,
+            },
+            {
+              field: "contact",
+              headerName: "Contact",
+              headerClassName: "custom-header",
+              width: 200,
+            },
+            {
+              field: "created_at",
+              headerName: "Added On",
+              headerClassName: "custom-header",
+              width: 150,
             },
             {
               field: "status",
               headerName: "Status",
               headerClassName: "custom-header",
-              flex: 1,
+              width: 150,
             },
             {
               field: "actions",
@@ -318,6 +330,9 @@ const DataTable = ({
             "& .MuiDataGrid-columnHeaderTitle": {
               fontWeight: "regular",
             },
+            "& .MuiDataGrid-cell": {
+              py: "10px"
+            }
           }}
           getRowHeight={() => "auto"}
         />
@@ -360,6 +375,32 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
     }
   }, [infoJobId, jobs]);
 
+  const getJobsExport = async () => {
+    try {
+      const response = await fetchJobsExport({
+        apiClient,
+        seasonId: currentSeason,
+      });
+      if (response.message === "successful get" && response.jobs) {
+        function download(filename: string, text: string) {
+          var element = document.createElement("a");
+          element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+          element.setAttribute("download", filename);
+          element.style.display = "none";
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
+        }
+        const fileName = "Pursuit_job-applications-export.csv";
+        download(fileName, response.jobs);
+      } else {
+        console.error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) {
     return (
       <Box
@@ -389,11 +430,7 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
       }}>
       <AddJobForm open={addJobFormOpen} setOpen={setAddJobFormOpen} currentSeason={currentSeason} />
       <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
-      <EditJobForm
-        open={editJobFormOpen}
-        setOpen={setEditJobFormOpen}
-        jobId={editJobId}
-      />
+      <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} jobId={editJobId} />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box
         sx={{
@@ -427,7 +464,9 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
             }}>
             Create Season
           </SmallButton>
-          <SmallButton type="outlined">Export Data</SmallButton>
+          <SmallButton type="outlined" onClick={getJobsExport}>
+            Export Data
+          </SmallButton>
         </Box>
       </Box>
       {jobs && (
