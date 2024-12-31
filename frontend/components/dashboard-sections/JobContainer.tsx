@@ -69,6 +69,7 @@ const ActionCenter = ({
   setJobInfoOpen,
   setInfoJobId,
   setEditJobId,
+  refetchJobs,
 }: {
   jobId: number | null;
   job: any;
@@ -76,6 +77,7 @@ const ActionCenter = ({
   setJobInfoOpen: any;
   setInfoJobId: any;
   setEditJobId: any;
+  refetchJobs: any;
 }) => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
@@ -161,6 +163,7 @@ const ActionCenter = ({
         hidden: null,
       });
       console.log(message);
+      await refetchJobs();
     } catch (error) {
       console.error(error);
     }
@@ -256,12 +259,14 @@ const DataTable = ({
   setEditJobFormOpen,
   setInfoJobId,
   setEditJobId,
+  refetchJobs,
 }: {
   data: any;
   setJobInfoOpen: any;
   setEditJobFormOpen: any;
   setInfoJobId: any;
   setEditJobId: any;
+  refetchJobs: any;
 }) => {
   return (
     <Paper
@@ -390,6 +395,7 @@ const DataTable = ({
                   setInfoJobId={setInfoJobId}
                   setEditJobId={setEditJobId}
                   job={params.row}
+                  refetchJobs={refetchJobs}
                 />
               ),
             },
@@ -451,6 +457,7 @@ const JobContainer = ({
 
   const refetchJobs = async () => {
     try {
+      console.log("Refetching jobs");
       const response = await fetchJobs({ apiClient, seasonId: currentSeason });
       if (response.message === "successful get" && response.jobs) {
         const notHiddenJobs = response.jobs.filter((job: any) => job.hidden === false);
@@ -587,6 +594,7 @@ const JobContainer = ({
           setJobInfoOpen={setJobInfoOpen}
           setInfoJobId={setInfoJobId}
           setEditJobId={setEditJobId}
+          refetchJobs={refetchJobs}
         />
       )}
     </Paper>

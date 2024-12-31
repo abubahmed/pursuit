@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
-const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60;
+const BACKEND_ACCESS_TOKEN_LIFETIME = 10;
 const BACKEND_REFRESH_TOKEN_LIFETIME = 6 * 24 * 60 * 60;
 
 const getCurrentEpochTime = () => {
@@ -34,7 +34,7 @@ const SIGN_IN_HANDLERS = {
 const SIGN_IN_PROVIDERS = Object.keys(SIGN_IN_HANDLERS);
 
 export const authOptions = {
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: BACKEND_REFRESH_TOKEN_LIFETIME,
@@ -95,6 +95,7 @@ export const authOptions = {
             refresh: token["refresh_token"],
           },
         });
+        console.log(response.data);
         token["access_token"] = response.data.access;
         token["refresh_token"] = response.data.refresh;
         token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;

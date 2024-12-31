@@ -62,7 +62,7 @@ const FullWidthTabs = ({
     seasonName: string | null;
     seasonDescription: string | null;
   }) => {
-    if (!seasonName || loading) return;
+    if (loading) return;
     setLoading(true);
     try {
       const response = await createSeason({ apiClient, seasonName, seasonDescription });

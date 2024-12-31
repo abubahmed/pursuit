@@ -9,6 +9,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
@@ -109,29 +110,26 @@ const EditJobForm = ({
   open,
   setOpen,
   jobId,
-  refetchJobs
+  refetchJobs,
 }: {
   open: boolean;
   setOpen: any;
   jobId: number | null;
   refetchJobs: any;
 }) => {
+  const [loading, setLoading] = useState(false);
   const apiClient = useApi({ useToken: true });
-  const handleEditJob = async ({
-    status,
-  }: {
-    apiClient: ReturnType<typeof useApi>;
-    jobId: number | null;
-    status: string | null;
-  }) => {
+  const handleEditJob = async ({ status }: { status: string | null }) => {
+    if (loading) return;
     try {
       const { message } = await editJob({ apiClient, jobId, status, starred: null, hidden: null });
       console.log(message);
+      await refetchJobs();
     } catch (error) {
       console.error(error);
     } finally {
       setOpen(false);
-      refetchJobs();
+      setLoading(false);
     }
   };
 
@@ -163,6 +161,29 @@ const EditJobForm = ({
             bgcolor: "background.paper",
           }}
           elevation={2}>
+          {loading && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "white",
+                zIndex: 2,
+                borderRadius: "15px",
+              }}>
+              <CircularProgress
+                size="3rem"
+                sx={{
+                  color: "rgb(20,86,57)",
+                }}
+              />
+            </Box>
+          )}
           <FullWidthTabs setOpen={setOpen} handleEditJob={handleEditJob} />
         </Paper>
       </Fade>

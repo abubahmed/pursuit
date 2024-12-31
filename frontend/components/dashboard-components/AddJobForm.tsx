@@ -82,7 +82,7 @@ const FullWidthTabs = ({
     jobUrl: string;
     refetchJobs: any;
   }) => {
-    if (!jobUrl || loading) return;
+    if (loading) return;
     setLoading(true);
     try {
       const response = await addJobUrl({ apiClient, seasonId: currentSeason, jobUrl });
@@ -108,7 +108,7 @@ const FullWidthTabs = ({
     jobText: string;
     refetchJobs: any;
   }) => {
-    if (!jobText || loading) return;
+    if (loading) return;
     setLoading(true);
     try {
       const response = await addJobText({ apiClient, seasonId: currentSeason, jobText });
