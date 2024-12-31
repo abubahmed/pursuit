@@ -7,31 +7,43 @@ from django.contrib.auth import get_user_model
 from api.models.profile_model import Profile
 from api.serializer import ProfileSerializer, UserSerializer
 
+User = get_user_model()
+
 
 class UserListView(APIView):
     def get(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {
+                    "success": False,
+                    "message": "User is not authenticated",
+                    "data": {
+                        "user": {},
+                    },
+                },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         try:
-            User = get_user_model()
             user = User.objects.get(id=user_id)
             if not user:
                 return Response(
-                    {"success": False, "message": "User not found"},
+                    {
+                        "success": False,
+                        "message": "User not found",
+                        "data": {"user": {}},
+                    },
                     status=status.HTTP_404_NOT_FOUND,
                 )
             serializer = UserSerializer(user)
-            logger.info(serializer.data)
+            serialized_data = serializer.data
+            logger.info(serialized_data)
             return Response(
                 {
                     "success": True,
                     "message": "successful get",
                     "data": {
-                        "user": serializer.data,
+                        "user": serialized_data,
                     },
                 },
                 status=status.HTTP_200_OK,
@@ -39,7 +51,11 @@ class UserListView(APIView):
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to get user"},
+                {
+                    "success": False,
+                    "message": "Failed to get user with error(s) " + str(e),
+                    "data": {"user": {}},
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -48,25 +64,38 @@ class ProfileListView(APIView):
     def get(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {
+                    "success": False,
+                    "message": "User is not authenticated",
+                    "data": {
+                        "profile": {},
+                    },
+                },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         try:
-            profile = Profile.objects.get(user_id=user_id)
+            profile = Profile.objects.get(user=user_id)
             if not profile:
                 return Response(
-                    {"success": False, "message": "Profile not found"},
+                    {
+                        "success": False,
+                        "message": "Profile not found",
+                        "data": {
+                            "profile": {},
+                        },
+                    },
                     status=status.HTTP_404_NOT_FOUND,
                 )
             serializer = ProfileSerializer(profile)
-            logger.info(serializer.data)
+            serialized_data = serializer.data
+            logger.info(serialized_data)
             return Response(
                 {
                     "success": True,
                     "message": "successful get",
                     "data": {
-                        "profile": serializer.data,
+                        "profile": serialized_data,
                     },
                 },
                 status=status.HTTP_200_OK,
@@ -74,7 +103,11 @@ class ProfileListView(APIView):
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to get profile"},
+                {
+                    "success": False,
+                    "message": "Failed to get profile with error(s) " + str(e),
+                    "data": {"profile": {}},
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -83,7 +116,13 @@ class ProfileUpdateBasicView(APIView):
     def put(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {
+                    "success": False,
+                    "message": "User is not authenticated",
+                    "data": {
+                        "profile": {},
+                    },
+                },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
@@ -95,14 +134,26 @@ class ProfileUpdateBasicView(APIView):
                 new_last_name,
             ):
                 return Response(
-                    {"success": False, "message": "No data to update"},
+                    {
+                        "success": False,
+                        "message": "No data to update",
+                        "data": {
+                            "profile": {},
+                        },
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            profile = Profile.objects.get(user_id=user_id)
+            profile = Profile.objects.get(user=user_id)
             if not profile:
                 return Response(
-                    {"success": False, "message": "Profile not found"},
+                    {
+                        "success": False,
+                        "message": "Profile not found",
+                        "data": {
+                            "profile": {},
+                        },
+                    },
                     status=status.HTTP_404_NOT_FOUND,
                 )
             profile.first_name = (
@@ -124,6 +175,10 @@ class ProfileUpdateBasicView(APIView):
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to update profile"},
+                {
+                    "success": False,
+                    "message": "Failed to update profile with error(s) " + str(e),
+                    "data": {"profile": {}},
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

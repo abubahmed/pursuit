@@ -17,7 +17,6 @@ import SmallButton from "../general-components/SmallButton";
 
 const BasicTable = ({ job }: { job: any }) => {
   const [rows, setRows] = useState([]) as any;
-  const valueWidth = 600;
   const tableHeight = 500;
 
   useEffect(() => {

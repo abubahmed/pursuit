@@ -8,33 +8,41 @@ export const fetchUser = async ({ apiClient }: { apiClient: ReturnType<typeof us
     return userDetails;
   } catch (error) {
     console.error(error);
-    return {};
+    return;
   }
 };
 
 export const fetchProfile = async ({ apiClient }: { apiClient: ReturnType<typeof useApi> }) => {
-  if (!apiClient) return { profileDetails: {}, message: "Invalid data" };
+  if (!apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.get("users/profile/");
-    const profileDetails = response?.data?.data?.profile;
     const message = response?.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const profileDetails = response.data?.data?.profile;
     return { profileDetails, message };
   } catch (error) {
     console.error(error);
-    return { profileDetails: {}, message: error };
+    return {
+      message: "Fetching profile details failed with error(s) " + error,
+    };
   }
 };
 
 export const fetchSeasons = async ({ apiClient }: { apiClient: ReturnType<typeof useApi> }) => {
-  if (!apiClient) return { seasons: [], message: "Invalid data" };
+  if (!apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.get("seasons/");
-    const seasons = response?.data?.data?.seasons;
-    const message = response?.data?.message;
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const seasons = response.data?.data?.seasons;
     return { seasons, message };
   } catch (error) {
     console.error(error);
-    return { seasons: [], message: error };
+    return { message: "Failed to fetch seasons with error(s) " + error };
   }
 };
 
@@ -47,19 +55,29 @@ export const createSeason = async ({
   seasonName: string | null;
   seasonDescription: string | null;
 }) => {
-  if (!seasonName || !apiClient)
-    return { season: null, message: "Invalid data" };
+  const seasonNameCharLimit = 50;
+  const seasonDescriptionCharLimit = 500;
+  if (
+    !seasonName ||
+    seasonName.length > seasonNameCharLimit ||
+    (seasonDescription && seasonDescription.length > seasonDescriptionCharLimit) ||
+    !apiClient
+  )
+    return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("seasons/add/", {
       name: seasonName,
-      description: seasonDescription,
+      description: seasonDescription || "",
     });
-    const message = response?.data?.message;
-    const season = response?.data?.data?.season;
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const season = response.data?.data?.season;
     return { season, message };
   } catch (error) {
     console.error(error);
-    return { season: null, message: error };
+    return { message: "Failed to create season with error(s) " + error };
   }
 };
 
@@ -70,14 +88,18 @@ export const deleteJob = async ({
   apiClient: ReturnType<typeof useApi>;
   jobId: number | null;
 }) => {
-  if (!jobId || !apiClient) return { message: "Invalid data" };
+  if (!jobId || !apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/delete/", { job_id: jobId } as any);
-    const message = response?.data?.message;
-    return { message };
+    const message = response.data?.message;
+    if (response?.data?.success === false) {
+      return { message };
+    }
+    const job = response.data?.data;
+    return { job, message };
   } catch (error) {
     console.error(error);
-    return { message: error };
+    return { message: "Failed to delete job with error(s) " + error };
   }
 };
 
@@ -88,21 +110,22 @@ export const fetchJobs = async ({
   apiClient: ReturnType<typeof useApi>;
   seasonId: number | null;
 }) => {
-  if (!seasonId || !apiClient) return { jobs: [], message: "Invalid data" };
+  if (!seasonId || !apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/", { season_id: seasonId });
-    const jobs = response?.data?.data?.jobs;
-    if (jobs) {
-      jobs.forEach((job: any) => {
-        job.created_at = new Date(job.created_at as string).toLocaleDateString();
-        job.skills = job.skills.join(", ");
-      });
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
     }
-    const message = response?.data?.message;
+    const jobs = response.data?.data?.jobs;
+    jobs.forEach((job: any) => {
+      job.created_at = new Date(job.created_at as string).toLocaleDateString();
+      job.skills = job.skills.join(", ");
+    });
     return { jobs, message };
   } catch (error) {
     console.error(error);
-    return { jobs: [], message: error };
+    return { message: "Failed to fetch jobs with error(s) " + error };
   }
 };
 
@@ -113,15 +136,18 @@ export const fetchJobsExport = async ({
   apiClient: ReturnType<typeof useApi>;
   seasonId: number | null;
 }) => {
-  if (!seasonId || !apiClient) return { message: "Invalid data", jobs: null };
+  if (!seasonId || !apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/export/", { season_id: seasonId });
-    const message = response?.data?.message;
-    const jobs = response?.data?.data;
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const jobs = response.data?.data;
     return { message, jobs };
   } catch (error) {
     console.error(error);
-    return { message: error, jobs: null };
+    return { message: "Failed to fetch jobs for export with error(s) " + error };
   }
 };
 
@@ -134,15 +160,20 @@ export const addJobUrl = async ({
   seasonId: number | null;
   jobUrl: string;
 }) => {
-  if (!seasonId || !jobUrl || !apiClient) return { message: "Invalid data", job: null };
+  const urlCharLimit = 1000;
+  if (!seasonId || !jobUrl || !apiClient || jobUrl.length > urlCharLimit)
+    return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/add/", { season_id: seasonId, url: jobUrl });
-    const message = response?.data?.message;
-    const job = response?.data?.data;
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const job = response.data?.data;
     return { message, job };
   } catch (error) {
     console.error(error);
-    return { message: error, job: null };
+    return { message: "Failed to add job by URL with error(s) " + error };
   }
 };
 
@@ -155,15 +186,20 @@ export const addJobText = async ({
   seasonId: number | null;
   jobText: string;
 }) => {
-  if (!seasonId || !jobText || !apiClient) return { message: "Invalid data", job: null };
+  const textCharLimit = 10000;
+  if (!seasonId || !jobText || !apiClient || jobText.length > textCharLimit)
+    return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/add/text/", { season_id: seasonId, text: jobText });
-    const message = response?.data?.message;
-    const job = response?.data?.data;
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const job = response.data?.data;
     return { message, job };
   } catch (error) {
     console.error(error);
-    return { message: error, job: null };
+    return { message: "Failed to add job by text with error(s) " + error };
   }
 };
 
@@ -180,14 +216,19 @@ export const editJob = async ({
   starred: string | null;
   hidden: string | null;
 }) => {
-  if (!apiClient || !jobId || (!starred && !status && !hidden)) return { message: "Invalid data" };
+  if (!apiClient || !jobId || (!starred && !status && !hidden))
+    return { message: "Invalid arguments provided; request rejected" };
   try {
     const params: any = { status, starred, hidden, job_id: jobId };
     const response = await apiClient.post(`jobs/update/`, params);
-    const message = response?.data?.message;
-    return { message };
+    const message = response.data?.message;
+    if (response.data?.success === false) {
+      return { message };
+    }
+    const job = response.data?.data;
+    return { job, message };
   } catch (error) {
     console.error(error);
-    return { message: error };
+    return { message: "Failed to edit job with error(s) " + error };
   }
 };

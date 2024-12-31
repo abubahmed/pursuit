@@ -86,9 +86,9 @@ const FullWidthTabs = ({ setOpen, handleEditJob }: { setOpen: any; handleEditJob
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
-            onClick={() => {
+            onClick={async () => {
               console.log(status);
-              handleEditJob({ status });
+              await handleEditJob({ status });
             }}>
             Submit
           </SmallButton>
@@ -109,10 +109,12 @@ const EditJobForm = ({
   open,
   setOpen,
   jobId,
+  refetchJobs
 }: {
   open: boolean;
   setOpen: any;
   jobId: number | null;
+  refetchJobs: any;
 }) => {
   const apiClient = useApi({ useToken: true });
   const handleEditJob = async ({
@@ -129,6 +131,7 @@ const EditJobForm = ({
       console.error(error);
     } finally {
       setOpen(false);
+      refetchJobs();
     }
   };
 

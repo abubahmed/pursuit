@@ -16,7 +16,7 @@ import {
 import SmallButton from "../general-components/SmallButton";
 import useApi from "@/util/apiClient";
 import { addJobUrl, addJobText } from "@/util/apiRequests";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -206,8 +206,8 @@ const FullWidthTabs = ({
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
-            onClick={() => {
-              handleAddJobUrl({ apiClient, currentSeason, jobUrl, refetchJobs });
+            onClick={async () => {
+              await handleAddJobUrl({ apiClient, currentSeason, jobUrl, refetchJobs });
             }}>
             Submit
           </SmallButton>
@@ -243,8 +243,8 @@ const FullWidthTabs = ({
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
-            onClick={() => {
-              handleAddJobText({ apiClient, currentSeason, jobText, refetchJobs });
+            onClick={async () => {
+              await handleAddJobText({ apiClient, currentSeason, jobText, refetchJobs });
             }}>
             Submit
           </SmallButton>

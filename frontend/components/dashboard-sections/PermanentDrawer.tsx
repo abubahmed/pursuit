@@ -10,11 +10,10 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import logoImage from "@/public/logos/Logo maker project (1).png";
-import { MdLogout, MdPayment } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 import { IoCalendarClearOutline, IoCalendarClear } from "react-icons/io5";
-import { seasons } from "@/util/pageContent";
-import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 const drawerWidth = 230;
 const openedMixin = (theme: Theme): CSSObject => ({

@@ -1,3 +1,4 @@
+from yaml import serialize
 from loguru import logger
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,14 +19,29 @@ class JobListView(APIView):
     def post(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"successs": False, "message": "User is not authenticated"},
+                {
+                    "successs": False,
+                    "message": "User is not authenticated",
+                    "data": {
+                        "jobs": [],
+                        "count": 0,
+                    },
+                },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         season_id = int(request.data.get("season_id"))
-        if not season_id:
+        season = Season.objects.get(id=season_id, user=user_id)
+        if not season_id or not season:
             return Response(
-                {"success": False, "message": "Season Id is required"},
+                {
+                    "success": False,
+                    "message": "Season ID was not provided or season does not exist",
+                    "data": {
+                        "jobs": [],
+                        "count": 0,
+                    },
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
@@ -46,7 +62,14 @@ class JobListView(APIView):
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to get jobs"},
+                {
+                    "success": False,
+                    "message": "Failed to get jobs with error(s) " + str(e),
+                    "data": {
+                        "jobs": [],
+                        "count": 0,
+                    },
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -56,18 +79,29 @@ class JobCreateTextView(APIView):
         print("request.data", request.data)
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {"success": False, "message": "User is not authenticated", "data": {}},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
+        max_character_limit = 10000
         text = request.data.get("text")
-        season_id = int(request.data.get("season_id"))
-        season = Season.objects.get(id=season_id)
-        user_id = request.user.id
-        if not text or not season_id or not season:
+        if not text or len(text) == 0 or len(text) > max_character_limit:
             return Response(
                 {
                     "success": False,
-                    "message": "URL and Season ID are required",
+                    "message": "Text was not provided or is too large",
+                    "data": {},
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user_id = request.user.id
+        season_id = int(request.data.get("season_id"))
+        season = Season.objects.get(id=season_id, user=user_id)
+        if not season_id or not season:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Season ID was not provided or season does not exist",
+                    "data": {},
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -77,7 +111,11 @@ class JobCreateTextView(APIView):
             variables = client.extract_variables(text)
             if not variables:
                 return Response(
-                    {"success": False, "message": "Failed to extract variables"},
+                    {
+                        "success": False,
+                        "message": "Failed to extract variables",
+                        "data": {},
+                    },
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
             logger.info(variables)
@@ -104,16 +142,16 @@ class JobCreateTextView(APIView):
                 return Response(
                     {
                         "success": False,
-                        "message": "Invalid job data " + str(serializer.errors),
+                        "message": "Serialization failed with error(s) "
+                        + str(serializer.errors),
+                        "data": {},
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             serializer.save()
-            saved_instance = serializer.instance
-            serialized_data = JobSerializer(saved_instance).data
-            job = Job.objects.get(id=saved_instance.id)
-            season.jobs.add(job)
+            season.jobs.add(serializer.instance)
             season.save()
+            serialized_data = serializer.data
             logger.info(serialized_data)
             return Response(
                 {
@@ -128,7 +166,8 @@ class JobCreateTextView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": "Failed to create job with error " + str(e),
+                    "message": "Failed to create job with error(s) " + str(e),
+                    "data": {},
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -139,18 +178,18 @@ class JobCreateURLView(APIView):
         print("request.data", request.data)
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {"success": False, "message": "User is not authenticated", "data": {}},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
+        user_id = request.user.id
         url = request.data.get("url")
         season_id = int(request.data.get("season_id"))
-        season = Season.objects.get(id=season_id)
-        user_id = request.user.id
+        season = Season.objects.get(id=season_id, user=user_id)
         if not url or not season_id or not season:
             return Response(
                 {
                     "success": False,
-                    "message": "URL and Season ID are required",
+                    "message": "URL or Season ID was not provided or season does not exist",
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -162,7 +201,11 @@ class JobCreateURLView(APIView):
             variables = client.extract_variables(text)
             if not variables:
                 return Response(
-                    {"success": False, "message": "Failed to extract variables"},
+                    {
+                        "success": False,
+                        "message": "Failed to extract variables",
+                        "data": {},
+                    },
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
             logger.info(variables)
@@ -190,16 +233,16 @@ class JobCreateURLView(APIView):
                 return Response(
                     {
                         "success": False,
-                        "message": "Invalid job data " + str(serializer.errors),
+                        "message": "Serialization failed with error(s) "
+                        + str(serializer.errors),
+                        "data": {},
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             serializer.save()
-            saved_instance = serializer.instance
-            serialized_data = JobSerializer(saved_instance).data
-            job = Job.objects.get(id=saved_instance.id)
-            season.jobs.add(job)
+            season.jobs.add(serializer.instance)
             season.save()
+            serialized_data = serializer.data
             logger.info(serialized_data)
             return Response(
                 {
@@ -214,7 +257,8 @@ class JobCreateURLView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": "Failed to create job with error " + str(e),
+                    "message": "Failed to create job with error(s) " + str(e),
+                    "data": {},
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -229,26 +273,26 @@ class JobUpdateView(APIView):
             )
         user_id = request.user.id
         job_id = request.data.get("job_id")
+        job = Job.objects.get(id=job_id, user=user_id)
         status_attribute = request.data.get("status")
         starred = request.data.get("starred")
         hidden = request.data.get("hidden")
-        if not job_id:
+        if not job_id or not job:
             return Response(
-                {"success": False, "message": "Job ID is required"},
+                {
+                    "success": False,
+                    "message": "Job ID was not provided or job does not exist",
+                    "data": {},
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if not status_attribute and not starred and not hidden:
             return Response(
-                {"success": False, "message": "No data to update"},
+                {"success": False, "message": "No data to update", "data": {}},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            job = Job.objects.get(id=job_id, user_id=user_id)
-            if not job:
-                return Response(
-                    {"success": False, "message": "Job not found"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
+            job = Job.objects.get(id=job_id, user=user_id)
             STATUS_CHOICES = Job.JOB_STATUS_CHOICES
             STATUS_CHOICES = [status[0] for status in STATUS_CHOICES]
             HIDDEN_CHOICES = ["True", "False"]
@@ -259,7 +303,11 @@ class JobUpdateView(APIView):
                 or (hidden and hidden not in HIDDEN_CHOICES)
             ):
                 return Response(
-                    {"success": False, "message": "Invalid data to update"},
+                    {
+                        "success": False,
+                        "message": "Invalid updated parameters provided",
+                        "data": {},
+                    },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             if status_attribute and status_attribute in STATUS_CHOICES:
@@ -269,14 +317,23 @@ class JobUpdateView(APIView):
             if hidden and hidden in HIDDEN_CHOICES:
                 job.hidden = True if hidden == "True" else False
             job.save()
+            serialized_data = JobSerializer(job).data
             return Response(
-                {"success": True, "message": "Job updated successfully"},
+                {
+                    "success": True,
+                    "message": "Job updated successfully",
+                    "data": serialized_data,
+                },
                 status=status.HTTP_200_OK,
             )
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to update job"},
+                {
+                    "success": False,
+                    "message": "Failed to update job with error(s) " + str(e),
+                    "data": {},
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -285,32 +342,41 @@ class JobDeleteView(APIView):
     def post(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {"success": False, "message": "User is not authenticated", "data": {}},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         job_id = request.data.get("job_id")
-        if not job_id:
+        job = Job.objects.get(id=job_id, user=user_id)
+        if not job_id or not job:
             return Response(
-                {"success": False, "message": "Job ID is required"},
+                {
+                    "success": False,
+                    "message": "Job ID was not provided or job does not exist",
+                    "data": {},
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            job = Job.objects.get(id=job_id, user_id=user_id)
-            if not job:
-                return Response(
-                    {"success": False, "message": "Job not found"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
+            job = Job.objects.get(id=job_id, user=user_id)
+            serialized_data = JobSerializer(job).data
             job.delete()
             return Response(
-                {"success": True, "message": "Job deleted successfully"},
+                {
+                    "success": True,
+                    "message": "Job deleted successfully",
+                    "data": serialized_data,
+                },
                 status=status.HTTP_200_OK,
             )
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to delete job"},
+                {
+                    "success": False,
+                    "message": "Failed to delete job with error(s) " + str(e),
+                    "data": {},
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
@@ -319,20 +385,26 @@ class JobExportView(APIView):
     def post(self, request):
         if not request.user.is_authenticated or not request.user.id:
             return Response(
-                {"success": False, "message": "User is not authenticated"},
+                {"success": False, "message": "User is not authenticated", "data": ""},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         user_id = request.user.id
         season_id = int(request.data.get("season_id"))
-        if not season_id:
+        season = Season.objects.get(id=season_id, user=user_id)
+        if not season_id or not season:
             return Response(
-                {"success": False, "message": "Season Id is required"},
+                {
+                    "success": False,
+                    "message": "Season ID was not provided or season does not exist",
+                    "data": "",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
         try:
-            jobs = Job.objects.filter(user_id=user_id, season_id=season_id)
+            jobs = Job.objects.filter(user=user_id, season=season_id)
             serializer = JobSerializer(jobs, many=True)
-            logger.info(serializer.data)
+            serialized_data = serializer.data
+            logger.info(serialized_data)
             csv_data = [
                 [
                     "ID",
@@ -354,26 +426,26 @@ class JobExportView(APIView):
                     "Added On",
                 ]
             ]
-            for job in serializer.data:
+            for job in serialized_data:
                 csv_data.append(
                     [
-                        job["id"],
-                        job["title"],
-                        job["company"],
-                        job["description"],
-                        job["location"],
-                        job["salary"],
-                        job["skills"],
-                        job["during"],
-                        job["status"],
-                        job["type"],
-                        job["level"],
-                        job["mode"],
-                        job["contact"],
-                        job["starred"],
-                        job["hidden"],
-                        job["url"],
-                        job["created_at"],
+                        job["id"] or "",
+                        job["title"] or "",
+                        job["company"] or "",
+                        job["description"] or "",
+                        job["location"] or "",
+                        job["salary"] or "",
+                        job["skills"] or "",
+                        job["during"] or "",
+                        job["status"] or "",
+                        job["type"] or "",
+                        job["level"] or "",
+                        job["mode"] or "",
+                        job["contact"] or "",
+                        job["starred"] or "",
+                        job["hidden"] or "",
+                        job["url"] or "",
+                        job["created_at"] or "",
                     ]
                 )
             output = io.StringIO()
@@ -391,6 +463,10 @@ class JobExportView(APIView):
         except Exception as e:
             logger.exception(e)
             return Response(
-                {"success": False, "message": "Failed to get jobs"},
+                {
+                    "success": False,
+                    "message": "Failed to export jobs with error(s) " + str(e),
+                    "data": "",
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

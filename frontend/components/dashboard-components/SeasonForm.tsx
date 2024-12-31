@@ -111,8 +111,8 @@ const FullWidthTabs = ({
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
-            onClick={() => {
-              handleCreateSeason({ apiClient, seasonName, seasonDescription });
+            onClick={async () => {
+              await handleCreateSeason({ apiClient, seasonName, seasonDescription });
             }}>
             Submit
           </SmallButton>

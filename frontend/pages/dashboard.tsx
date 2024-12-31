@@ -1,13 +1,11 @@
-import { useRouter } from "next/router";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Box, CircularProgress } from "@mui/material";
-import { Typography } from "@mui/material";
 import Navbar from "@/components/dashboard-sections/Navbar";
 import JobContainer from "@/components/dashboard-sections/JobContainer";
 import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
 import { useState, useEffect } from "react";
 import useApi from "@/util/apiClient";
-import { fetchUser, fetchProfile, fetchSeasons } from "@/util/apiRequests";
+import { fetchProfile, fetchSeasons } from "@/util/apiRequests";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth import get_user_model
-from numpy import number
 from .season_model import Season
 
 User = get_user_model()

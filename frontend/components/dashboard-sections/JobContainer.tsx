@@ -1,6 +1,6 @@
 import { Box, Typography, Paper, Popover, CircularProgress } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
-import { DataGrid, GridColDef, GridCellParams, gridClasses } from "@mui/x-data-grid";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { FaTrash } from "react-icons/fa";
 import { RiEdit2Fill } from "react-icons/ri";
 import { BiSolidHide, BiSolidShow } from "react-icons/bi";
@@ -64,12 +64,14 @@ const PopoverContent = ({
 
 const ActionCenter = ({
   jobId,
+  job,
   setEditJobFormOpen,
   setJobInfoOpen,
   setInfoJobId,
   setEditJobId,
 }: {
   jobId: number | null;
+  job: any;
   setEditJobFormOpen: any;
   setJobInfoOpen: any;
   setInfoJobId: any;
@@ -141,6 +143,29 @@ const ActionCenter = ({
     }
   };
 
+  const handleStarJob = async ({
+    starred,
+    jobId,
+    apiClient,
+  }: {
+    starred: any;
+    jobId: number | null;
+    apiClient: any;
+  }) => {
+    try {
+      const { message } = await editJob({
+        jobId,
+        apiClient,
+        starred: starred,
+        status: null,
+        hidden: null,
+      });
+      console.log(message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -172,8 +197,13 @@ const ActionCenter = ({
         }}>
         <BiSolidShow />
       </IconBox>
-      <IconBox dataKey="5" onClick={handleClick}>
-        <IoIosStar />
+      <IconBox
+        dataKey="5"
+        onClick={async () => {
+          const starred = job.starred ? "False" : "True";
+          await handleStarJob({ starred, jobId, apiClient });
+        }}>
+        <IoIosStar color={job.starred ? "gold" : "black"} />
       </IconBox>
       <Popover
         id={popoverId}
@@ -201,8 +231,8 @@ const ActionCenter = ({
           <PopoverContent
             content="Are you sure you want to delete this job?"
             handleClose={handleClose}
-            handleSubmit={() => {
-              handleDeleteJob({ jobId, apiClient });
+            handleSubmit={async () => {
+              await handleDeleteJob({ jobId, apiClient });
             }}
           />
         )}
@@ -210,8 +240,8 @@ const ActionCenter = ({
           <PopoverContent
             content="Are you sure you want to hide this job?"
             handleClose={handleClose}
-            handleSubmit={() => {
-              handleHideJob({ apiClient, jobId });
+            handleSubmit={async () => {
+              await handleHideJob({ apiClient, jobId });
             }}
           />
         )}
@@ -359,6 +389,7 @@ const DataTable = ({
                   setJobInfoOpen={setJobInfoOpen}
                   setInfoJobId={setInfoJobId}
                   setEditJobId={setEditJobId}
+                  job={params.row}
                 />
               ),
             },
@@ -500,8 +531,17 @@ const JobContainer = ({
         currentSeason={currentSeason}
         refetchJobs={refetchJobs}
       />
-      <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} refetchSeasons={refetchSeasons} />
-      <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} jobId={editJobId} />
+      <SeasonForm
+        open={seasonFormOpen}
+        setOpen={setSeasonFormOpen}
+        refetchSeasons={refetchSeasons}
+      />
+      <EditJobForm
+        open={editJobFormOpen}
+        setOpen={setEditJobFormOpen}
+        jobId={editJobId}
+        refetchJobs={refetchJobs}
+      />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box
         sx={{
