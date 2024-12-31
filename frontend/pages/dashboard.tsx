@@ -11,8 +11,8 @@ import { fetchUser, fetchProfile, fetchSeasons } from "@/util/apiRequests";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const [profileDetails, setProfileDetails] = useState({});
-  const [seasons, setSeasons] = useState([]);
+  const [profileDetails, setProfileDetails] = useState(null);
+  const [seasons, setSeasons] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [loading, setLoading] = useState({
     profileDetails: true,
@@ -22,20 +22,36 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (session && status === "authenticated") {
-      fetchProfile({ apiClient }).then((data) => {
-        setProfileDetails(data.profileDetails);
-        setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
-        console.log(data.profileDetails);
-      });
+      if (profileDetails) setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
+      if (seasons) setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
 
-      fetchSeasons({ apiClient }).then((data) => {
-        setSeasons(data.seasons);
-        setSelectedSeason(data?.seasons[0]?.id);
-        setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
-        console.log(data.seasons);
-      });
+      if (!profileDetails) {
+        fetchProfile({ apiClient }).then((data) => {
+          setProfileDetails(data.profileDetails);
+          setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
+          console.log(data.profileDetails);
+        });
+      }
+
+      if (!seasons) {
+        fetchSeasons({ apiClient }).then((data) => {
+          setSeasons(data.seasons);
+          setSelectedSeason(data?.seasons[0]?.id);
+          setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
+          console.log(data.seasons);
+        });
+      }
     }
-  }, [session]);
+  }, [session, status]);
+
+  const refetchSeasons = async () => {
+    try {
+      const response = await fetchSeasons({ apiClient });
+      setSeasons(response.seasons);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (status === "loading" || loading.profileDetails || loading.seasons) {
     return (
@@ -64,7 +80,7 @@ export default function Dashboard() {
           overflow: "auto",
         }}>
         <Navbar profileDetails={profileDetails} />
-        <JobContainer currentSeason={selectedSeason} />
+        <JobContainer currentSeason={selectedSeason} refetchSeasons={refetchSeasons} />
       </Box>
     </Box>
   );

@@ -1,7 +1,18 @@
-import { Backdrop, Box, Modal, Fade, Typography, Paper, TextField } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Modal,
+  Fade,
+  Typography,
+  Paper,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
+import { createSeason } from "@/util/apiRequests";
+import useApi from "@/util/apiClient";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -26,13 +37,50 @@ const TabPanel = (props: {
   );
 };
 
-const FullWidthTabs = () => {
+const FullWidthTabs = ({
+  setOpen,
+  loading,
+  setLoading,
+  refetchSeasons,
+}: {
+  setOpen: any;
+  loading: boolean;
+  setLoading: any;
+  refetchSeasons: any;
+}) => {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const [seasonName, setSeasonName] = useState("");
+  const [seasonDescription, setSeasonDescription] = useState("");
+  const apiClient = useApi({ useToken: true });
+
+  const handleCreateSeason = async ({
+    apiClient,
+    seasonName,
+    seasonDescription,
+  }: {
+    apiClient: any;
+    seasonName: string | null;
+    seasonDescription: string | null;
+  }) => {
+    if (!seasonName || loading) return;
+    setLoading(true);
+    try {
+      const response = await createSeason({ apiClient, seasonName, seasonDescription });
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSeasonDescription("");
+      setSeasonName("");
+      setOpen(false);
+      setLoading(false);
+      refetchSeasons();
+    }
+  };
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%", borderRadius: "15px" }}>
-      <TabPanel value={value} index={0} dir={theme.direction}>
+      <TabPanel value={0} index={0} dir={theme.direction}>
         <Typography
           variant="h6"
           gutterBottom
@@ -41,7 +89,13 @@ const FullWidthTabs = () => {
           }}>
           Create New Season
         </Typography>
-        <TextField label="Enter New Season Name" variant="outlined" fullWidth />
+        <TextField
+          label="Enter New Season Name"
+          variant="outlined"
+          fullWidth
+          value={seasonName}
+          onChange={(e) => setSeasonName(e.target.value)}
+        />
         <TextField
           label="Enter New Season Description"
           variant="outlined"
@@ -51,17 +105,43 @@ const FullWidthTabs = () => {
           sx={{
             mt: 2,
           }}
+          value={seasonDescription}
+          onChange={(e) => setSeasonDescription(e.target.value)}
         />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton type="outlined">Cancel</SmallButton>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              handleCreateSeason({ apiClient, seasonName, seasonDescription });
+            }}>
+            Submit
+          </SmallButton>
+          <SmallButton
+            type="outlined"
+            onClick={() => {
+              setOpen(false);
+              setSeasonDescription("");
+              setSeasonName("");
+            }}>
+            Cancel
+          </SmallButton>
         </Box>
       </TabPanel>
     </Box>
   );
 };
 
-const SeasonForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
+const SeasonForm = ({
+  open,
+  setOpen,
+  refetchSeasons,
+}: {
+  open: boolean;
+  setOpen: any;
+  refetchSeasons: any;
+}) => {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -90,7 +170,35 @@ const SeasonForm = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
             bgcolor: "background.paper",
           }}
           elevation={2}>
-          <FullWidthTabs />
+          {loading && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "white",
+                zIndex: 2,
+                borderRadius: "15px",
+              }}>
+              <CircularProgress
+                size="3rem"
+                sx={{
+                  color: "rgb(20,86,57)",
+                }}
+              />
+            </Box>
+          )}
+          <FullWidthTabs
+            setOpen={setOpen}
+            loading={loading}
+            setLoading={setLoading}
+            refetchSeasons={refetchSeasons}
+          />
         </Paper>
       </Fade>
     </Modal>

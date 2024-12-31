@@ -58,7 +58,7 @@ const FullWidthTabs = ({
   currentSeason: number | null;
   setOpen: any;
   refetchJobs: any;
-  loading: any;
+  loading: boolean;
   setLoading: any;
 }) => {
   const theme = useTheme();
@@ -211,7 +211,13 @@ const FullWidthTabs = ({
             }}>
             Submit
           </SmallButton>
-          <SmallButton type="outlined" onClick={() => setOpen(false)}>
+          <SmallButton
+            type="outlined"
+            onClick={() => {
+              setOpen(false);
+              setJobUrl("");
+              setLoading(false);
+            }}>
             Cancel
           </SmallButton>
         </Box>
@@ -246,6 +252,9 @@ const FullWidthTabs = ({
             type="outlined"
             onClick={() => {
               setOpen(false);
+              setJobText("");
+              setJobUrl("");
+              setJobFile(null);
             }}>
             Cancel
           </SmallButton>
@@ -265,6 +274,9 @@ const FullWidthTabs = ({
             type="outlined"
             onClick={() => {
               setOpen(false);
+              setJobText("");
+              setJobUrl("");
+              setJobFile(null);
             }}>
             Cancel
           </SmallButton>

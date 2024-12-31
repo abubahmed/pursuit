@@ -389,7 +389,13 @@ const DataTable = ({
   );
 };
 
-const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
+const JobContainer = ({
+  currentSeason,
+  refetchSeasons,
+}: {
+  currentSeason: number | null;
+  refetchSeasons: any;
+}) => {
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
   const [seasonFormOpen, setSeasonFormOpen] = useState(false);
   const [editJobFormOpen, setEditJobFormOpen] = useState(false);
@@ -494,7 +500,7 @@ const JobContainer = ({ currentSeason }: { currentSeason: number | null }) => {
         currentSeason={currentSeason}
         refetchJobs={refetchJobs}
       />
-      <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} />
+      <SeasonForm open={seasonFormOpen} setOpen={setSeasonFormOpen} refetchSeasons={refetchSeasons} />
       <EditJobForm open={editJobFormOpen} setOpen={setEditJobFormOpen} jobId={editJobId} />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box

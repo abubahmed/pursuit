@@ -44,10 +44,10 @@ export const createSeason = async ({
   seasonDescription,
 }: {
   apiClient: ReturnType<typeof useApi>;
-  seasonName: string;
-  seasonDescription: string;
+  seasonName: string | null;
+  seasonDescription: string | null;
 }) => {
-  if (!seasonName || !seasonDescription || !apiClient)
+  if (!seasonName || !apiClient)
     return { season: null, message: "Invalid data" };
   try {
     const response = await apiClient.post("seasons/add/", {
