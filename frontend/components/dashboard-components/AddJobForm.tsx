@@ -145,69 +145,73 @@ const FullWidthTabs = ({
             borderTopRightRadius: "15px",
             backgroundColor: "white",
             color: "black",
-            "& .Mui-selected": {
-              color: "#05472A",
-            },
-            "& .MuiTabs-indicator": {
-              backgroundColor: "#05472A",
-            },
+            "& .Mui-selected": { color: "#05472A" },
+            "& .MuiTabs-indicator": { backgroundColor: "#05472A" },
             fontWeight: "regular",
             fontSize: "1rem",
           }}
           aria-label="full width tabs example">
-          <Tab
-            label="Add by URL"
-            {...a11yProps(0)}
-            sx={{
-              color: "black",
-              fontSize: "1rem",
-              fontWeight: "medium",
-              textTransform: "none",
-            }}
-          />
-          <Tab
-            label="Add by Text"
-            {...a11yProps(1)}
-            sx={{
-              color: "black",
-              fontSize: "1rem",
-              fontWeight: "medium",
-              textTransform: "none",
-            }}
-          />
-          <Tab
-            label="Add by File"
-            {...a11yProps(2)}
-            sx={{
-              color: "black",
-              fontSize: "1rem",
-              fontWeight: "medium",
-              textTransform: "none",
-            }}
-          />
+          {["Add by URL", "Add by Text", "Add by File"].map((label, index) => (
+            <Tab
+              key={index}
+              label={label}
+              {...a11yProps(index)}
+              sx={{
+                color: "black",
+                fontSize: "1rem",
+                fontWeight: "medium",
+                textTransform: "none",
+              }}
+            />
+          ))}
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0} dir={theme.direction}>
+      <Box
+        sx={{
+          p: 3,
+        }}
+        dir={theme.direction}>
         <Typography
           variant="h6"
           gutterBottom
           sx={{
             mb: 2,
           }}>
-          Add Job by URL
+          Add Job by {value === 0 ? "URL" : value === 1 ? "Text" : "File"}
         </Typography>
-        <TextField
-          label="Enter URL"
-          variant="outlined"
-          fullWidth
-          value={jobUrl}
-          onChange={(e) => setJobUrl(e.target.value)}
-        />
+        {value === 0 ? (
+          <TextField
+            label="Enter URL"
+            variant="outlined"
+            fullWidth
+            value={jobUrl}
+            onChange={(e) => setJobUrl(e.target.value)}
+          />
+        ) : value === 1 ? (
+          <TextField
+            label="Enter Job Description"
+            variant="outlined"
+            fullWidth
+            multiline
+            rows={6}
+            value={jobText}
+            onChange={(e) => setJobText(e.target.value)}
+          />
+        ) : (
+          <SmallButton type="outlined">
+            Upload File
+            <input type="file" hidden accept="image/*,.pdf,.doc,.docx" />
+          </SmallButton>
+        )}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
             onClick={async () => {
-              await handleAddJobUrl({ apiClient, currentSeason, jobUrl, refetchJobs });
+              if (value === 0) {
+                await handleAddJobUrl({ apiClient, currentSeason, jobUrl, refetchJobs });
+              } else if (value === 1) {
+                await handleAddJobText({ apiClient, currentSeason, jobText, refetchJobs });
+              }
             }}>
             Submit
           </SmallButton>
@@ -221,67 +225,7 @@ const FullWidthTabs = ({
             Cancel
           </SmallButton>
         </Box>
-      </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{
-            mb: 2,
-          }}>
-          Add Job by Text
-        </Typography>
-        <TextField
-          label="Enter Job Description"
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={6}
-          value={jobText}
-          onChange={(e) => setJobText(e.target.value)}
-        />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton
-            type="contained"
-            onClick={async () => {
-              await handleAddJobText({ apiClient, currentSeason, jobText, refetchJobs });
-            }}>
-            Submit
-          </SmallButton>
-          <SmallButton
-            type="outlined"
-            onClick={() => {
-              setOpen(false);
-              setJobText("");
-              setJobUrl("");
-              setJobFile(null);
-            }}>
-            Cancel
-          </SmallButton>
-        </Box>
-      </TabPanel>
-      <TabPanel value={value} index={2} dir={theme.direction}>
-        <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
-          Add Job by File
-        </Typography>
-        <SmallButton type="outlined">
-          Upload File
-          <input type="file" hidden accept="image/*,.pdf,.doc,.docx" />
-        </SmallButton>
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
-          <SmallButton type="contained">Submit</SmallButton>
-          <SmallButton
-            type="outlined"
-            onClick={() => {
-              setOpen(false);
-              setJobText("");
-              setJobUrl("");
-              setJobFile(null);
-            }}>
-            Cancel
-          </SmallButton>
-        </Box>
-      </TabPanel>
+      </Box>
     </Box>
   );
 };

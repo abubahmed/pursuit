@@ -22,8 +22,8 @@ const SmallButton = ({
           color: "white",
           boxShadow: "none",
           textTransform: "none",
-          borderRadius: "50px",
-          padding: "6px 25px",
+          borderRadius: "100px",
+          padding: "8px 25px",
           fontSize: "0.95rem",
         }}>
         {children}
@@ -37,8 +37,8 @@ const SmallButton = ({
         sx={{
           color: "black",
           textTransform: "none",
-          borderRadius: "50px",
-          padding: "6px 25px",
+          borderRadius: "100px",
+          padding: "8px 25px",
           border: "1px solid black",
           fontSize: "0.95rem",
           boxShadow: "none",

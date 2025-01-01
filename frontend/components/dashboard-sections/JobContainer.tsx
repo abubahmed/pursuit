@@ -8,7 +8,7 @@ import { IoIosStar } from "react-icons/io";
 import AddJobForm from "../dashboard-components/AddJobForm";
 import EditJobForm from "../dashboard-components/EditJobForm";
 import JobInfoModal from "../dashboard-components/JobInfoModal";
-import SeasonForm from "../dashboard-components/SeasonForm";
+import FilterDataForm from "../dashboard-components/FilterDataForm";
 import { useState, useEffect } from "react";
 import { fetchJobs, fetchJobsExport, deleteJob, editJob } from "@/util/apiRequests";
 import useApi from "@/util/apiClient";
@@ -260,6 +260,7 @@ const DataTable = ({
   setInfoJobId,
   setEditJobId,
   refetchJobs,
+  initialColumnVisibilityState,
 }: {
   data: any;
   setJobInfoOpen: any;
@@ -267,6 +268,7 @@ const DataTable = ({
   setInfoJobId: any;
   setEditJobId: any;
   refetchJobs: any;
+  initialColumnVisibilityState: any;
 }) => {
   return (
     <Paper
@@ -284,15 +286,7 @@ const DataTable = ({
         <DataGrid
           initialState={{
             columns: {
-              columnVisibilityModel: {
-                description: false,
-                url: false,
-                during: false,
-                type: false,
-                mode: false,
-                level: false,
-                contact: false,
-              },
+              columnVisibilityModel: initialColumnVisibilityState,
             },
             pagination: { paginationModel },
           }}
@@ -433,8 +427,8 @@ const JobContainer = ({
   currentSeason: number | null;
   refetchSeasons: any;
 }) => {
+  const [filterDataFormOpen, setFilterDataFormOpen] = useState(false);
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
-  const [seasonFormOpen, setSeasonFormOpen] = useState(false);
   const [editJobFormOpen, setEditJobFormOpen] = useState(false);
   const [jobInfoOpen, setJobInfoOpen] = useState(false);
   const [infoJobId, setInfoJobId] = useState(null);
@@ -442,6 +436,23 @@ const JobContainer = ({
   const [infoJob, setInfoJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const initialColumnVisibilityState = {
+    title: true,
+    company: true,
+    location: true,
+    description: false,
+    during: false,
+    level: false,
+    mode: false,
+    salary: true,
+    skills: true,
+    type: false,
+    url: false,
+    contact: false,
+    created_at: true,
+    status: true,
+  };
+  const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibilityState);
   const apiClient = useApi({ useToken: true });
 
   useEffect(() => {
@@ -479,7 +490,7 @@ const JobContainer = ({
     }
   }, [infoJobId, jobs]);
 
-  const getJobsExport = async () => {
+  const handleJobsExport = async () => {
     try {
       const response = await fetchJobsExport({
         apiClient,
@@ -526,7 +537,7 @@ const JobContainer = ({
 
   return (
     <Paper
-      elevation={1}
+      elevation={2}
       sx={{
         m: 3,
         backgroundColor: "white",
@@ -538,16 +549,18 @@ const JobContainer = ({
         currentSeason={currentSeason}
         refetchJobs={refetchJobs}
       />
-      <SeasonForm
-        open={seasonFormOpen}
-        setOpen={setSeasonFormOpen}
-        refetchSeasons={refetchSeasons}
-      />
       <EditJobForm
         open={editJobFormOpen}
         setOpen={setEditJobFormOpen}
         jobId={editJobId}
         refetchJobs={refetchJobs}
+      />
+      <FilterDataForm
+        open={filterDataFormOpen}
+        setOpen={setFilterDataFormOpen}
+        columnVisibility={columnVisibility}
+        setColumnVisibility={setColumnVisibility}
+        initialColumnVisibilityState={initialColumnVisibilityState}
       />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box
@@ -576,13 +589,13 @@ const JobContainer = ({
             Add Job
           </SmallButton>
           <SmallButton
-            type="contained"
+            type="outlined"
             onClick={() => {
-              setSeasonFormOpen(true);
+              setFilterDataFormOpen(true);
             }}>
-            Create Season
+            Filter Data
           </SmallButton>
-          <SmallButton type="outlined" onClick={getJobsExport}>
+          <SmallButton type="outlined" onClick={handleJobsExport}>
             Export Data
           </SmallButton>
         </Box>
@@ -595,6 +608,7 @@ const JobContainer = ({
           setInfoJobId={setInfoJobId}
           setEditJobId={setEditJobId}
           refetchJobs={refetchJobs}
+          initialColumnVisibilityState={initialColumnVisibilityState}
         />
       )}
     </Paper>

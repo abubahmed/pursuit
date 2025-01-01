@@ -12,7 +12,7 @@ const Navbar = ({ profileDetails }: { profileDetails: any }) => {
 
   return (
     <Paper
-      elevation={1}
+      elevation={2}
       sx={{
         width: "100%",
       }}>

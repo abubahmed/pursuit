@@ -131,7 +131,7 @@ const FullWidthTabs = ({
   );
 };
 
-const SeasonForm = ({
+const CreateSeasonForm = ({
   open,
   setOpen,
   refetchSeasons,
@@ -205,4 +205,4 @@ const SeasonForm = ({
   );
 };
 
-export default SeasonForm;
+export default CreateSeasonForm;

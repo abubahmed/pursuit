@@ -6,12 +6,16 @@ import MiniDrawer from "@/components/dashboard-sections/PermanentDrawer";
 import { useState, useEffect } from "react";
 import useApi from "@/util/apiClient";
 import { fetchProfile, fetchSeasons } from "@/util/apiRequests";
+import { useRouter } from "next/router";
+import CreateSeasonForm from "@/components/dashboard-components/CreateSeasonForm";
 
 export default function Dashboard() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [profileDetails, setProfileDetails] = useState(null);
   const [seasons, setSeasons] = useState(null);
   const [selectedSeason, setSelectedSeason] = useState(null);
+  const [seasonFormOpen, setSeasonFormOpen] = useState(false);
   const [loading, setLoading] = useState({
     profileDetails: true,
     seasons: true,
@@ -39,6 +43,13 @@ export default function Dashboard() {
           console.log(data.seasons);
         });
       }
+    }
+
+    if (status === "unauthenticated") {
+      setProfileDetails(null);
+      setSeasons(null);
+      setSelectedSeason(null);
+      router.push("/");
     }
   }, [session, status]);
 
@@ -70,6 +81,7 @@ export default function Dashboard() {
         seasons={seasons}
         setSelectedSeason={setSelectedSeason}
         selectedSeason={selectedSeason}
+        setSeasonFormOpen={setSeasonFormOpen}
       />
       <Box
         sx={{
@@ -77,6 +89,11 @@ export default function Dashboard() {
           backgroundColor: "rgb(240, 240, 240, 0.3)",
           overflow: "auto",
         }}>
+        <CreateSeasonForm
+          open={seasonFormOpen}
+          setOpen={setSeasonFormOpen}
+          refetchSeasons={refetchSeasons}
+        />
         <Navbar profileDetails={profileDetails} />
         <JobContainer currentSeason={selectedSeason} refetchSeasons={refetchSeasons} />
       </Box>

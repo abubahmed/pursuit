@@ -11,7 +11,8 @@ import {
 import Image from "next/image";
 import logoImage from "@/public/logos/Logo maker project (1).png";
 import { MdLogout } from "react-icons/md";
-import { IoCalendarClearOutline, IoCalendarClear } from "react-icons/io5";
+import { IoCalendarClearOutline, IoCalendarClear, IoAddOutline } from "react-icons/io5";
+import { RiAddLargeLine } from "react-icons/ri";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 
@@ -71,10 +72,12 @@ const MiniDrawer = ({
   seasons,
   setSelectedSeason,
   selectedSeason,
+  setSeasonFormOpen,
 }: {
   seasons: any;
   setSelectedSeason: any;
   selectedSeason: number | null;
+  setSeasonFormOpen: any;
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
@@ -180,6 +183,57 @@ const MiniDrawer = ({
           sx={{
             mt: "auto",
           }}>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              onClick={() => setSeasonFormOpen(true)}
+              sx={[
+                {
+                  minHeight: 48,
+                },
+                open
+                  ? {
+                      justifyContent: "initial",
+                      borderRadius: "10px",
+                    }
+                  : {
+                      justifyContent: "center",
+                    },
+              ]}>
+              <ListItemIcon
+                sx={[
+                  {
+                    minWidth: 0,
+                    justifyContent: "center",
+                  },
+                  open
+                    ? {
+                        mr: 2.5,
+                      }
+                    : {
+                        mr: "auto",
+                      },
+                ]}>
+                <RiAddLargeLine color="white" size="1.3rem" />
+              </ListItemIcon>
+              <ListItemText
+                primary="New Season"
+                disableTypography
+                sx={[
+                  open
+                    ? {
+                        opacity: 1,
+                        color: "white",
+                        fontSize: "1rem",
+                      }
+                    : {
+                        opacity: 0,
+                        color: "white",
+                        fontSize: "1rem",
+                      },
+                ]}
+              />
+            </ListItemButton>
+          </ListItem>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               onClick={() => signOut({ callbackUrl: "/" })}

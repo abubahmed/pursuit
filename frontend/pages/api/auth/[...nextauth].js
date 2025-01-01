@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
-const BACKEND_ACCESS_TOKEN_LIFETIME = 10;
+const BACKEND_ACCESS_TOKEN_LIFETIME = 60 * 60;
 const BACKEND_REFRESH_TOKEN_LIFETIME = 6 * 24 * 60 * 60;
 
 const getCurrentEpochTime = () => {

@@ -51,7 +51,7 @@ const Hero = () => {
                 color: "white",
                 textTransform: "none",
                 borderRadius: "100px",
-                padding: "10px 25px",
+                padding: "12px 30px",
                 fontSize: "1rem",
                 boxShadow: "none",
                 mr: 3,
@@ -66,7 +66,7 @@ const Hero = () => {
                 textTransform: "none",
                 border: "1px solid black",
                 borderRadius: "100px",
-                padding: "10px 25px",
+                padding: "12px 30px",
                 fontSize: "1rem",
               }}>
               Sign Up Now
