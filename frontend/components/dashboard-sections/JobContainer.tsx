@@ -81,6 +81,7 @@ const ActionCenter = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<any | null>(null);
   const [popupContent, setPopupContent] = useState<string>("");
+  const [renderTrigger, setRenderTrigger] = useState(false);
   const apiClient = useApi({ useToken: true });
 
   const handleClick = (event: any) => {
@@ -163,9 +164,10 @@ const ActionCenter = ({
         hidden: null,
       });
       console.log(message);
-      await refetchJobs();
     } catch (error) {
       console.error(error);
+    } finally {
+      setRenderTrigger(!renderTrigger);
     }
   };
 
@@ -205,6 +207,7 @@ const ActionCenter = ({
         onClick={async () => {
           const starred = job.starred ? "False" : "True";
           await handleStarJob({ starred, jobId, apiClient });
+          job.starred = !job.starred;
         }}>
         <IoIosStar color={job.starred ? "gold" : "black"} />
       </IconBox>
@@ -261,6 +264,9 @@ const DataTable = ({
   setEditJobId,
   refetchJobs,
   initialColumnVisibilityState,
+  columnVisibility,
+  columnSelection,
+  starredSelection,
 }: {
   data: any;
   setJobInfoOpen: any;
@@ -269,6 +275,9 @@ const DataTable = ({
   setEditJobId: any;
   refetchJobs: any;
   initialColumnVisibilityState: any;
+  columnVisibility: any;
+  columnSelection: any;
+  starredSelection: any;
 }) => {
   return (
     <Paper
@@ -280,6 +289,8 @@ const DataTable = ({
         [`.${gridClasses.cell}`]: {
           display: "flex",
           alignItems: "center",
+          wordWrap: "break-word",
+          overflowWrap: "break-word",
         },
       }}>
       {data && (
@@ -290,7 +301,31 @@ const DataTable = ({
             },
             pagination: { paginationModel },
           }}
-          rows={data}
+          rows={(() => {
+            const areAllFalsy =
+              Object.values(columnSelection).every((val) => !val) && !starredSelection;
+            if (areAllFalsy) {
+              return data;
+            }
+            return data.filter((row: any) => {
+              let isValid = true;
+              for (const key in columnSelection) {
+                if (
+                  columnVisibility[key] &&
+                  columnSelection[key] !== "" &&
+                  row[key] !== columnSelection[key]
+                ) {
+                  isValid = false;
+                  break;
+                }
+              }
+              if (starredSelection && !row.starred) {
+                isValid = false;
+              }
+              return isValid;
+            });
+          })()}
+          columnVisibilityModel={columnVisibility}
           columns={[
             {
               field: "title",
@@ -411,6 +446,9 @@ const DataTable = ({
             },
             "& .MuiDataGrid-cell": {
               py: "10px",
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "normal",
             },
           }}
           getRowHeight={() => "auto"}
@@ -453,6 +491,14 @@ const JobContainer = ({
     status: true,
   };
   const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibilityState);
+  const [columnSelection, setColumnSelection] = useState({
+    during: "",
+    level: "",
+    mode: "",
+    status: "",
+    type: "",
+  });
+  const [starredSelection, setStarredSelection] = useState(false);
   const apiClient = useApi({ useToken: true });
 
   useEffect(() => {
@@ -561,6 +607,10 @@ const JobContainer = ({
         columnVisibility={columnVisibility}
         setColumnVisibility={setColumnVisibility}
         initialColumnVisibilityState={initialColumnVisibilityState}
+        columnSelection={columnSelection}
+        setColumnSelection={setColumnSelection}
+        setStarredSelection={setStarredSelection}
+        starredSelection={starredSelection}
       />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
       <Box
@@ -609,6 +659,9 @@ const JobContainer = ({
           setEditJobId={setEditJobId}
           refetchJobs={refetchJobs}
           initialColumnVisibilityState={initialColumnVisibilityState}
+          columnVisibility={columnVisibility}
+          columnSelection={columnSelection}
+          starredSelection={starredSelection}
         />
       )}
     </Paper>

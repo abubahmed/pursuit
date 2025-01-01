@@ -329,3 +329,30 @@ export const reviews = [
     image: "https://randomuser.me/api/portraits/women/4.jpg",
   },
 ];
+
+export const statusChoices = [
+  "Research",
+  "Applied",
+  "Interview",
+  "Assessment",
+  "Offer",
+  "Rejected",
+  "Waitlisted",
+  "Withdrawn",
+  "Other",
+];
+
+export const duringChoices = ["Winter", "Spring", "Summer", "Fall", "Year-round", "Other"];
+
+export const typeChoices = [
+  "Full-time",
+  "Part-time",
+  "Contract",
+  "Internship",
+  "Freelance",
+  "Other",
+];
+
+export const levelChoices = ["Entry", "Mid", "Senior", "Lead", "Manager", "Director", "Other"];
+
+export const modeChoices = ["Remote", "Onsite", "Hybrid", "Other"];

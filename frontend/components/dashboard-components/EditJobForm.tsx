@@ -16,6 +16,7 @@ import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
 import { editJob } from "@/util/apiRequests";
 import useApi from "@/util/apiClient";
+import { statusChoices } from "@/util/pageContent";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -67,17 +68,7 @@ const FullWidthTabs = ({ setOpen, handleEditJob }: { setOpen: any; handleEditJob
             value={status}
             label="Age"
             onChange={handleChange}>
-            {[
-              "Research",
-              "Applied",
-              "Interview",
-              "Assessment",
-              "Offer",
-              "Rejected",
-              "Waitlisted",
-              "Withdrawn",
-              "Other",
-            ].map((status) => (
+            {statusChoices.map((status) => (
               <MenuItem key={status} value={status}>
                 {status}
               </MenuItem>

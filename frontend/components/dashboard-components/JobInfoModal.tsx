@@ -18,6 +18,7 @@ import SmallButton from "../general-components/SmallButton";
 const BasicTable = ({ job }: { job: any }) => {
   const [rows, setRows] = useState([]) as any;
   const tableHeight = 500;
+  const maxWidth = 600;
 
   useEffect(() => {
     if (!job) return;
@@ -70,6 +71,7 @@ const BasicTable = ({ job }: { job: any }) => {
                     color: "black",
                     wordWrap: "break-word",
                     overflowWrap: "break-word",
+                    maxWidth: maxWidth,
                   }}>
                   {row.value}
                 </TableCell>

@@ -11,10 +11,18 @@ import {
   MenuItem,
   FormControlLabel,
   Checkbox,
+  TextField,
 } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import SmallButton from "../general-components/SmallButton";
+import {
+  statusChoices,
+  typeChoices,
+  modeChoices,
+  levelChoices,
+  duringChoices,
+} from "@/util/pageContent";
 
 const TabPanel = (props: {
   children?: React.ReactNode;
@@ -44,11 +52,19 @@ const FullWidthTabs = ({
   columnVisibility,
   setColumnVisibility,
   initialColumnVisibilityState,
+  setColumnSelection,
+  columnSelection,
+  setStarredSelection,
+  starredSelection,
 }: {
   setOpen: any;
   columnVisibility: any;
   setColumnVisibility: any;
   initialColumnVisibilityState: any;
+  setColumnSelection: any;
+  columnSelection: any;
+  setStarredSelection: any;
+  starredSelection: any;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -56,6 +72,7 @@ const FullWidthTabs = ({
   const handleChange = (event: any) => {
     setStatus(event.target.value as string);
   };
+  const maxFormHeight = 400;
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%", borderRadius: "15px" }}>
@@ -68,55 +85,107 @@ const FullWidthTabs = ({
           }}>
           Filter Job Data
         </Typography>
-        <FormControl fullWidth>
-          {/* <InputLabel id="demo-simple-select-label">Select Application Status</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={status}
-            label="Age"
-            onChange={handleChange}>
-            {[
-              "Research",
-              "Applied",
-              "Interview",
-              "Assessment",
-              "Offer",
-              "Rejected",
-              "Waitlisted",
-              "Withdrawn",
-              "Other",
-            ].map((status) => (
-              <MenuItem key={status} value={status}>
-                {status}
-              </MenuItem>
-            ))}
-          </Select> */}
+        <FormControl
+          fullWidth
+          sx={{
+            maxHeight: maxFormHeight,
+            overflowY: "auto",
+          }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={starredSelection}
+                name="starred"
+                onChange={() => {
+                  setStarredSelection((prev: any) => !prev);
+                }}
+              />
+            }
+            label="Starred"
+          />
           {Object.keys(initialColumnVisibilityState).map((value: any, index: any) => {
             const checked = columnVisibility[value];
             let valueName = value.charAt(0).toUpperCase() + value.slice(1);
             if (value === "url") valueName = "Link";
             if (value === "created_at") valueName = "Added On";
             return (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked}
-                    name={value}
-                    onChange={() => {
-                      setColumnVisibility((prev: any) => {
-                        return { ...prev, [value]: !checked };
-                      });
-                      console.log(columnVisibility);
-                    }}
-                  />
-                }
-                label={valueName}
-              />
+              <Box key={value} display="flex" alignItems="center" mr={2}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={columnVisibility[value]}
+                      name={value}
+                      onChange={() => {
+                        setColumnVisibility((prev: any) => {
+                          return { ...prev, [value]: !checked };
+                        });
+                        setColumnSelection((prev: any) => {
+                          return { ...prev, [value]: "" };
+                        });
+                      }}
+                    />
+                  }
+                  label={valueName}
+                />
+                {checked && value in columnSelection && (
+                  <FormControl sx={{ ml: 2, my: 1 }} fullWidth>
+                    <InputLabel id={`select-${value}-label`}>Select {valueName}</InputLabel>
+                    <Select
+                      labelId={`select-${value}-label`}
+                      id={`select-${value}`}
+                      variant="outlined"
+                      value={columnSelection[value]}
+                      label={valueName}>
+                      {(() => {
+                        if (value === "status") {
+                          return statusChoices;
+                        } else if (value === "type") {
+                          return typeChoices;
+                        } else if (value === "mode") {
+                          return modeChoices;
+                        } else if (value === "level") {
+                          return levelChoices;
+                        } else if (value === "during") {
+                          return duringChoices;
+                        } else {
+                          return [];
+                        }
+                      })().map((item) => (
+                        <MenuItem
+                          key={item}
+                          value={item}
+                          onClick={() => {
+                            setColumnSelection((prev: any) => {
+                              return { ...prev, [value]: item };
+                            });
+                          }}>
+                          {item}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              </Box>
             );
           })}
         </FormControl>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
+          <SmallButton
+            type="contained"
+            onClick={() => {
+              setColumnVisibility(initialColumnVisibilityState);
+              setColumnSelection({
+                status: "",
+                type: "",
+                mode: "",
+                level: "",
+                during: "",
+              });
+              setStarredSelection(false);
+              setOpen(false);
+            }}>
+            Reset
+          </SmallButton>
           <SmallButton
             type="outlined"
             onClick={() => {
@@ -136,12 +205,20 @@ const FilterDataForm = ({
   setColumnVisibility,
   columnVisibility,
   initialColumnVisibilityState,
+  setColumnSelection,
+  columnSelection,
+  setStarredSelection,
+  starredSelection,
 }: {
   open: boolean;
   setOpen: any;
   setColumnVisibility: any;
   columnVisibility: any;
   initialColumnVisibilityState: any;
+  setColumnSelection: any;
+  columnSelection: any;
+  setStarredSelection: any;
+  starredSelection: any;
 }) => {
   return (
     <Modal
@@ -176,6 +253,10 @@ const FilterDataForm = ({
             columnVisibility={columnVisibility}
             setColumnVisibility={setColumnVisibility}
             initialColumnVisibilityState={initialColumnVisibilityState}
+            setColumnSelection={setColumnSelection}
+            columnSelection={columnSelection}
+            setStarredSelection={setStarredSelection}
+            starredSelection={starredSelection}
           />
         </Paper>
       </Fade>
