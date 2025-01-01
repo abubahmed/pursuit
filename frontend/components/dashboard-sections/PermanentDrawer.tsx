@@ -114,70 +114,72 @@ const MiniDrawer = ({
           sx={{
             mt: 2,
           }}>
-          {seasons.map((season: any, index: number) => (
-            <ListItem key={index} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                onClick={() => setSelectedSeason(season.id)}
-                sx={[
-                  {
-                    minHeight: 48,
-                  },
-                  open
-                    ? {
-                        justifyContent: "initial",
-                        borderRadius: "10px",
-                      }
-                    : {
-                        justifyContent: "center",
-                      },
-                ]}>
-                <ListItemIcon
+          {seasons &&
+            seasons.length > 0 &&
+            seasons.map((season: any, index: number) => (
+              <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={() => setSelectedSeason(season.id)}
                   sx={[
                     {
-                      minWidth: 0,
-                      justifyContent: "center",
+                      minHeight: 48,
                     },
                     open
                       ? {
-                          mr: 2.5,
+                          justifyContent: "initial",
+                          borderRadius: "10px",
                         }
                       : {
-                          mr: "auto",
+                          justifyContent: "center",
                         },
                   ]}>
-                  {selectedSeason !== season.id ? (
-                    <IoCalendarClearOutline color="white" size="1.3rem" />
-                  ) : (
-                    <IoCalendarClear color="white" size="1.3rem" />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  primary={season.name}
-                  disableTypography
-                  sx={[
-                    open
-                      ? {
-                          opacity: 1,
-                          color: "white",
-                          fontSize: "1rem",
-                        }
-                      : {
-                          opacity: 0,
-                          color: "white",
-                          fontSize: "1rem",
-                        },
-                    selectedSeason === season.id
-                      ? {
-                          fontWeight: "medium",
-                        }
-                      : {
-                          fontWeight: "regular",
-                        },
-                  ]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={[
+                      {
+                        minWidth: 0,
+                        justifyContent: "center",
+                      },
+                      open
+                        ? {
+                            mr: 2.5,
+                          }
+                        : {
+                            mr: "auto",
+                          },
+                    ]}>
+                    {selectedSeason !== season.id ? (
+                      <IoCalendarClearOutline color="white" size="1.3rem" />
+                    ) : (
+                      <IoCalendarClear color="white" size="1.3rem" />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={season.name}
+                    disableTypography
+                    sx={[
+                      open
+                        ? {
+                            opacity: 1,
+                            color: "white",
+                            fontSize: "1rem",
+                          }
+                        : {
+                            opacity: 0,
+                            color: "white",
+                            fontSize: "1rem",
+                          },
+                      selectedSeason === season.id
+                        ? {
+                            fontWeight: "medium",
+                          }
+                        : {
+                            fontWeight: "regular",
+                          },
+                    ]}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
         </List>
         <List
           sx={{
@@ -185,6 +187,7 @@ const MiniDrawer = ({
           }}>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
+              disabled={selectedSeason === null || selectedSeason === undefined}
               onClick={() => setSeasonFormOpen(true)}
               sx={[
                 {

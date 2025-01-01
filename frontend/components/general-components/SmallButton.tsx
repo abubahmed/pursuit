@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 const SmallButton = ({
   type,
   children,
+  disabled = false,
   onClick = () => {
     console.log("Button clicked");
   },
@@ -11,14 +12,16 @@ const SmallButton = ({
   type: string;
   children: React.ReactNode;
   onClick?: any;
+  disabled?: boolean;
 }) => {
   if (type === "contained") {
     return (
       <Button
+        disabled={disabled}
         onClick={onClick}
         variant="contained"
         style={{
-          backgroundColor: "rgb(20,86,57)",
+          backgroundColor: !disabled ? "rgb(20,86,57)" : "",
           color: "white",
           boxShadow: "none",
           textTransform: "none",
@@ -32,6 +35,7 @@ const SmallButton = ({
   } else if (type === "outlined") {
     return (
       <Button
+        disabled={disabled}
         onClick={onClick}
         variant="outlined"
         sx={{

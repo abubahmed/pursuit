@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, Popover, CircularProgress } from "@mui/material";
+import { Box, Typography, Paper, Popover, CircularProgress, Alert } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import { FaTrash } from "react-icons/fa";
@@ -14,6 +14,93 @@ import { fetchJobs, fetchJobsExport, deleteJob, editJob } from "@/util/apiReques
 import useApi from "@/util/apiClient";
 
 const paginationModel = { page: 0, pageSize: 10 };
+const columns = [
+  {
+    field: "title",
+    headerName: "Job Title",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "company",
+    headerName: "Company",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "location",
+    headerName: "Location",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    headerClassName: "custom-header",
+    width: 300,
+  },
+  {
+    field: "during",
+    headerName: "During",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "level",
+    headerName: "Level",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "mode",
+    headerName: "Mode",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "salary",
+    headerName: "Salary",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "skills",
+    headerName: "Skills",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "type",
+    headerName: "Type",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "url",
+    headerName: "Link",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "contact",
+    headerName: "Contact",
+    headerClassName: "custom-header",
+    width: 200,
+  },
+  {
+    field: "created_at",
+    headerName: "Added On",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    headerClassName: "custom-header",
+    width: 150,
+  },
+];
+
 const IconBox = ({
   dataKey,
   onClick,
@@ -293,177 +380,97 @@ const DataTable = ({
           overflowWrap: "break-word",
         },
       }}>
-      {data && (
-        <DataGrid
-          initialState={{
-            columns: {
-              columnVisibilityModel: initialColumnVisibilityState,
-            },
-            pagination: { paginationModel },
-          }}
-          rows={(() => {
-            const areAllFalsy =
-              Object.values(columnSelection).every((val) => !val) && !starredSelection;
-            if (areAllFalsy) {
-              return data;
-            }
-            return data.filter((row: any) => {
-              let isValid = true;
-              for (const key in columnSelection) {
-                if (
-                  columnVisibility[key] &&
-                  columnSelection[key] !== "" &&
-                  row[key] !== columnSelection[key]
-                ) {
-                  isValid = false;
-                  break;
-                }
-              }
-              if (starredSelection && !row.starred) {
+      <DataGrid
+        initialState={{
+          columns: {
+            columnVisibilityModel: initialColumnVisibilityState,
+          },
+          pagination: { paginationModel },
+        }}
+        rows={(() => {
+          if (!data || data.length === 0) return [];
+          const areAllFalsy =
+            Object.values(columnSelection).every((val) => !val) && !starredSelection;
+          if (areAllFalsy) {
+            return data;
+          }
+          return data.filter((row: any) => {
+            let isValid = true;
+            for (const key in columnSelection) {
+              if (
+                columnVisibility[key] &&
+                columnSelection[key] !== "" &&
+                row[key] !== columnSelection[key]
+              ) {
                 isValid = false;
+                break;
               }
-              return isValid;
-            });
-          })()}
-          columnVisibilityModel={columnVisibility}
-          columns={[
-            {
-              field: "title",
-              headerName: "Job Title",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "company",
-              headerName: "Company",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "location",
-              headerName: "Location",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "description",
-              headerName: "Description",
-              headerClassName: "custom-header",
-              width: 300,
-            },
-            {
-              field: "during",
-              headerName: "During",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "level",
-              headerName: "Level",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "mode",
-              headerName: "Mode",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "salary",
-              headerName: "Salary",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "skills",
-              headerName: "Skills",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "type",
-              headerName: "Type",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "url",
-              headerName: "Link",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "contact",
-              headerName: "Contact",
-              headerClassName: "custom-header",
-              width: 200,
-            },
-            {
-              field: "created_at",
-              headerName: "Added On",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "status",
-              headerName: "Status",
-              headerClassName: "custom-header",
-              width: 150,
-            },
-            {
-              field: "actions",
-              headerClassName: "custom-header",
-              headerName: "Actions",
-              width: 180,
-              renderCell: (params) => (
-                <ActionCenter
-                  jobId={params.row.id}
-                  setEditJobFormOpen={setEditJobFormOpen}
-                  setJobInfoOpen={setJobInfoOpen}
-                  setInfoJobId={setInfoJobId}
-                  setEditJobId={setEditJobId}
-                  job={params.row}
-                  refetchJobs={refetchJobs}
-                />
-              ),
-            },
-          ]}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
-          sx={{
-            border: 0,
+            }
+            if (starredSelection && !row.starred) {
+              isValid = false;
+            }
+            return isValid;
+          });
+        })()}
+        columnVisibilityModel={columnVisibility}
+        columns={[
+          ...columns,
+          {
+            field: "actions",
+            headerClassName: "custom-header",
+            headerName: "Actions",
+            width: 180,
+            renderCell: (params) => (
+              <ActionCenter
+                jobId={params.row.id}
+                setEditJobFormOpen={setEditJobFormOpen}
+                setJobInfoOpen={setJobInfoOpen}
+                setInfoJobId={setInfoJobId}
+                setEditJobId={setEditJobId}
+                job={params.row}
+                refetchJobs={refetchJobs}
+              />
+            ),
+          },
+        ]}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
+        disableRowSelectionOnClick
+        sx={{
+          border: 0,
+          fontWeight: "regular",
+          fontSize: "0.95rem",
+          color: "black",
+          borderRadius: "15px",
+          "& .MuiDataGrid-columnHeaders": {
             fontWeight: "regular",
-            fontSize: "0.95rem",
-            color: "black",
-            borderRadius: "15px",
-            "& .MuiDataGrid-columnHeaders": {
-              fontWeight: "regular",
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              fontWeight: "regular",
-            },
-            "& .MuiDataGrid-cell": {
-              py: "10px",
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              whiteSpace: "normal",
-            },
-          }}
-          getRowHeight={() => "auto"}
-        />
-      )}
+          },
+          "& .MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "regular",
+          },
+          "& .MuiDataGrid-cell": {
+            py: "10px",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+            whiteSpace: "normal",
+          },
+        }}
+        getRowHeight={() => "auto"}
+      />
     </Paper>
   );
 };
 
 const JobContainer = ({
-  currentSeason,
-  refetchSeasons,
+  currentSeason = null,
+  refetchSeasons = null,
+  error,
+  setError,
 }: {
   currentSeason: number | null;
   refetchSeasons: any;
+  error: boolean;
+  setError: any;
 }) => {
   const [filterDataFormOpen, setFilterDataFormOpen] = useState(false);
   const [addJobFormOpen, setAddJobFormOpen] = useState(false);
@@ -502,14 +509,33 @@ const JobContainer = ({
   const apiClient = useApi({ useToken: true });
 
   useEffect(() => {
-    if (currentSeason) {
-      fetchJobs({ apiClient, seasonId: currentSeason }).then((data) => {
-        const notHiddenJobs = data.jobs.filter((job: any) => job.hidden === false);
-        setJobs(notHiddenJobs);
-        console.log(notHiddenJobs);
+    const fetchAndSetJobs = async () => {
+      if (currentSeason) {
+        try {
+          let data = await fetchJobs({ apiClient, seasonId: currentSeason });
+          if (!data.jobs) {
+            setError(true);
+            setJobs([]);
+            return;
+          }
+          const notHiddenJobs = data.jobs.filter((job: any) => job.hidden === false);
+          setJobs(notHiddenJobs);
+          console.log(notHiddenJobs);
+        } catch (error) {
+          console.error(error);
+          setError(true);
+          setJobs([]);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setJobs([]);
+        setError(true);
         setLoading(false);
-      });
-    }
+      }
+    };
+
+    fetchAndSetJobs();
   }, [currentSeason]);
 
   const refetchJobs = async () => {
@@ -521,9 +547,13 @@ const JobContainer = ({
         setJobs(notHiddenJobs);
       } else {
         console.error(response.message);
+        setJobs([]);
+        setError(true);
       }
     } catch (error) {
       console.error(error);
+      setJobs([]);
+      setError(true);
     }
   };
 
@@ -613,6 +643,17 @@ const JobContainer = ({
         starredSelection={starredSelection}
       />
       <JobInfoModal open={jobInfoOpen} setOpen={setJobInfoOpen} job={infoJob} />
+      {error && (
+        <Alert
+          severity="error"
+          sx={{
+            fontWeight: "regular",
+            fontSize: "0.95rem",
+            py: 1,
+          }}>
+          There was an issue fetching your data. Please try again at a later time.
+        </Alert>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -632,6 +673,7 @@ const JobContainer = ({
             alignItems: "center",
           }}>
           <SmallButton
+            disabled={error}
             type="contained"
             onClick={() => {
               setAddJobFormOpen(true);
@@ -639,31 +681,30 @@ const JobContainer = ({
             Add Job
           </SmallButton>
           <SmallButton
+            disabled={error}
             type="outlined"
             onClick={() => {
               setFilterDataFormOpen(true);
             }}>
             Filter Data
           </SmallButton>
-          <SmallButton type="outlined" onClick={handleJobsExport}>
+          <SmallButton type="outlined" onClick={handleJobsExport} disabled={error}>
             Export Data
           </SmallButton>
         </Box>
       </Box>
-      {jobs && (
-        <DataTable
-          data={jobs}
-          setEditJobFormOpen={setEditJobFormOpen}
-          setJobInfoOpen={setJobInfoOpen}
-          setInfoJobId={setInfoJobId}
-          setEditJobId={setEditJobId}
-          refetchJobs={refetchJobs}
-          initialColumnVisibilityState={initialColumnVisibilityState}
-          columnVisibility={columnVisibility}
-          columnSelection={columnSelection}
-          starredSelection={starredSelection}
-        />
-      )}
+      <DataTable
+        data={jobs}
+        setEditJobFormOpen={setEditJobFormOpen}
+        setJobInfoOpen={setJobInfoOpen}
+        setInfoJobId={setInfoJobId}
+        setEditJobId={setEditJobId}
+        refetchJobs={refetchJobs}
+        initialColumnVisibilityState={initialColumnVisibilityState}
+        columnVisibility={columnVisibility}
+        columnSelection={columnSelection}
+        starredSelection={starredSelection}
+      />
     </Paper>
   );
 };

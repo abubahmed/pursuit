@@ -11,11 +11,12 @@ import CreateSeasonForm from "@/components/dashboard-components/CreateSeasonForm
 
 export default function Dashboard() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as any;
   const [profileDetails, setProfileDetails] = useState(null);
-  const [seasons, setSeasons] = useState(null);
+  const [seasons, setSeasons] = useState(null) as any;
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [seasonFormOpen, setSeasonFormOpen] = useState(false);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState({
     profileDetails: true,
     seasons: true,
@@ -23,44 +24,79 @@ export default function Dashboard() {
   const apiClient = useApi({ useToken: true });
 
   useEffect(() => {
-    if (session && status === "authenticated") {
-      if (profileDetails) setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
-      if (seasons) setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
+    const fetchData = async () => {
+      if (session === null || status === "unauthenticated") {
+        setProfileDetails(null);
+        setSeasons(null);
+        setSelectedSeason(null);
+        router.push("/");
+      }
 
-      if (!profileDetails) {
-        fetchProfile({ apiClient }).then((data) => {
-          setProfileDetails(data.profileDetails);
+      if (session && status === "authenticated") {
+        if (profileDetails) {
           setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
-          console.log(data.profileDetails);
-        });
-      }
-
-      if (!seasons) {
-        fetchSeasons({ apiClient }).then((data) => {
-          setSeasons(data.seasons);
-          setSelectedSeason(data?.seasons[0]?.id);
+        }
+        if (seasons) {
           setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
-          console.log(data.seasons);
-        });
-      }
-    }
+        }
+        if (seasons && profileDetails) {
+          return;
+        }
 
-    if (status === "unauthenticated") {
-      setProfileDetails(null);
-      setSeasons(null);
-      setSelectedSeason(null);
-      router.push("/");
-    }
+        if (!profileDetails) {
+          try {
+            const response = await fetchProfile({ apiClient });
+            console.log(response.message);
+            if (response?.profileDetails) console.log(response.profileDetails);
+            setProfileDetails(response?.profileDetails || null);
+            setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
+          } catch (error) {
+            console.error(error);
+            setProfileDetails(null);
+            setError(true);
+            setLoading((prevLoading) => ({ ...prevLoading, profileDetails: false }));
+          }
+        }
+
+        if (!seasons) {
+          try {
+            const response = await fetchSeasons({ apiClient });
+            console.log(response.message);
+            console.log(response?.seasons);
+            setSeasons(response?.seasons || null);
+            setSelectedSeason(response?.seasons[0]?.id);
+            setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
+          } catch (error) {
+            console.error(error);
+            setSeasons(null);
+            setSelectedSeason(null);
+            setError(true);
+            setLoading((prevLoading) => ({ ...prevLoading, seasons: false }));
+          }
+        }
+      }
+    };
+
+    fetchData();
   }, [session, status]);
 
   const refetchSeasons = async () => {
     try {
       const response = await fetchSeasons({ apiClient });
-      setSeasons(response.seasons);
+      console.log(response.message);
+      console.log(response?.seasons);
+      setSeasons(response?.seasons || null);
     } catch (error) {
       console.error(error);
+      setSeasons(null);
+      setError(true);
     }
   };
+
+  if (session === null || status === "unauthenticated") {
+    router.push("/");
+    return;
+  }
 
   if (status === "loading" || loading.profileDetails || loading.seasons) {
     return (
@@ -95,7 +131,7 @@ export default function Dashboard() {
           refetchSeasons={refetchSeasons}
         />
         <Navbar profileDetails={profileDetails} />
-        <JobContainer currentSeason={selectedSeason} refetchSeasons={refetchSeasons} />
+        <JobContainer currentSeason={selectedSeason} refetchSeasons={refetchSeasons} error={error} setError={setError} />
       </Box>
     </Box>
   );

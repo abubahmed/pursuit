@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
-const BACKEND_ACCESS_TOKEN_LIFETIME = 60 * 60;
+const BACKEND_ACCESS_TOKEN_LIFETIME = 45 * 60;
 const BACKEND_REFRESH_TOKEN_LIFETIME = 6 * 24 * 60 * 60;
 
 const getCurrentEpochTime = () => {
@@ -81,13 +81,20 @@ export const authOptions = {
     async jwt({ user, token, account }) {
       if (user && account) {
         let backendResponse = account.provider === "credentials" ? user : account.meta;
+        console.log("backend response: ", backendResponse);
         token["user"] = backendResponse.user;
         token["access_token"] = backendResponse.access;
         token["refresh_token"] = backendResponse.refresh;
         token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
+        console.log("access token: ", token["access_token"]);
+        console.log("refresh token: ", token["refresh_token"]);
+        console.log("ref: ", token["ref"]);
         return token;
       }
       if (getCurrentEpochTime() > token["ref"]) {
+        console.log("refreshing token");
+        console.log("access token: ", token["access_token"]);
+        console.log("refresh token: ", token["refresh_token"]);
         const response = await axios({
           method: "post",
           url: process.env.NEXTAUTH_BACKEND_URL + "token/refresh/",
@@ -95,9 +102,9 @@ export const authOptions = {
             refresh: token["refresh_token"],
           },
         });
-        console.log(response.data);
+        console.log("refresh response: ", response.data);
         token["access_token"] = response.data.access;
-        token["refresh_token"] = response.data.refresh;
+        token["refresh_token"] = response.data.refresh || token["refresh_token"];
         token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
       }
       return token;

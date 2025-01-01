@@ -110,6 +110,7 @@ export const fetchJobs = async ({
   apiClient: ReturnType<typeof useApi>;
   seasonId: number | null;
 }) => {
+  return { message: "hello" };
   if (!seasonId || !apiClient) return { message: "Invalid arguments provided; request rejected" };
   try {
     const response = await apiClient.post("jobs/", { season_id: seasonId });
