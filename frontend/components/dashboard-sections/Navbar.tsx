@@ -6,7 +6,12 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const Navbar = ({ profileDetails }: { profileDetails: any }) => {
-  const { email, first_name, last_name, avatar_url } = profileDetails;
+  const {
+    email = "",
+    first_name = "User",
+    last_name = "",
+    avatar_url = "http://www.gravatar.com/avatar/?d=mp",
+  } = profileDetails;
   const name =
     first_name && last_name ? `${first_name} ${last_name}` : first_name ? first_name : "User";
 

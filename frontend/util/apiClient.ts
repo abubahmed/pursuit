@@ -8,6 +8,9 @@ console.log(backendUrl);
 const useApi = ({ useToken }: { useToken: boolean }) => {
   const { data: session, status } = useSession() as any;
   const token = session?.access_token;
+  console.log(token);
+  console.log(session);
+  console.log(status);
 
   const apiInstance = useMemo(() => {
     const instance = axios.create({

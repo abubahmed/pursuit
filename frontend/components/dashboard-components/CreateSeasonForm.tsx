@@ -7,6 +7,7 @@ import {
   Paper,
   TextField,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
@@ -51,6 +52,8 @@ const FullWidthTabs = ({
   const theme = useTheme();
   const [seasonName, setSeasonName] = useState("");
   const [seasonDescription, setSeasonDescription] = useState("");
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertText, setAlertText] = useState("");
   const apiClient = useApi({ useToken: true });
 
   const handleCreateSeason = async ({
@@ -65,16 +68,25 @@ const FullWidthTabs = ({
     if (loading) return;
     setLoading(true);
     try {
-      const response = await createSeason({ apiClient, seasonName, seasonDescription });
-      console.log(response);
+      const { code, message, season } = await createSeason({
+        apiClient,
+        seasonName,
+        seasonDescription,
+      });
+      if (code && code.includes("ERR")) {
+        setAlertOpen(true);
+        setAlertText(message);
+      }
+      if (code && code === "SUCCESS_CREATE_SEASON") {
+        setOpen(false);
+        refetchSeasons();
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setSeasonDescription("");
       setSeasonName("");
-      setOpen(false);
       setLoading(false);
-      refetchSeasons();
     }
   };
 
@@ -108,6 +120,18 @@ const FullWidthTabs = ({
           value={seasonDescription}
           onChange={(e) => setSeasonDescription(e.target.value)}
         />
+        {alertOpen && (
+          <Alert
+            severity="error"
+            sx={{
+              fontWeight: "regular",
+              fontSize: "0.95rem",
+              py: 1,
+              mt: 2
+            }}>
+            {alertText}
+          </Alert>
+        )}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"

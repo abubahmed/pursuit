@@ -10,6 +10,7 @@ import {
   Select,
   MenuItem,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
@@ -41,12 +42,56 @@ const TabPanel = (props: {
   );
 };
 
-const FullWidthTabs = ({ setOpen, handleEditJob }: { setOpen: any; handleEditJob: any }) => {
+const FullWidthTabs = ({
+  setOpen,
+  setLoading,
+  loading,
+  jobId,
+  refetchJobs,
+}: {
+  setOpen: any;
+  setLoading: any;
+  loading: boolean;
+  jobId: number | null;
+  refetchJobs: any;
+}) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [status, setStatus] = useState("");
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertText, setAlertText] = useState("");
+  const apiClient = useApi({ useToken: true });
   const handleChange = (event: any) => {
     setStatus(event.target.value as string);
+  };
+
+  const handleEditJob = async ({ status }: { status: string | null; setStatus: any }) => {
+    if (loading) return;
+    try {
+      const { message, code, job } = await editJob({
+        apiClient,
+        jobId,
+        status,
+        starred: null,
+        hidden: null,
+      });
+      if (code === "ERR_NO_FIELDS_TO_UPDATE") {
+        setAlertOpen(true);
+        setAlertText("No option selected");
+      } else if (code.includes("ERR")) {
+        setAlertOpen(true);
+        setAlertText(message);
+      }
+      if (code.includes("SUCCESS_EDIT_JOB")) {
+        setOpen(false);
+        await refetchJobs();
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setStatus("");
+    }
   };
 
   return (
@@ -75,12 +120,24 @@ const FullWidthTabs = ({ setOpen, handleEditJob }: { setOpen: any; handleEditJob
             ))}
           </Select>
         </FormControl>
+        {alertOpen && (
+          <Alert
+            severity="error"
+            sx={{
+              fontWeight: "regular",
+              fontSize: "0.95rem",
+              py: 1,
+              mt: 2,
+            }}>
+            {alertText}
+          </Alert>
+        )}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
             type="contained"
             onClick={async () => {
               console.log(status);
-              await handleEditJob({ status });
+              await handleEditJob({ status, setStatus });
             }}>
             Submit
           </SmallButton>
@@ -109,20 +166,6 @@ const EditJobForm = ({
   refetchJobs: any;
 }) => {
   const [loading, setLoading] = useState(false);
-  const apiClient = useApi({ useToken: true });
-  const handleEditJob = async ({ status }: { status: string | null }) => {
-    if (loading) return;
-    try {
-      const { message } = await editJob({ apiClient, jobId, status, starred: null, hidden: null });
-      console.log(message);
-      await refetchJobs();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setOpen(false);
-      setLoading(false);
-    }
-  };
 
   return (
     <Modal
@@ -175,7 +218,13 @@ const EditJobForm = ({
               />
             </Box>
           )}
-          <FullWidthTabs setOpen={setOpen} handleEditJob={handleEditJob} />
+          <FullWidthTabs
+            setOpen={setOpen}
+            setLoading={setLoading}
+            loading={loading}
+            jobId={jobId}
+            refetchJobs={refetchJobs}
+          />
         </Paper>
       </Fade>
     </Modal>

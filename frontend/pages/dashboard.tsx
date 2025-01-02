@@ -79,7 +79,7 @@ export default function Dashboard() {
 
     fetchData();
   }, [session, status]);
-
+  
   const refetchSeasons = async () => {
     try {
       const response = await fetchSeasons({ apiClient });
@@ -131,7 +131,12 @@ export default function Dashboard() {
           refetchSeasons={refetchSeasons}
         />
         <Navbar profileDetails={profileDetails} />
-        <JobContainer currentSeason={selectedSeason} refetchSeasons={refetchSeasons} error={error} setError={setError} />
+        <JobContainer
+          currentSeason={selectedSeason}
+          refetchSeasons={refetchSeasons}
+          error={error}
+          setError={setError}
+        />
       </Box>
     </Box>
   );

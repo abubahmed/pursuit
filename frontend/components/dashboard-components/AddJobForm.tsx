@@ -12,6 +12,8 @@ import {
   Tab,
   TextField,
   CircularProgress,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import SmallButton from "../general-components/SmallButton";
 import useApi from "@/util/apiClient";
@@ -43,7 +45,14 @@ const FullWidthTabs = ({
   const [jobText, setJobText] = useState("");
   const [jobFile, setJobFile] = useState(null);
   const [value, setValue] = useState(0);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertText, setAlertText] = useState("");
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setJobFile(null);
+    setJobUrl("");
+    setJobText("");
+    setAlertOpen(false);
+    setAlertText("");
     setValue(newValue);
   };
   const apiClient = useApi({ useToken: true });
@@ -62,14 +71,23 @@ const FullWidthTabs = ({
     if (loading) return;
     setLoading(true);
     try {
-      const response = await addJobUrl({ apiClient, seasonId: currentSeason, jobUrl });
-      console.log(response);
-      await refetchJobs();
+      const { message, job, code } = await addJobUrl({
+        apiClient,
+        seasonId: currentSeason,
+        jobUrl,
+      });
+      if (code && code.includes("ERR")) {
+        setAlertOpen(true);
+        setAlertText(message);
+      }
+      if (code && code === "SUCCESS_ADD_JOB_URL") {
+        await refetchJobs();
+        setOpen(false);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setJobUrl("");
-      setOpen(false);
       setLoading(false);
     }
   };
@@ -88,14 +106,23 @@ const FullWidthTabs = ({
     if (loading) return;
     setLoading(true);
     try {
-      const response = await addJobText({ apiClient, seasonId: currentSeason, jobText });
-      console.log(response);
-      await refetchJobs();
+      const { message, code, job } = await addJobText({
+        apiClient,
+        seasonId: currentSeason,
+        jobText,
+      });
+      if (code && code.includes("ERR")) {
+        setAlertOpen(true);
+        setAlertText(message);
+      }
+      if (code && code === "SUCCESS_ADD_JOB_TEXT") {
+        await refetchJobs();
+        setOpen(false);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       setJobText("");
-      setOpen(false);
       setLoading(false);
     }
   };
@@ -179,6 +206,18 @@ const FullWidthTabs = ({
             Upload File
             <input type="file" hidden accept="image/*,.pdf,.doc,.docx" />
           </SmallButton>
+        )}
+        {alertOpen && (
+          <Alert
+            severity="error"
+            sx={{
+              fontWeight: "regular",
+              fontSize: "0.95rem",
+              py: 1,
+              mt: 2,
+            }}>
+            {alertText}
+          </Alert>
         )}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3, gap: 2 }}>
           <SmallButton
