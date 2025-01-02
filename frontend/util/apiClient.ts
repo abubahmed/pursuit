@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000/api/";
 console.log(backendUrl);

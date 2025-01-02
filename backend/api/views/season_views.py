@@ -1,4 +1,3 @@
-from yaml import serialize
 from loguru import logger
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,7 +5,6 @@ from rest_framework import status
 from api.models.season_model import Season
 from api.serializer import SeasonSerializer
 from django.contrib.auth import get_user_model
-from datetime import datetime
 
 User = get_user_model()
 

@@ -2,8 +2,12 @@ from huggingface_hub import InferenceClient
 from loguru import logger
 from api.models.job_model import Job
 import json
-from api.util.secrets import HUGGINGFACE_API_KEY
+import os
 import copy
+from dotenv import load_dotenv
+
+load_dotenv()
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 
 
 class InferenceClientClass:

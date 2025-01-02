@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import logoImage from "@/public/logos/Logo maker project (1).png";
 import { MdLogout } from "react-icons/md";
-import { IoCalendarClearOutline, IoCalendarClear, IoAddOutline } from "react-icons/io5";
+import { IoCalendarClearOutline, IoCalendarClear } from "react-icons/io5";
 import { RiAddLargeLine } from "react-icons/ri";
 import { useState } from "react";
 import { signOut } from "next-auth/react";

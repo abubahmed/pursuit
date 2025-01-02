@@ -2,16 +2,16 @@ DEBUG = True
 
 INSTALLED_APPS = [
     # ...existing apps...
-    'corsheaders',
-    'debug_toolbar',  # Add debug toolbar
+    "corsheaders",
+    "debug_toolbar",  # Add debug toolbar
     # ...existing apps...
 ]
 
 MIDDLEWARE = [
     # ...existing middleware...
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  # Add debug toolbar middleware
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # Add debug toolbar middleware
     # ...existing middleware...
 ]
 
@@ -26,5 +26,6 @@ INTERNAL_IPS = [
 
 # Add this at the end of your settings.py
 import socket
+
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += [ip[:-1] + "1" for ip in ips]

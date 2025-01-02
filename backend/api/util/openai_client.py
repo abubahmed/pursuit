@@ -1,9 +1,13 @@
 from loguru import logger
-from api.util.secrets import OPENAI_API_KEY
 from api.models.job_model import Job
 import json
 import copy
 from openai import OpenAI
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 class OpenAIClient:

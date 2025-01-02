@@ -11,14 +11,20 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from .secrets import (
-    DJANGO_SECRET_KEY,
-    POSTGRES_PASSWORD,
-    JWT_SECRET_KEY,
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
-)
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+DJANGO_SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "default_django_secret_key")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "default_postgres_password")
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "default_jwt_secret_key")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "default_google_client_id")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "default_google_client_secret")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,12 +38,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = DJANGO_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ALLOWED_HOSTS
 
 
 # Application definition
@@ -184,10 +187,7 @@ REST_AUTH = {
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ]
+    CORS_ALLOWED_ORIGINS = ALLOWED_ORIGINS
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -207,9 +207,11 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
+
 def show_toolbar(request):
     return True
 
+
 DEBUG_TOOLBAR_CONFIG = {
-  "SHOW_TOOLBAR_CALLBACK" : show_toolbar,
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }

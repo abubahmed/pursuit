@@ -2,10 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 from loguru import logger
 import string
-from api.util.secrets import SCRAPERAPI_API_KEY
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+SCRAPERAPI_API_KEY = os.getenv("SCRAPERAPI_API_KEY")
 
 
-class Scraper:      
+class Scraper:
     def get_text(self, url):
         if not url:
             logger.exception("Invalid URL")
@@ -28,8 +32,12 @@ class Scraper:
                     element.decompose()
             text = soup.get_text()
             trimmed_text = " ".join(text.split())
-            allowed_chars = string.ascii_letters + string.digits + string.punctuation + " "
-            cleaned_text = "".join(char for char in trimmed_text if char in allowed_chars)
+            allowed_chars = (
+                string.ascii_letters + string.digits + string.punctuation + " "
+            )
+            cleaned_text = "".join(
+                char for char in trimmed_text if char in allowed_chars
+            )
             return cleaned_text
         except Exception as e:
             logger.exception(e)

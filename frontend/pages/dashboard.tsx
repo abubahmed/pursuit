@@ -79,7 +79,7 @@ export default function Dashboard() {
 
     fetchData();
   }, [session, status]);
-  
+
   const refetchSeasons = async () => {
     try {
       const response = await fetchSeasons({ apiClient });

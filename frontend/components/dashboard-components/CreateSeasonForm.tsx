@@ -127,7 +127,7 @@ const FullWidthTabs = ({
               fontWeight: "regular",
               fontSize: "0.95rem",
               py: 1,
-              mt: 2
+              mt: 2,
             }}>
             {alertText}
           </Alert>

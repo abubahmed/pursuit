@@ -1,4 +1,3 @@
-from platformdirs import user_cache_dir
 from loguru import logger
 from rest_framework.views import APIView
 from rest_framework.response import Response

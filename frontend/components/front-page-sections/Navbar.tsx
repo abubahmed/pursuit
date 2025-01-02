@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import logoImage from "@/public/logos/Logo maker project (2).png";
 import Image from "next/image";
 import SmallButton from "../general-components/SmallButton";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Navbar() {
   return (

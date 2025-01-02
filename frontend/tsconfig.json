@@ -17,6 +17,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tests/jobs.api.test.mjs", "util/apiClient.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "tests/jobs.api.test.mjs",
+    "util/apiClient.ts"
+  ],
   "exclude": ["node_modules"]
 }

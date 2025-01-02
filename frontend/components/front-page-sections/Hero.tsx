@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Button, Box, Container } from "@mui/material";
 import Image from "next/image";
 import heroImage from "@/public/images/people-working-as-team-company (10).jpg";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const Hero = () => {
   return (
