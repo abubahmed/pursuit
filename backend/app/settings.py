@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -24,6 +25,7 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "default_google_client_id")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "default_google_client_secret")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+DATABASE_URL = os.getenv("DATABASE_URL", "default_database_url")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 
@@ -116,6 +118,8 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+DATABASES["default"] = dj_database_url.parse(DATABASE_URL)
 
 
 # Password validation
