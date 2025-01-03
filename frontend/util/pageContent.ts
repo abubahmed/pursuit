@@ -111,12 +111,12 @@ export const FAQs = [
   {
     question: "How do I create an account on Pursuit?",
     answer:
-      "To create an account on Pursuit, click on the 'Sign Up' button on the homepage and fill in the required details. You will receive a confirmation email to verify your account.",
+      "Creating an account on Pursuit is as easy as clicking the 'Sign Up' button on the homepage and signing in with your Google account. From there, you can start adding job applications and tracking your job search progress.",
   },
   {
     question: "Is Pursuit free to use?",
     answer:
-      "Pursuit offers both free and premium plans. The free plan includes basic features, while the premium plan provides additional functionalities such as advanced analytics and priority support.",
+      "Pursuit offers both free and premium plans. The free plan includes basic features, while the premium plan provides additional functionalities and expanded job application and season limits.",
   },
   {
     question: "How do I update the status of my job applications?",
@@ -124,19 +124,14 @@ export const FAQs = [
       "To update the status of your job applications, go to your dashboard, select the application you want to update, and choose the new status from the dropdown menu.",
   },
   {
-    question: "Can I set reminders for important dates?",
-    answer:
-      "Yes, Pursuit allows you to set reminders for important dates such as interview schedules and follow-up deadlines. You can receive notifications via email or within the app.",
-  },
-  {
     question: "How secure is my data on Pursuit?",
     answer:
-      "Pursuit takes data security seriously. We use industry-standard encryption and security measures to protect your personal information and ensure your data is safe.",
+      "Pursuit takes data security seriously. We use industry-standard data security measures to protect your personal information and ensure your data is safe from attackers and breaches.",
   },
   {
     question: "Can I export my job application data?",
     answer:
-      "Yes, you can export your job application data in various formats such as CSV or PDF. This feature is available in the premium plan.",
+      "Yes, you can export your job application data from Pursuit in CSV format. To export your data, simply select the 'Export Data' option from the dashboard menu.",
   },
   {
     question: "How do I contact Pursuit support?",
@@ -144,29 +139,34 @@ export const FAQs = [
       "You can contact Pursuit support by clicking on the 'Support' link in the app or by sending an email to support@pursuit.com. Our support team is available 24/7 to assist you.",
   },
   {
-    question: "Can I customize the job application fields?",
-    answer:
-      "Yes, Pursuit allows you to customize the job application fields to suit your needs. You can add, remove, or modify fields to track the information that is most important to you.",
-  },
-  {
-    question: "What type of analytics does Pursuit provide?",
-    answer:
-      "Pursuit provides detailed analytics on your job application progress, including the number of applications submitted, response rates, and interview success rates. You can use this data to improve your job search strategy.",
-  },
-  {
     question: "What job characteristics does Pursuit track?",
     answer:
       "Pursuit tracks various job characteristics such as job title, company name, job location, salary range, application deadline, and job description. You can view these details for each application in your dashboard.",
   },
   {
-    question: "Can I compare job offers in Pursuit?",
+    question: "Can I compare job applications in Pursuit?",
     answer:
-      "Yes, Pursuit allows you to compare job offers side by side to evaluate factors such as salary, benefits, location, and job responsibilities. This feature is available in the premium plan.",
+      "Yes, Pursuit allows you to compare job applications side by side to evaluate factors such as salary, benefits, location, and job responsibilities.",
   },
   {
     question: "What options do I have for adding job applications?",
     answer:
       "You can add job applications by either uploading the URL of the job posting or pasting in the text content of the job description. Pursuit will automatically extract the relevant information and populate the fields for you.",
+  },
+  {
+    question: "How do I filter job applications in Pursuit?",
+    answer:
+      "You can filter job applications in Pursuit by various criteria such as job level, job mode, job type, and job application status. This allows you to view specific subsets of your job applications based on your preferences.",
+  },
+  {
+    question: "What are seasons used for in Pursuit?",
+    answer:
+      "Seasons in Pursuit are used to help you stay organized by grouping job applications together. You can create different seasons for different time periods or job search cycles.",
+  },
+  {
+    question: "How do I favorite a job application in Pursuit?",
+    answer:
+      "To favorite a job application in Pursuit, click on the star icon next to the application. This will mark the application as a favorite and allow you to easily access it from your dashboard.",
   },
 ];
 
@@ -178,13 +178,14 @@ export const features = [
     Icon: FaBox,
   },
   {
-    title: "Priority Job Applications",
-    description: "Mark certain jobs as high priority to keep track of the jobs you love the most.",
+    title: "Favorite Job Applications",
+    description: "Mark certain jobs as favorite to keep track of the jobs you love the most.",
     Icon: FaExclamationCircle,
   },
   {
-    title: "Get Job Analytics",
-    description: "Get insights on your job application progress and see how you can improve.",
+    title: "Filter Jobs By Traits",
+    description:
+      "Filter your job applications by job characteristics to take a closer look at your job search.",
     Icon: FaChartArea,
   },
   {
@@ -193,13 +194,14 @@ export const features = [
     Icon: BsFillInfoSquareFill,
   },
   {
-    title: "Get Reminders",
-    description: "Get reminders for follow-ups and interviews to never miss an opportunity.",
-    Icon: RiNotification2Fill,
+    title: "Flexible Job Tracking",
+    description:
+      "Save job applications from any source, whether it's a URL or just plain text content.",
+    Icon: FaListAlt,
   },
   {
-    title: "Track Your Offers",
-    description: "Track the offers you receive and compare them to make the best decision.",
+    title: "Track Your Applications",
+    description: "Update the status of your job applications and keep track of your progress.",
     Icon: FaListAlt,
   },
 ];
@@ -243,7 +245,7 @@ export const pricing: any = [
     features: [
       "10 job applications/week",
       "1 job season",
-      "Limited analytics",
+      "Low-speed uploads",
       "Limited job characteristics",
     ],
   },
@@ -255,7 +257,7 @@ export const pricing: any = [
     features: [
       "100 job applications/week",
       "Unlimited job seasons",
-      "Full analytics",
+      "High-speed uploads",
       "Full job characteristics",
     ],
   },
@@ -267,7 +269,7 @@ export const pricing: any = [
     features: [
       "Unlimited job applications",
       "Unlimited job seasons",
-      "Full analytics",
+      "High-speed uploads",
       "Full job characteristics",
     ],
   },

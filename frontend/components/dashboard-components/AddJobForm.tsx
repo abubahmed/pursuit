@@ -154,7 +154,7 @@ const FullWidthTabs = ({
             fontSize: "1rem",
           }}
           aria-label="full width tabs example">
-          {["Add by URL", "Add by Text", "Add by File"].map((label, index) => (
+          {["Add by URL", "Add by Text"].map((label, index) => (
             <Tab
               key={index}
               label={label}

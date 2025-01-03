@@ -80,7 +80,7 @@ const ReviewCard = ({
                 sx={{
                   color: "black",
                   fontWeight: "regular",
-                  fontSize: "1rem",
+                  fontSize: "0.95rem",
                   textAlign: "right",
                 }}>
                 {reviewObject.name}
@@ -90,7 +90,7 @@ const ReviewCard = ({
                 sx={{
                   color: "black",
                   fontWeight: "light",
-                  fontSize: "1rem",
+                  fontSize: "0.95rem",
                 }}>
                 {reviewObject.title}
               </Typography>
