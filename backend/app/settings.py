@@ -18,14 +18,14 @@ import dj_database_url
 
 load_dotenv()
 
-DJANGO_SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "default_django_secret_key")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "default_postgres_password")
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "default_jwt_secret_key")
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "default_google_client_id")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "default_google_client_secret")
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
-ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
-DATABASE_URL = os.getenv("DATABASE_URL", "default_database_url")
+DJANGO_SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS").split(",")
+DATABASE_URL = os.getenv("DATABASE_URL")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 
 
