@@ -13,7 +13,7 @@ const FeatureCard = ({
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Paper
-        elevation={0}
+        elevation={1}
         sx={{
           padding: "40px",
           backgroundColor: "rgb(20,86,57)",

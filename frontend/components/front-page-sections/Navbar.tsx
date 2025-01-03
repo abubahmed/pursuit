@@ -1,6 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Button, Box, Container, Paper } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { SlArrowDown } from "react-icons/sl";
 import logoImage from "@/public/logos/Logo maker project (2).png";
 import Image from "next/image";
 import SmallButton from "../general-components/SmallButton";
@@ -25,19 +26,52 @@ export default function Navbar() {
                 gap: "40px",
                 justifyContent: "center",
               }}>
-              <Box sx={{ display: "flex", gap: "20px", justifyContent: "center" }}>
-                {["Features", "Pricing", "Questions", "Reviews"].map((text, index) => (
+              <Box
+                sx={{
+                  display: { xs: "none", md: "none", lg: "flex" },
+                  gap: "15px",
+                  justifyContent: "center",
+                }}>
+                {[
+                  {
+                    text: "Features",
+                    link: "features",
+                  },
+                  {
+                    text: "Pricing",
+                    link: "pricing",
+                  },
+                  {
+                    text: "Questions",
+                    link: "contact",
+                  },
+                  {
+                    text: "Reviews",
+                    link: "reviews",
+                  },
+                ].map((item, index) => (
                   <Button
                     key={index}
+                    onClick={() => {
+                      const element = document.getElementById(item.link);
+                      if (element) {
+                        element.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      } else {
+                        console.error(`Element with id ${item.link} not found`);
+                      }
+                    }}
                     sx={{
                       color: "black",
-                      textTransform: "none",
                       fontWeight: "regular",
                       fontSize: "1rem",
                       justifyContent: "center",
+                      textTransform: "none",
+                      width: "120px",
                       gap: "5px",
                     }}>
-                    {text}
+                    {item.text}
                     <ExpandMoreIcon />
                   </Button>
                 ))}

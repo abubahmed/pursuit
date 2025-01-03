@@ -6,12 +6,13 @@ import { reviews } from "@/util/pageContent";
 const Reviews = () => {
   return (
     <Container
+      id="reviews"
       maxWidth="lg"
       sx={{
-        py: 8,
+        py: 10,
       }}>
       <Box
-        mb={5}
+        mb={6}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -23,7 +24,7 @@ const Reviews = () => {
           sx={{
             color: "black",
             fontWeight: "bold",
-            fontSize: "1.8rem",
+            fontSize: "2rem",
           }}>
           What Our Customers Have to Say
         </Typography>

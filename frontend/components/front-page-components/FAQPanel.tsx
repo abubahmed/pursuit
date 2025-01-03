@@ -20,7 +20,7 @@ const FAQPanel = ({
       onChange={onChange}
       expanded={expanded === `panel${index}` ? true : false}
       sx={{
-        py: "16px",
+        py: "18px",
         "&:before": {
           display: "none",
         },
@@ -55,7 +55,7 @@ const FAQPanel = ({
           sx={{
             color: "white",
             fontSize: "1rem",
-            fontWeight: "light",
+            fontWeight: "regular",
           }}>
           {faq.answer}
         </Typography>

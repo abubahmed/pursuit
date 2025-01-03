@@ -6,12 +6,13 @@ import { pricing } from "@/util/pageContent";
 const Pricing = () => {
   return (
     <Container
+      id="pricing"
       maxWidth="lg"
       sx={{
-        py: 8,
+        py: 10,
       }}>
       <Box
-        mb={4}
+        mb={6}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -22,10 +23,10 @@ const Pricing = () => {
           variant="h4"
           sx={{
             color: "black",
-            fontSize: "1.8rem",
+            fontSize: "2rem",
             fontWeight: "bold",
           }}>
-          Our Pricing Plans
+          Pricing Plans
         </Typography>
       </Box>
       <Grid

@@ -158,6 +158,16 @@ export const FAQs = [
     answer:
       "Pursuit tracks various job characteristics such as job title, company name, job location, salary range, application deadline, and job description. You can view these details for each application in your dashboard.",
   },
+  {
+    question: "Can I compare job offers in Pursuit?",
+    answer:
+      "Yes, Pursuit allows you to compare job offers side by side to evaluate factors such as salary, benefits, location, and job responsibilities. This feature is available in the premium plan.",
+  },
+  {
+    question: "What options do I have for adding job applications?",
+    answer:
+      "You can add job applications by either uploading the URL of the job posting or pasting in the text content of the job description. Pursuit will automatically extract the relevant information and populate the fields for you.",
+  },
 ];
 
 export const features = [
@@ -327,6 +337,38 @@ export const reviews = [
     review:
       "I highly recommend this app to anyone looking for a job. It’s easy to use and has all the features you need to stay on top of your job search.",
     image: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    name: "Hannah White",
+    title: "Graphic Designer",
+    rating: 5,
+    review:
+      "This app has been a lifesaver during my job search. The ability to track all my applications and set reminders for follow-ups is fantastic.",
+    image: "https://randomuser.me/api/portraits/women/5.jpg",
+  },
+  {
+    name: "Jack Green",
+    title: "Project Manager",
+    rating: 4,
+    review:
+      "A very helpful tool for job seekers. The analytics feature provides great insights into my job search progress.",
+    image: "https://randomuser.me/api/portraits/men/5.jpg",
+  },
+  {
+    name: "Isabella Brown",
+    title: "Content Writer",
+    rating: 5,
+    review:
+      "I love how easy it is to use this app. It has made my job search process so much more organized and efficient.",
+    image: "https://randomuser.me/api/portraits/women/6.jpg",
+  },
+  {
+    name: "Liam Johnson",
+    title: "Web Developer",
+    rating: 4,
+    review:
+      "The job tracker app is very useful. It helps me keep track of all my applications and stay on top of my job search.",
+    image: "https://randomuser.me/api/portraits/men/6.jpg",
   },
 ];
 

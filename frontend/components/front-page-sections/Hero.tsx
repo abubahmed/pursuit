@@ -24,7 +24,7 @@ const Hero = () => {
           <Typography
             variant="h2"
             component="h1"
-            mb={3}
+            mb={4}
             sx={{
               color: "black",
               fontWeight: "bold",
@@ -38,7 +38,7 @@ const Hero = () => {
             sx={{
               color: "black",
               fontWeight: "regular",
-              fontSize: "1rem",
+              fontSize: "1.1rem",
             }}>
             Manage every step of your job search. Track jobs with detail, set reminders, and get
             insights to land your dream job.
@@ -52,9 +52,9 @@ const Hero = () => {
                 textTransform: "none",
                 borderRadius: "100px",
                 padding: "12px 30px",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
                 boxShadow: "none",
-                mr: 3,
+                mr: 4,
               }}>
               Request a Demo
             </Button>
@@ -67,7 +67,7 @@ const Hero = () => {
                 border: "1px solid black",
                 borderRadius: "100px",
                 padding: "12px 30px",
-                fontSize: "1rem",
+                fontSize: "1.1rem",
               }}>
               Sign Up Now
             </Button>

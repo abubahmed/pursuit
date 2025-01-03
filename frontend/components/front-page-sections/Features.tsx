@@ -6,12 +6,13 @@ import { features } from "@/util/pageContent";
 const Features = () => {
   return (
     <Box
+      id="features"
       sx={{
         backgroundColor: "#05472A",
       }}>
-      <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Container maxWidth="lg" sx={{ py: 10 }}>
         <Box
-          mb={4}
+          mb={6}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -22,9 +23,9 @@ const Features = () => {
             sx={{
               color: "white",
               fontWeight: "bold",
-              fontSize: "1.8rem",
+              fontSize: "2rem",
             }}>
-            Our Key Features
+            Key Features
           </Typography>
         </Box>
         <Grid container spacing={4}>

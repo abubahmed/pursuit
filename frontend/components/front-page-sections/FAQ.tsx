@@ -11,16 +11,17 @@ const FAQ = () => {
 
   return (
     <Box
+      id="faq"
       sx={{
         backgroundColor: "#05472A",
       }}>
       <Container
         maxWidth="lg"
         sx={{
-          py: 8,
+          py: 10,
         }}>
         <Box
-          mb={3}
+          mb={4}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -32,7 +33,7 @@ const FAQ = () => {
             sx={{
               color: "white",
               fontWeight: "bold",
-              fontSize: "1.8rem",
+              fontSize: "2rem",
             }}>
             Frequently Asked Questions
           </Typography>

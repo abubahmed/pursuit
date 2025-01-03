@@ -23,7 +23,7 @@ const PricingCard = ({
         }}>
         <Typography
           variant="h6"
-          mb={1}
+          mb={2}
           sx={{
             color: "black",
             fontWeight: "medium",
@@ -36,9 +36,9 @@ const PricingCard = ({
           {plan.description}
         </Typography>
         <Typography
-          sx={{ color: "black", textAlign: "left", fontSize: "1.6rem" }}
+          sx={{ color: "black", textAlign: "left", fontSize: "1.8rem" }}
           variant="h5"
-          mb={3}>
+          mb={4}>
           {plan.price}
           <span style={{ fontSize: "1rem" }}>/mo or</span> $
           {Number(plan.price.replace("$", "")) * 12}
@@ -56,6 +56,20 @@ const PricingCard = ({
           }}>
           Subscribe
         </Button>
+        <Button
+          sx={{
+            mt: 2,
+            width: "100%",
+            color: "black",
+            textTransform: "none",
+            fontWeight: "regular",
+            fontSize: "1rem",
+            borderRadius: "100px",
+            backgroundColor: "white",
+            border: "1px solid black",
+          }}>
+          Learn More
+        </Button>
         <Box
           mt={4}
           sx={{
@@ -66,7 +80,7 @@ const PricingCard = ({
             sx={{
               flex: 1,
               height: "1px",
-              backgroundColor: "darkgray",
+              backgroundColor: "black",
             }}
           />
           <Typography
@@ -81,7 +95,7 @@ const PricingCard = ({
             sx={{
               flex: 1,
               height: "1px",
-              backgroundColor: "darkgray",
+              backgroundColor: "black",
             }}
           />
         </Box>

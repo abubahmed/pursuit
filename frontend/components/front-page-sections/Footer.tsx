@@ -12,8 +12,8 @@ const Footer = () => {
       <Container
         maxWidth="lg"
         sx={{
-          py: 4,
-          pt: 6,
+          py: 6,
+          pt: 8,
         }}>
         <Box
           sx={{
