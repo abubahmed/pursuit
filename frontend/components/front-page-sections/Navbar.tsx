@@ -43,7 +43,7 @@ export default function Navbar() {
                   },
                   {
                     text: "Questions",
-                    link: "contact",
+                    link: "faq",
                   },
                   {
                     text: "Reviews",
